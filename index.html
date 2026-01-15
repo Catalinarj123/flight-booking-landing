@@ -146,6 +146,21 @@ button{background:#c8102e;color:#fff;border:none;margin-top:20px;cursor:pointer;
       <option value="ida-regreso">Ida y regreso</option>
     </select>
 
+    <!-- NUEVO: PASAJEROS -->
+    <label>Número de pasajeros</label>
+    <select id="pasajeros">
+      <option value="">Selecciona</option>
+      <option value="1">1 pasajero</option>
+      <option value="2">2 pasajeros</option>
+      <option value="3">3 pasajeros</option>
+      <option value="4">4 pasajeros</option>
+      <option value="5">5 pasajeros</option>
+      <option value="6">6 pasajeros</option>
+      <option value="7">7 pasajeros</option>
+      <option value="8">8 pasajeros</option>
+      <option value="9">9 pasajeros</option>
+    </select>
+
     <label>Fecha ida</label>
     <input type="date" id="fechaIda">
 
@@ -173,8 +188,7 @@ const aeropuertosInternacionales=[
 
 function seleccionar(tipo){
   document.getElementById("home").classList.add("oculto");
-  const form=document.getElementById("formulario");
-  form.classList.add("activo");
+  document.getElementById("formulario").classList.add("activo");
 
   document.getElementById("tipoVueloTitulo").textContent =
     tipo==="nacional"?"Vuelo Nacional":"Vuelo Internacional";
@@ -189,8 +203,8 @@ function seleccionar(tipo){
 function cargar(lista){
   const o=document.getElementById("origen");
   const d=document.getElementById("destino");
-  o.innerHTML='<option>Origen</option>';
-  d.innerHTML='<option>Destino</option>';
+  o.innerHTML='<option value="">Origen</option>';
+  d.innerHTML='<option value="">Destino</option>';
   lista.forEach(a=>{
     o.appendChild(new Option(a,a));
     d.appendChild(new Option(a,a));
@@ -198,10 +212,9 @@ function cargar(lista){
 }
 
 function cambiarFechas(){
-  const fr=document.getElementById("fechaRegreso");
-  const lr=document.getElementById("labelRegreso");
   const show=document.getElementById("tipoViaje").value==="ida-regreso";
-  fr.style.display=lr.style.display=show?"block":"none";
+  document.getElementById("fechaRegreso").style.display=show?"block":"none";
+  document.getElementById("labelRegreso").style.display=show?"block":"none";
 }
 
 function regresarInicio(){
