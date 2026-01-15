@@ -3,288 +3,221 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cotiza tu vuelo</title>
-
-<!-- FONT -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Avianca Travel Assistance</title>
 
 <style>
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
-  font-family: 'Inter', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
 }
 
-:root {
-  --avianca-red: #C8102E;
-  --dark: #111;
-  --gray: #6e6e73;
+body {
+  margin: 0;
+  background: #000;
+  color: #fff;
 }
 
-/* ===== SECCIONES ===== */
 section {
   min-height: 100vh;
-  width: 100%;
-  display: none;
-}
-
-/* ===== HOME ===== */
-#home {
   display: flex;
   justify-content: center;
   align-items: center;
-  background:
-    linear-gradient(to bottom, rgba(0,0,0,0.55), rgba(0,0,0,0.75)),
-    url('https://images.unsplash.com/photo-1529070538774-1843cb3265df');
+  padding: 40px;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+#home {
+  background: linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)),
+  url("https://images.unsplash.com/photo-1542291026-7eec264c27ff");
   background-size: cover;
   background-position: center;
-  padding: 40px 20px;
+  flex-direction: column;
   text-align: center;
-  color: white;
 }
 
-.home-content img {
-  width: 200px;
-  margin-bottom: 25px;
+.logo {
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 40px;
 }
 
-.home-content h1 {
-  font-size: 2.4rem;
-  font-weight: 500;
-  margin-bottom: 10px;
-}
-
-.home-content p {
-  font-size: 1.1rem;
-  color: #e5e5e7;
-  margin-bottom: 50px;
-}
-
-/* ===== CARDS ===== */
-.options {
+.opciones {
   display: flex;
   gap: 30px;
-  flex-wrap: wrap;
-  justify-content: center;
 }
 
-.option-card {
-  width: 260px;
-  height: 380px;
-  border-radius: 26px;
-  overflow: hidden;
-  position: relative;
-  cursor: pointer;
-  box-shadow: 0 12px 35px rgba(0,0,0,0.25);
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-}
-
-.option-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 25px 60px rgba(0,0,0,0.35);
-}
-
-.option-card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.option-card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-}
-
-.option-card span {
-  position: absolute;
-  bottom: 20px;
-  width: 100%;
-  text-align: center;
-  font-size: 1.4rem;
-  font-weight: 500;
-  z-index: 2;
-}
-
-/* ===== FORMULARIO ===== */
-#formulario {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background:
-    linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.85)),
-    url('https://images.unsplash.com/photo-1504198453319-5ce911bafcde');
+.opcion {
+  width: 220px;
+  height: 320px;
+  border-radius: 20px;
   background-size: cover;
   background-position: center;
-  padding: 40px 20px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 20px;
+  font-size: 22px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform .3s ease, box-shadow .3s ease;
 }
 
-.form-card {
-  background: rgba(255,255,255,0.95);
-  backdrop-filter: blur(10px);
+.opcion:hover {
+  transform: scale(1.05);
+  box-shadow: 0 20px 40px rgba(0,0,0,.6);
+}
+
+#nacional {
+  background-image: linear-gradient(rgba(0,0,0,.4), rgba(0,0,0,.7)),
+  url("https://images.unsplash.com/photo-1504198453319-5ce911bafcde");
+}
+
+#internacional {
+  background-image: linear-gradient(rgba(0,0,0,.4), rgba(0,0,0,.7)),
+  url("https://images.unsplash.com/photo-1529070538774-1843cb3265df");
+}
+
+#formulario {
+  display: none;
+  background: linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.7)),
+  url("https://images.unsplash.com/photo-1436491865332-7a61a109cc05");
+  background-size: cover;
+  background-position: center;
+}
+
+.form-box {
+  background: #fff;
+  color: #000;
+  border-radius: 20px;
+  padding: 30px;
   width: 100%;
-  max-width: 520px;
-  border-radius: 28px;
-  padding: 40px;
-  box-shadow: 0 30px 80px rgba(0,0,0,0.45);
+  max-width: 420px;
+  animation: fadeUp .6s ease;
 }
 
-.form-card h2 {
-  text-align: center;
-  color: var(--avianca-red);
-  font-weight: 500;
-  margin-bottom: 30px;
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.form-group {
-  margin-bottom: 18px;
-}
-
-.form-group label {
-  font-size: 0.8rem;
-  color: var(--gray);
-  margin-bottom: 6px;
-  display: block;
-}
-
-.form-group input,
-.form-group select {
+select, input, button {
   width: 100%;
   padding: 14px;
-  border-radius: 14px;
-  border: 1px solid #ddd;
-  font-size: 1rem;
+  margin-top: 12px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  font-size: 16px;
 }
 
-/* ===== BOTÓN ===== */
 button {
-  margin-top: 25px;
-  width: 100%;
-  padding: 15px;
-  background: var(--avianca-red);
-  color: white;
+  background: #c8102e;
+  color: #fff;
   border: none;
-  border-radius: 16px;
-  font-size: 1.05rem;
-  font-weight: 500;
+  margin-top: 20px;
   cursor: pointer;
-  transition: background 0.3s ease;
 }
 
 button:hover {
-  background: #b10f28;
+  background: #a00d25;
 }
 
-/* ===== LEGAL ===== */
-.legal {
-  font-size: 0.7rem;
-  color: #666;
+.footer {
+  margin-top: 15px;
+  font-size: 12px;
   text-align: center;
-  margin-top: 20px;
-  line-height: 1.4;
+  color: #666;
 }
 </style>
 </head>
 
 <body>
 
-<!-- HOME -->
 <section id="home">
-  <div class="home-content">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Avianca_Logo_2013.svg">
-    <h1>Planifica tu próximo viaje</h1>
-    <p>Asesoría personalizada en vuelos Avianca</p>
-
-    <div class="options">
-      <div class="option-card" onclick="openForm('Nacional')">
-        <img src="https://images.unsplash.com/photo-1586864387967-d02ef85d93e8">
-        <span>✈️ Vuelos Nacionales</span>
-      </div>
-
-      <div class="option-card" onclick="openForm('Internacional')">
-        <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d">
-        <span>🌍 Vuelos Internacionales</span>
-      </div>
-    </div>
+  <div class="logo">AVIANCA</div>
+  <div class="opciones">
+    <div id="nacional" class="opcion" onclick="seleccionar('nacional')">Vuelos Nacionales</div>
+    <div id="internacional" class="opcion" onclick="seleccionar('internacional')">Vuelos Internacionales</div>
   </div>
 </section>
 
-<!-- FORMULARIO -->
 <section id="formulario">
-  <div class="form-card">
-    <h2>Datos del viaje</h2>
+  <div class="form-box">
+    <h2>Solicita tu vuelo</h2>
 
-    <input type="hidden" id="tipoVuelo">
+    <select id="origen"></select>
+    <select id="destino"></select>
 
-    <div class="form-group">
-      <label>Fecha de viaje</label>
-      <input type="date" id="fecha">
-    </div>
+    <select id="tipoViaje" onchange="cambiarFechas()">
+      <option value="">Tipo de viaje</option>
+      <option value="ida">Solo ida</option>
+      <option value="ida-regreso">Ida y regreso</option>
+    </select>
 
-    <div class="form-group">
-      <label>Ciudad de origen</label>
-      <input type="text" id="origen">
-    </div>
+    <input type="date" id="fechaIda">
+    <input type="date" id="fechaRegreso" style="display:none;">
 
-    <div class="form-group">
-      <label>Ciudad de destino</label>
-      <input type="text" id="destino">
-    </div>
+    <button type="button" onclick="enviarWhatsApp()">Cotizar por WhatsApp</button>
 
-    <div class="form-group">
-      <label>Tipo de trayecto</label>
-      <select id="trayecto">
-        <option>Solo ida</option>
-        <option>Ida y regreso</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label>Número de pasajeros</label>
-      <input type="number" id="pasajeros" min="1" value="1">
-    </div>
-
-    <button onclick="sendWhatsApp()">Cotizar por WhatsApp</button>
-
-    <div class="legal">
-      Servicio de asesoría en vuelos comerciales.<br>
-      Vuelos operados por AVIANCA.
-    </div>
+    <div class="footer">vuelos operados por AVIANCA</div>
   </div>
 </section>
 
 <script>
-function openForm(tipo) {
-  document.getElementById("tipoVuelo").value = tipo;
+const aeropuertosNacionales = [
+ "Bogotá (BOG)","Medellín (MDE)","Cali (CLO)","Cartagena (CTG)",
+ "Barranquilla (BAQ)","Pereira (PEI)","Santa Marta (SMR)",
+ "Bucaramanga (BGA)","Cúcuta (CUC)","San Andrés (ADZ)"
+];
+
+const aeropuertosInternacionales = [
+ "Miami (MIA)","New York (JFK)","Madrid (MAD)","Barcelona (BCN)",
+ "Cancún (CUN)","Ciudad de México (MEX)","Lima (LIM)",
+ "Buenos Aires (EZE)","Santiago (SCL)","Panamá (PTY)"
+];
+
+function seleccionar(tipo) {
   document.getElementById("home").style.display = "none";
   document.getElementById("formulario").style.display = "flex";
+  cargarAeropuertos(tipo);
 }
 
-function sendWhatsApp() {
-  const tipo = document.getElementById("tipoVuelo").value;
-  const fecha = document.getElementById("fecha").value;
-  const origen = document.getElementById("origen").value;
-  const destino = document.getElementById("destino").value;
-  const trayecto = document.getElementById("trayecto").value;
-  const pasajeros = document.getElementById("pasajeros").value;
+function cargarAeropuertos(tipo) {
+  const origen = document.getElementById("origen");
+  const destino = document.getElementById("destino");
+  origen.innerHTML = '<option value="">Origen</option>';
+  destino.innerHTML = '<option value="">Destino</option>';
 
-  const mensaje =
-`Hola, deseo cotizar un vuelo ${tipo}.
-📅 Fecha: ${fecha}
-✈️ Origen: ${origen}
-📍 Destino: ${destino}
-🔁 Trayecto: ${trayecto}
-👤 Pasajeros: ${pasajeros}`;
+  const lista = tipo === "nacional" ? aeropuertosNacionales : aeropuertosInternacionales;
 
-  window.open(
-    `https://wa.me/3016791639?text=${encodeURIComponent(mensaje)}`,
-    "_blank"
-  );
+  lista.forEach(a => {
+    origen.innerHTML += `<option>${a}</option>`;
+    destino.innerHTML += `<option>${a}</option>`;
+  });
 }
 
-document.getElementById("home").style.display = "flex";
+function cambiarFechas() {
+  const tipo = document.getElementById("tipoViaje").value;
+  document.getElementById("fechaRegreso").style.display =
+    tipo === "ida-regreso" ? "block" : "none";
+}
+
+function enviarWhatsApp() {
+  const o = origen.value;
+  const d = destino.value;
+  const fi = fechaIda.value;
+  const fr = fechaRegreso.value;
+  const tv = tipoViaje.value;
+
+  if (!o || !d || !fi || !tv) {
+    alert("Completa todos los campos");
+    return;
+  }
+
+  let msg = `✈️ Solicitud de vuelo Avianca%0AOrigen: ${o}%0ADestino: ${d}%0AFecha ida: ${fi}`;
+  if (tv === "ida-regreso") msg += `%0AFecha regreso: ${fr}`;
+
+  window.open(`https://wa.me/573016791639?text=${msg}`, "_blank");
+}
 </script>
 
 </body>
