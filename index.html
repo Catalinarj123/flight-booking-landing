@@ -95,7 +95,6 @@ const aeropuertosInternacionales = [
   {name:"Londres (LHR)",flag:"🇬🇧"}
 ];
 
-// Mostrar formulario según tipo de vuelo
 function seleccionar(tipo){
   const home = document.getElementById("home");
   const form = document.getElementById("formulario");
@@ -115,7 +114,6 @@ function seleccionar(tipo){
   cargarAeropuertos(tipo);
 }
 
-// Cargar aeropuertos según tipo
 function cargarAeropuertos(tipo){
   const origen=document.getElementById("origen");
   const destino=document.getElementById("destino");
@@ -132,7 +130,6 @@ function cargarAeropuertos(tipo){
   });
 }
 
-// Mostrar u ocultar fecha regreso
 function cambiarFechas(){
   const tipoV=document.getElementById("tipoViaje").value;
   const fechaRegreso=document.getElementById("fechaRegreso");
@@ -141,7 +138,6 @@ function cambiarFechas(){
   else{fechaRegreso.style.display="none"; labelRegreso.style.display="none";}
 }
 
-// Enviar WhatsApp
 function enviarWhatsApp(){
   const o=document.getElementById("origen").value;
   const d=document.getElementById("destino").value;
@@ -154,7 +150,6 @@ function enviarWhatsApp(){
   window.open(`https://wa.me/573016791639?text=${msg}`,"_blank");
 }
 
-// Botón Regresa
 function regresarInicio(){
   const home=document.getElementById("home");
   const form=document.getElementById("formulario");
