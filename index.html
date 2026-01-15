@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Avianca Travel Assistance</title>
+<meta name="description" content="Cotiza vuelos nacionales e internacionales de Avianca de manera rápida y sencilla.">
 
 <style>
 * {
@@ -33,6 +34,7 @@ section {
   background-position: center;
   flex-direction: column;
   text-align: center;
+  opacity: 1;
 }
 
 .logo {
@@ -44,6 +46,8 @@ section {
 .opciones {
   display: flex;
   gap: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .opcion {
@@ -60,6 +64,8 @@ section {
   font-weight: 600;
   cursor: pointer;
   transition: transform .3s ease, box-shadow .3s ease;
+  border: none;
+  color: #fff;
 }
 
 .opcion:hover {
@@ -83,6 +89,10 @@ section {
   url("https://images.unsplash.com/photo-1436491865332-7a61a109cc05");
   background-size: cover;
   background-position: center;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.6s ease;
 }
 
 .form-box {
@@ -100,10 +110,16 @@ section {
   to { opacity: 1; transform: translateY(0); }
 }
 
+label {
+  display: block;
+  margin-top: 12px;
+  font-weight: 500;
+}
+
 select, input, button {
   width: 100%;
   padding: 14px;
-  margin-top: 12px;
+  margin-top: 6px;
   border-radius: 12px;
   border: 1px solid #ccc;
   font-size: 16px;
@@ -127,6 +143,18 @@ button:hover {
   text-align: center;
   color: #666;
 }
+
+/* Responsive */
+@media (max-width: 600px) {
+  .opciones {
+    flex-direction: column;
+    gap: 20px;
+  }
+  .opcion {
+    width: 100%;
+    height: 250px;
+  }
+}
 </style>
 </head>
 
@@ -135,8 +163,8 @@ button:hover {
 <section id="home">
   <div class="logo">AVIANCA</div>
   <div class="opciones">
-    <div id="nacional" class="opcion" onclick="seleccionar('nacional')">Vuelos Nacionales</div>
-    <div id="internacional" class="opcion" onclick="seleccionar('internacional')">Vuelos Internacionales</div>
+    <button id="nacional" class="opcion" onclick="seleccionar('nacional')">Vuelos Nacionales</button>
+    <button id="internacional" class="opcion" onclick="seleccionar('internacional')">Vuelos Internacionales</button>
   </div>
 </section>
 
@@ -144,21 +172,28 @@ button:hover {
   <div class="form-box">
     <h2>Solicita tu vuelo</h2>
 
+    <label for="origen">Origen</label>
     <select id="origen"></select>
+
+    <label for="destino">Destino</label>
     <select id="destino"></select>
 
+    <label for="tipoViaje">Tipo de viaje</label>
     <select id="tipoViaje" onchange="cambiarFechas()">
-      <option value="">Tipo de viaje</option>
+      <option value="">Selecciona tipo de viaje</option>
       <option value="ida">Solo ida</option>
       <option value="ida-regreso">Ida y regreso</option>
     </select>
 
+    <label for="fechaIda">Fecha ida</label>
     <input type="date" id="fechaIda">
+
+    <label for="fechaRegreso" style="display:none;">Fecha regreso</label>
     <input type="date" id="fechaRegreso" style="display:none;">
 
     <button type="button" onclick="enviarWhatsApp()">Cotizar por WhatsApp</button>
 
-    <div class="footer">vuelos operados por AVIANCA</div>
+    <div class="footer">Vuelos operados por AVIANCA</div>
   </div>
 </section>
 
@@ -176,45 +211,66 @@ const aeropuertosInternacionales = [
 ];
 
 function seleccionar(tipo) {
-  document.getElementById("home").style.display = "none";
-  document.getElementById("formulario").style.display = "flex";
+  const home = document.getElementById("home");
+  const form = document.getElementById("formulario");
+
+  home.style.opacity = 0;
+  setTimeout(() => home.style.display = "none", 600);
+
+  form.style.display = "flex";
+  setTimeout(() => form.style.opacity = 1, 50);
+
   cargarAeropuertos(tipo);
 }
 
 function cargarAeropuertos(tipo) {
   const origen = document.getElementById("origen");
   const destino = document.getElementById("destino");
+
   origen.innerHTML = '<option value="">Origen</option>';
   destino.innerHTML = '<option value="">Destino</option>';
 
   const lista = tipo === "nacional" ? aeropuertosNacionales : aeropuertosInternacionales;
 
   lista.forEach(a => {
-    origen.innerHTML += `<option>${a}</option>`;
-    destino.innerHTML += `<option>${a}</option>`;
+    const optionO = document.createElement('option');
+    optionO.textContent = a;
+    origen.appendChild(optionO);
+
+    const optionD = document.createElement('option');
+    optionD.textContent = a;
+    destino.appendChild(optionD);
   });
 }
 
 function cambiarFechas() {
   const tipo = document.getElementById("tipoViaje").value;
-  document.getElementById("fechaRegreso").style.display =
-    tipo === "ida-regreso" ? "block" : "none";
+  const fechaRegreso = document.getElementById("fechaRegreso");
+  const labelRegreso = fechaRegreso.previousElementSibling;
+
+  if (tipo === "ida-regreso") {
+    fechaRegreso.style.display = "block";
+    labelRegreso.style.display = "block";
+  } else {
+    fechaRegreso.style.display = "none";
+    labelRegreso.style.display = "none";
+  }
 }
 
 function enviarWhatsApp() {
-  const o = origen.value;
-  const d = destino.value;
-  const fi = fechaIda.value;
-  const fr = fechaRegreso.value;
-  const tv = tipoViaje.value;
+  const origen = document.getElementById("origen").value;
+  const destino = document.getElementById("destino").value;
+  const fechaIda = document.getElementById("fechaIda").value;
+  const fechaRegreso = document.getElementById("fechaRegreso").value;
+  const tipoViaje = document.getElementById("tipoViaje").value;
 
-  if (!o || !d || !fi || !tv) {
+  if (!origen || !destino || !fechaIda || !tipoViaje) {
     alert("Completa todos los campos");
     return;
   }
 
-  let msg = `✈️ Solicitud de vuelo Avianca%0AOrigen: ${o}%0ADestino: ${d}%0AFecha ida: ${fi}`;
-  if (tv === "ida-regreso") msg += `%0AFecha regreso: ${fr}`;
+  let msg = `✈️ Solicitud de vuelo Avianca%0AOrigen: ${origen}%0ADestino: ${destino}%0AFecha ida: ${fechaIda}`;
+  if (tipoViaje === "ida-regreso") msg += `%0AFecha regreso: ${fechaRegreso}`;
 
   window.open(`https://wa.me/573016791639?text=${msg}`, "_blank");
 }
@@ -222,3 +278,6 @@ function enviarWhatsApp() {
 
 </body>
 </html>
+✅ Ventajas de esta versión:
+
+M
