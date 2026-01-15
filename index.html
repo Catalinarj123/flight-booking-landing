@@ -100,6 +100,31 @@ section {
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* Animación estilo burbuja para botones */
+@keyframes bubblePop {
+  0% { transform: scale(0.5); opacity: 0; }
+  60% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.boton-regresa {
+  background: #555;
+  margin-top: 10px;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 12px;
+  padding: 12px;
+  font-weight: 600;
+  animation: bubblePop 0.5s ease forwards;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.boton-regresa:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+
 label {
   display: block;
   margin-top: 12px;
@@ -181,14 +206,13 @@ button:hover {
     <input type="date" id="fechaRegreso" style="display:none;">
 
     <button type="button" onclick="enviarWhatsApp()">COTIZA AHORA</button>
-    <button type="button" onclick="regresarInicio()" style="background:#555; margin-top:10px; color:#fff; border:none; cursor:pointer;">← Regresa</button>
+    <button type="button" class="boton-regresa" onclick="regresarInicio()">← Regresa</button>
 
     <div class="footer">Vuelos operados por AVIANCA AIRLINES</div>
   </div>
 </section>
 
 <script>
-// Aeropuertos nacionales e internacionales
 const aeropuertosNacionales = [
  "Bogotá (BOG)","Medellín (MDE)","Cali (CLO)","Cartagena (CTG)",
  "Barranquilla (BAQ)","Pereira (PEI)","Santa Marta (SMR)",
@@ -201,25 +225,20 @@ const aeropuertosInternacionales = [
  "Buenos Aires (EZE)","Santiago (SCL)","Panamá (PTY)"
 ];
 
-// Seleccionar tipo de vuelo
 function seleccionar(tipo) {
   const home = document.getElementById("home");
   const form = document.getElementById("formulario");
   const titulo = document.getElementById("tipoVueloTitulo");
 
-  // Ocultar home
   home.style.transition = "opacity 0.3s";
   home.style.opacity = 0;
   setTimeout(() => home.style.display = "none", 300);
 
-  // Mostrar formulario
   form.style.display = "flex";
   setTimeout(() => form.style.opacity = 1, 50);
 
-  // Cambiar título
   titulo.textContent = tipo === "nacional" ? "Vuelo Nacional" : "Vuelo Internacional";
 
-  // Cargar aeropuertos
   cargarAeropuertos();
 }
 
@@ -275,7 +294,6 @@ function enviarWhatsApp() {
   window.open(`https://wa.me/573016791639?text=${msg}`, "_blank");
 }
 
-// Función regresar a la primera vista
 function regresarInicio() {
   const home = document.getElementById("home");
   const form = document.getElementById("formulario");
@@ -284,7 +302,7 @@ function regresarInicio() {
   form.style.opacity = 0;
   setTimeout(() => form.style.display = "none", 300);
 
-  // Mostrar home
+  // Mostrar home con transición
   home.style.display = "flex";
   setTimeout(() => home.style.opacity = 1, 50);
 }
