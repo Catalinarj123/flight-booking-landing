@@ -26,6 +26,7 @@ section {
   align-items: center;
   padding: 40px;
   transition: opacity 0.6s ease, transform 0.6s ease;
+  position: relative;
 }
 
 /* Fondo unificado */
@@ -36,17 +37,35 @@ section {
   background-position: center;
 }
 
+/* Overlay difuminado en formulario */
+#formulario::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(6px);
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+#formulario.active::before {
+  opacity: 1;
+}
+
 #home {
   flex-direction: column;
   text-align: center;
   display: flex;
   opacity: 1;
+  z-index: 0;
 }
 
 .logo {
   font-size: 48px;
   font-weight: 700;
   margin-bottom: 40px;
+  z-index: 2;
 }
 
 .opciones {
@@ -54,6 +73,7 @@ section {
   gap: 30px;
   flex-wrap: wrap;
   justify-content: center;
+  z-index: 2;
 }
 
 .opcion {
@@ -71,6 +91,7 @@ section {
   border: none;
   color: #fff;
   background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7));
+  z-index: 2;
 }
 
 .opcion:hover {
@@ -83,6 +104,7 @@ section {
   justify-content: center;
   align-items: center;
   opacity: 0;
+  z-index: 2;
 }
 
 .form-box {
@@ -92,19 +114,23 @@ section {
   padding: 30px;
   width: 100%;
   max-width: 420px;
-  animation: fadeUp 0.6s ease;
+  transform: scale(0.5);
+  opacity: 0;
+  z-index: 3;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Animación estilo burbuja para botón Regresa */
+/* Animación tipo burbuja */
 @keyframes bubblePop {
   0% { transform: scale(0.5); opacity: 0; }
   60% { transform: scale(1.2); opacity: 1; }
   100% { transform: scale(1); opacity: 1; }
+}
+
+/* Hover burbujeante de tarjeta */
+.form-box:hover {
+  transform: scale(1.03);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
 }
 
 .boton-regresa {
@@ -183,7 +209,7 @@ button:hover {
 </section>
 
 <section id="formulario">
-  <div class="form-box">
+  <div class="form-box" id="formBox">
     <h2 id="tipoVueloTitulo">Solicita tu vuelo</h2>
 
     <label for="origen">Origen</label>
@@ -229,28 +255,26 @@ function seleccionar(tipo) {
   const home = document.getElementById("home");
   const form = document.getElementById("formulario");
   const titulo = document.getElementById("tipoVueloTitulo");
+  const formBox = document.getElementById("formBox");
 
-  // Ocultar home con transición
   home.style.transition = "opacity 0.3s";
   home.style.opacity = 0;
   setTimeout(() => home.style.display = "none", 300);
 
-  // Mostrar formulario
   form.style.display = "flex";
-  setTimeout(() => form.style.opacity = 1, 50);
+  form.classList.add("active");
+  setTimeout(() => {
+    form.style.opacity = 1;
+    formBox.style.animation = "bubblePop 0.5s ease forwards";
 
-  // Cambiar título
+    const btnRegresa = document.querySelector(".boton-regresa");
+    btnRegresa.style.animation = "none";
+    setTimeout(() => btnRegresa.style.animation = "bubblePop 0.5s ease forwards", 50);
+  }, 50);
+
   titulo.textContent = tipo === "nacional" ? "Vuelo Nacional" : "Vuelo Internacional";
 
-  // Cargar aeropuertos
   cargarAeropuertos();
-
-  // Reiniciar animación del botón Regresa
-  const btnRegresa = document.querySelector(".boton-regresa");
-  btnRegresa.style.animation = "none";
-  setTimeout(() => {
-    btnRegresa.style.animation = "bubblePop 0.5s ease forwards";
-  }, 50);
 }
 
 function cargarAeropuertos() {
@@ -308,12 +332,14 @@ function enviarWhatsApp() {
 function regresarInicio() {
   const home = document.getElementById("home");
   const form = document.getElementById("formulario");
+  const formBox = document.getElementById("formBox");
 
-  // Ocultar formulario
   form.style.opacity = 0;
-  setTimeout(() => form.style.display = "none", 300);
+  setTimeout(() => {
+    form.style.display = "none";
+    form.classList.remove("active");
+  }, 300);
 
-  // Mostrar home con transición
   home.style.display = "flex";
   setTimeout(() => home.style.opacity = 1, 50);
 }
