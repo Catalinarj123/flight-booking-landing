@@ -142,10 +142,6 @@ section{
 
 .opcion.nacional{
   background-image:url("https://images.unsplash.com/photo-1529070538774-1843cb3265df");
-}
-
-/* ✨ NUEVO — iguala la animación de Nacional a Internacional */
-.opcion.nacional{
   transition: transform .35s ease, box-shadow .35s ease, filter .35s ease;
 }
 .opcion.nacional:hover{
@@ -215,6 +211,16 @@ button:first-of-type{
 }
 
 #tipoVueloTitulo{text-align:center;}
+
+/* VALIDACIÓN VISUAL */
+input.error, select.error{
+  border:2px solid #c8102e;
+  background:#fff5f5;
+}
+input.ok, select.ok{
+  border:2px solid #2ecc71;
+  background:#f3fff7;
+}
 
 @media (max-width:768px){
   body{overflow:auto;}
@@ -326,6 +332,28 @@ function regresarInicio(){
 }
 
 function enviarWhatsApp(){
+
+  const campos = [origen, destino, tipoViaje, pasajeros, fechaIda];
+  if(tipoViaje.value === "ida-regreso") campos.push(fechaRegreso);
+
+  let valido = true;
+
+  campos.forEach(c=>{
+    if(!c.value){
+      c.classList.add("error");
+      c.classList.remove("ok");
+      valido = false;
+    }else{
+      c.classList.remove("error");
+      c.classList.add("ok");
+    }
+  });
+
+  if(!valido){
+    alert("Por favor completa todos los campos antes de cotizar.");
+    return;
+  }
+
   const titulo =
     tipoSeleccionado==="internacional"
     ?"✈️ Cotización de vuelo Avianca Internacional"
