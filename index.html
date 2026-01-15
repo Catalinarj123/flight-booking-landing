@@ -185,49 +185,28 @@ button{
   cursor:pointer;
 }
 
-/* 🫧 BUBBLE iOS PREMIUM – SOLO BOTONES SEGUNDA VISTA */
+/* BUBBLE iOS */
 .form-box button{
-  position:relative;
-  transition:
-    transform .25s cubic-bezier(.22,1.28,.3,1),
-    box-shadow .25s cubic-bezier(.22,1.28,.3,1),
-    filter .25s ease;
+  transition:transform .25s cubic-bezier(.22,1.28,.3,1),
+             box-shadow .25s cubic-bezier(.22,1.28,.3,1);
   box-shadow:0 10px 22px rgba(0,0,0,.25);
-  will-change:transform;
 }
-
 .form-box button:hover{
   transform:translateY(-4px) scale(1.03);
   box-shadow:0 22px 48px rgba(0,0,0,.35);
 }
-
 .form-box button:active{
   transform:scale(.92);
   box-shadow:0 6px 14px rgba(0,0,0,.2);
-  filter:brightness(.96);
 }
-
 .form-box button:first-of-type{
   animation:bubbleBreath 3.6s ease-in-out infinite;
 }
-
 @keyframes bubbleBreath{
-  0%{
-    transform:scale(1);
-    box-shadow:0 10px 22px rgba(0,0,0,.25);
-  }
-  40%{
-    transform:scale(1.06);
-    box-shadow:0 28px 64px rgba(0,0,0,.45);
-  }
-  65%{
-    transform:scale(.98);
-    box-shadow:0 14px 30px rgba(0,0,0,.3);
-  }
-  100%{
-    transform:scale(1);
-    box-shadow:0 10px 22px rgba(0,0,0,.25);
-  }
+  0%{transform:scale(1);}
+  40%{transform:scale(1.06);}
+  65%{transform:scale(.98);}
+  100%{transform:scale(1);}
 }
 
 .footer{
@@ -287,18 +266,7 @@ button{
     </select>
 
     <label>Número de pasajeros</label>
-    <select id="pasajeros">
-      <option value="">Selecciona</option>
-      <option value="1">1 pasajero</option>
-      <option value="2">2 pasajeros</option>
-      <option value="3">3 pasajeros</option>
-      <option value="4">4 pasajeros</option>
-      <option value="5">5 pasajeros</option>
-      <option value="6">6 pasajeros</option>
-      <option value="7">7 pasajeros</option>
-      <option value="8">8 pasajeros</option>
-      <option value="9">9 pasajeros</option>
-    </select>
+    <select id="pasajeros"></select>
 
     <label>Fecha ida</label>
     <input type="date" id="fechaIda">
@@ -309,17 +277,20 @@ button{
     <button onclick="enviarWhatsApp()">COTIZA AHORA</button>
     <button onclick="regresarInicio()">← Regresa</button>
 
-    <div class="footer">Vuelos operados por AVIANCA AIRLINES.</div>
+    <div class="footer">Vuelos operados por AVIANCA AIRLINES</div>
   </div>
 </section>
 
 <script>
 setTimeout(()=>document.getElementById("splash").remove(),3600);
 
+let tipoSeleccionado="nacional";
+
 const aeropuertosNacionales=["Bogotá (BOG)","Medellín (MDE)","Cali (CLO)","Cartagena (CTG)","Barranquilla (BAQ)","Bucaramanga (BGA)","Santa Marta (SMR)","San Andrés (ADZ)","Pereira (PEI)","Neiva (NVA)"];
 const aeropuertosInternacionales=["Miami (MIA)","New York (JFK)","Los Angeles (LAX)","Madrid (MAD)","Paris (CDG)","Barcelona (BCN)","Londres (LHR)"];
 
 function seleccionar(tipo){
+  tipoSeleccionado=tipo;
   home.classList.add("oculto");
   formulario.classList.add("activo");
   tipoVueloTitulo.textContent=tipo==="nacional"?"Vuelo Nacional":"Vuelo Internacional";
@@ -329,6 +300,8 @@ function seleccionar(tipo){
 function cargar(lista){
   origen.innerHTML='<option value="">Origen</option>';
   destino.innerHTML='<option value="">Destino</option>';
+  pasajeros.innerHTML='<option value="">Selecciona</option>';
+  for(let i=1;i<=9;i++) pasajeros.add(new Option(i+" pasajero"+(i>1?"s":""),i));
   lista.forEach(a=>{
     origen.add(new Option(a,a));
     destino.add(new Option(a,a));
@@ -346,28 +319,20 @@ function regresarInicio(){
 }
 
 function enviarWhatsApp(){
-  const origenVal=origen.value;
-  const destinoVal=destino.value;
-  const tipoViajeVal=tipoViaje.value;
-  const pasajerosVal=pasajeros.value;
-  const fechaIdaVal=fechaIda.value;
-  const fechaRegresoVal=fechaRegreso.value;
-
-  if(!origenVal||!destinoVal||!tipoViajeVal||!pasajerosVal||!fechaIdaVal){
-    alert("Completa todos los campos");
-    return;
-  }
+  const titulo = tipoSeleccionado==="internacional"
+    ? "✈️ Cotización de vuelo Avianca Internacional"
+    : "✈️ Cotización de vuelo Avianca";
 
   let mensaje =
-`✈️ Cotización de vuelo Avianca
-Origen: ${origenVal}
-Destino: ${destinoVal}
-Tipo de viaje: ${tipoViajeVal}
-Pasajeros: ${pasajerosVal}
-Fecha ida: ${fechaIdaVal}`;
+`${titulo}
+Origen: ${origen.value}
+Destino: ${destino.value}
+Tipo de viaje: ${tipoViaje.value}
+Pasajeros: ${pasajeros.value}
+Fecha ida: ${fechaIda.value}`;
 
-  if(tipoViajeVal==="ida-regreso"){
-    mensaje+=`\nFecha regreso: ${fechaRegresoVal}`;
+  if(tipoViaje.value==="ida-regreso"){
+    mensaje+=`\nFecha regreso: ${fechaRegreso.value}`;
   }
 
   const url=`https://wa.me/573016791639?text=${encodeURIComponent(mensaje)}`;
