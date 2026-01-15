@@ -100,7 +100,7 @@ section {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Animación estilo burbuja para botones */
+/* Animación estilo burbuja para botón Regresa */
 @keyframes bubblePop {
   0% { transform: scale(0.5); opacity: 0; }
   60% { transform: scale(1.2); opacity: 1; }
@@ -230,16 +230,27 @@ function seleccionar(tipo) {
   const form = document.getElementById("formulario");
   const titulo = document.getElementById("tipoVueloTitulo");
 
+  // Ocultar home con transición
   home.style.transition = "opacity 0.3s";
   home.style.opacity = 0;
   setTimeout(() => home.style.display = "none", 300);
 
+  // Mostrar formulario
   form.style.display = "flex";
   setTimeout(() => form.style.opacity = 1, 50);
 
+  // Cambiar título
   titulo.textContent = tipo === "nacional" ? "Vuelo Nacional" : "Vuelo Internacional";
 
+  // Cargar aeropuertos
   cargarAeropuertos();
+
+  // Reiniciar animación del botón Regresa
+  const btnRegresa = document.querySelector(".boton-regresa");
+  btnRegresa.style.animation = "none";
+  setTimeout(() => {
+    btnRegresa.style.animation = "bubblePop 0.5s ease forwards";
+  }, 50);
 }
 
 function cargarAeropuertos() {
