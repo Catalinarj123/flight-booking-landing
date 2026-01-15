@@ -87,20 +87,19 @@ section{
   50%{transform:translateY(-4px);}
   100%{transform:translateY(0);}
 }
-
 @keyframes fadeDown{
   to{opacity:1;transform:none;}
 }
 
 /* OPTIONS */
 .opciones{display:flex;gap:30px;justify-content:center;}
+
 .opcion{
   width:220px;
   height:320px;
   border-radius:20px;
   background:
-    linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.75)),
-    url("https://images.unsplash.com/photo-1529070538774-1843cb3265df");
+    linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.75));
   background-size:cover;
   background-position:center;
   color:#fff;
@@ -110,6 +109,15 @@ section{
   cursor:pointer;
   transition:.4s;
 }
+
+.opcion.nacional{
+  background-image:url("https://images.unsplash.com/photo-1529070538774-1843cb3265df");
+}
+
+.opcion.internacional{
+  background-image:url("https://images.unsplash.com/photo-1464037866556-6812c9d1c72e");
+}
+
 .opcion:hover{transform:translateY(-8px) scale(1.04);}
 
 /* FORM BOX */
@@ -145,6 +153,7 @@ button{
   margin-top:20px;
   cursor:pointer;
 }
+
 .footer{
   margin-top:15px;
   font-size:12px;
@@ -152,11 +161,9 @@ button{
   text-align:center;
 }
 
-#tipoVueloTitulo{
-  text-align:center;
-}
+#tipoVueloTitulo{text-align:center;}
 
-/* 🔥 ANIMACIÓN SOLO BOTONES SEGUNDA VISTA */
+/* BOTONES */
 .form-box button{
   transition:transform .25s ease, box-shadow .25s ease;
 }
@@ -173,67 +180,13 @@ button{
   100%{transform:scale(1);}
 }
 
-/* ===========================
-   OPTIMIZACIÓN MOBILE PREMIUM
-   =========================== */
+/* MOBILE */
 @media (max-width: 768px){
-
-  body{
-    overflow:auto;
-  }
-
-  section{
-    padding:24px 16px;
-  }
-
-  .logo-img{
-    width:90%;
-    max-width:380px;
-    margin-bottom:10px;
-  }
-
-  .slogan{
-    font-size:17px;
-    margin-bottom:22px;
-  }
-
-  .opciones{
-    flex-direction:column;
-    gap:20px;
-    width:100%;
-    max-width:360px;
-  }
-
-  .opcion{
-    width:100%;
-    height:200px;
-    font-size:20px;
-    border-radius:22px;
-  }
-
-  .form-box{
-    max-width:100%;
-    padding:22px 20px;
-  }
-
-  h2{
-    font-size:22px;
-  }
-
-  label{
-    font-size:14px;
-  }
-
-  select,
-  input,
-  button{
-    font-size:15px;
-  }
-
-  .footer{
-    font-size:11px;
-    margin-top:18px;
-  }
+  body{overflow:auto;}
+  section{padding:24px 16px;}
+  .logo-img{width:90%;max-width:380px;}
+  .opciones{flex-direction:column;gap:20px;width:100%;max-width:360px;}
+  .opcion{width:100%;height:200px;}
 }
 </style>
 </head>
@@ -245,8 +198,8 @@ button{
   <div class="slogan">¡Aquí comienza tu viaje!</div>
 
   <div class="opciones">
-    <button class="opcion" onclick="seleccionar('nacional')">Vuelos Nacionales</button>
-    <button class="opcion" onclick="seleccionar('internacional')">Vuelos Internacionales</button>
+    <button class="opcion nacional" onclick="seleccionar('nacional')">Vuelos Nacionales</button>
+    <button class="opcion internacional" onclick="seleccionar('internacional')">Vuelos Internacionales</button>
   </div>
 </section>
 
@@ -302,8 +255,8 @@ const aeropuertosNacionales=[
 ];
 
 const aeropuertosInternacionales=[
-"Miami (MIA)","New York (JFK)","Los Angeles (LAX)","Madrid (MAD)",
-"Paris (CDG)","Barcelona (BCN)","Londres (LHR)"
+"Miami (MIA)","New York (JFK)","Los Angeles (LAX)",
+"Madrid (MAD)","Paris (CDG)","Barcelona (BCN)","Londres (LHR)"
 ];
 
 function seleccionar(tipo){
