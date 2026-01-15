@@ -76,7 +76,7 @@ section{
   pointer-events:none;
 }
 
-/* LOGO */
+/* LOGO (MISMO PARA SPLASH Y HOME) */
 .logo-img{
   width:560px;
   max-width:95%;
@@ -141,16 +141,18 @@ section{
 
 .opcion.nacional{
   background-image:url("https://images.unsplash.com/photo-1529070538774-1843cb3265df");
+  animation:none; /* ← QUITA EL MOVIMIENTO AUTOMÁTICO */
 }
+
 .opcion.internacional{
   background-image:url("https://images.unsplash.com/photo-1464037866556-6812c9d1c72e");
 }
 
-/* EFECTO IGUAL PARA AMBAS */
+/* MISMA ANIMACIÓN PARA AMBAS */
 .opcion:hover{
   transform:translateY(-14px) scale(1.04);
   box-shadow:0 40px 80px rgba(0,0,0,.8);
-  filter:brightness(1.15) saturate(1.1);
+  filter: brightness(1.15) saturate(1.1);
 }
 
 /* FORM */
@@ -208,6 +210,7 @@ button:first-of-type{
 
 #tipoVueloTitulo{text-align:center;}
 
+/* VALIDACIÓN VISUAL */
 input.error, select.error{
   border:2px solid #c8102e;
   background:#fff5f5;
