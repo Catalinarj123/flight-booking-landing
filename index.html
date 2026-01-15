@@ -131,7 +131,7 @@ function cargarAeropuertos(tipo){
   o.innerHTML='<option value="">Origen</option>';
   d.innerHTML='<option value="">Destino</option>';
   let lista=tipo==="nacional"?aeropuertosNacionales:
-    [...aeropuertosNacionales,...aeropuertosInternacionales.map(a=>${a.flag} ${a.name})];
+    [...aeropuertosNacionales,...aeropuertosInternacionales.map(a=>`${a.flag} ${a.name}`)];
   lista.forEach(a=>{
     o.appendChild(new Option(a,a));
     d.appendChild(new Option(a,a));
@@ -152,9 +152,9 @@ function enviarWhatsApp(){
   const fr=document.getElementById("fechaRegreso").value;
   const tv=document.getElementById("tipoViaje").value;
   if(!o||!d||!fi||!tv){alert("Completa todos los campos");return;}
-  let msg=✈️ Solicitud de vuelo Avianca%0AOrigen: ${o}%0ADestino: ${d}%0AFecha ida: ${fi};
-  if(tv==="ida-regreso")msg+=%0AFecha regreso: ${fr};
-  window.open(https://wa.me/573016791639?text=${msg},"_blank");
+  let msg=`✈️ Solicitud de vuelo Avianca%0AOrigen: ${o}%0ADestino: ${d}%0AFecha ida: ${fi}`;
+  if(tv==="ida-regreso")msg+=`%0AFecha regreso: ${fr}`;
+  window.open(`https://wa.me/573016791639?text=${msg}`,"_blank");
 }
 
 function regresarInicio(){
