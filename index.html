@@ -95,35 +95,42 @@ section{
 /* OPTIONS */
 .opciones{display:flex;gap:30px;justify-content:center;}
 .opcion{
-  width:220px;height:320px;border-radius:20px;
-  color:#fff;font-size:22px;font-weight:600;
-  border:none;cursor:pointer;
+  width:220px;
+  height:320px;
+  border-radius:20px;
+  color:#fff;
+  font-size:22px;
+  font-weight:600;
+  border:none;
+  cursor:pointer;
+  background-size:cover;
+  background-position:center;
   transition:.4s;
 }
 
-/* ✅ IMÁGENES DE AEROPUERTOS REALES */
+/* ✈️ AVIONES COMERCIALES EN VUELO */
 .opcion.nacional{
   background:
-    linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.75)),
-    url("https://images.unsplash.com/photo-1582225373825-0dc6b0e0f8e3");
-  background-size:cover;
-  background-position:center;
+    linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.8)),
+    url("https://images.unsplash.com/photo-1529070538774-1843cb3265df");
 }
 
 .opcion.internacional{
   background:
-    linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.75)),
-    url("https://images.unsplash.com/photo-1506452819137-0422416856b8");
-  background-size:cover;
-  background-position:center;
+    linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.8)),
+    url("https://images.unsplash.com/photo-1464037866556-6812c9d1c72e");
 }
 
 .opcion:hover{transform:translateY(-8px) scale(1.04);}
 
 /* FORM BOX */
 .form-box{
-  background:#fff;color:#000;border-radius:22px;
-  padding:30px;max-width:420px;width:100%;
+  background:#fff;
+  color:#000;
+  border-radius:22px;
+  padding:30px;
+  max-width:420px;
+  width:100%;
   animation:formPop .7s ease forwards;
 }
 
@@ -135,8 +142,11 @@ section{
 
 label{display:block;margin-top:12px;}
 select,input,button{
-  width:100%;padding:14px;margin-top:6px;
-  border-radius:12px;border:1px solid #ccc;
+  width:100%;
+  padding:14px;
+  margin-top:6px;
+  border-radius:12px;
+  border:1px solid #ccc;
 }
 
 button{background:#c8102e;color:#fff;border:none;margin-top:20px;cursor:pointer;}
