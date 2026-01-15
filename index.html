@@ -170,7 +170,7 @@ button:hover {
 
 <section id="formulario">
   <div class="form-box">
-    <h2>Solicita tu vuelo</h2>
+    <h2 id="tipoVueloTitulo">Solicita tu vuelo</h2>
 
     <label for="origen">Origen</label>
     <select id="origen"></select>
@@ -198,6 +198,7 @@ button:hover {
 </section>
 
 <script>
+// Listas de aeropuertos
 const aeropuertosNacionales = [
  "Bogotá (BOG)","Medellín (MDE)","Cali (CLO)","Cartagena (CTG)",
  "Barranquilla (BAQ)","Pereira (PEI)","Santa Marta (SMR)",
@@ -213,13 +214,19 @@ const aeropuertosInternacionales = [
 function seleccionar(tipo) {
   const home = document.getElementById("home");
   const form = document.getElementById("formulario");
+  const titulo = document.getElementById("tipoVueloTitulo");
 
+  // Animación de transición
   home.style.opacity = 0;
   setTimeout(() => home.style.display = "none", 600);
 
   form.style.display = "flex";
   setTimeout(() => form.style.opacity = 1, 50);
 
+  // Cambiar título según la opción
+  titulo.textContent = tipo === "nacional" ? "Vuelo Nacional" : "Vuelo Internacional";
+
+  // Cargar aeropuertos según opción
   cargarAeropuertos(tipo);
 }
 
@@ -230,7 +237,12 @@ function cargarAeropuertos(tipo) {
   origen.innerHTML = '<option value="">Origen</option>';
   destino.innerHTML = '<option value="">Destino</option>';
 
-  const lista = tipo === "nacional" ? aeropuertosNacionales : aeropuertosInternacionales;
+  let lista;
+  if (tipo === "nacional") {
+    lista = aeropuertosNacionales;
+  } else { // internacional muestra todos
+    lista = [...aeropuertosNacionales, ...aeropuertosInternacionales];
+  }
 
   lista.forEach(a => {
     const optionO = document.createElement('option');
@@ -278,6 +290,3 @@ function enviarWhatsApp() {
 
 </body>
 </html>
-✅ Ventajas de esta versión:
-
-M
