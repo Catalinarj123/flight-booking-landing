@@ -28,7 +28,7 @@ section {
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
-/* Fondo unificado */
+/* Fondo unificado para ambas secciones */
 #home, #formulario {
   background: linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.7)),
   url("https://images.unsplash.com/photo-1436491865332-7a61a109cc05");
@@ -92,16 +92,12 @@ section {
   padding: 30px;
   width: 100%;
   max-width: 420px;
-  transform: scale(0.8);
-  opacity: 0;
+  animation: fadeUp 0.6s ease;
 }
 
-/* Animación tipo burbuja */
-@keyframes bubbleUp {
-  0% { transform: scale(0.8); opacity: 0; }
-  60% { transform: scale(1.05); opacity: 1; }
-  80% { transform: scale(0.97); }
-  100% { transform: scale(1); }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 label {
@@ -174,7 +170,7 @@ button:hover {
 
 <!-- Segunda vista -->
 <section id="formulario">
-  <div class="form-box" id="formBox">
+  <div class="form-box">
     <h2 id="tipoVueloTitulo">Solicita tu vuelo</h2>
 
     <label for="origen">Origen</label>
@@ -222,18 +218,13 @@ function seleccionar(tipo) {
   const home = document.getElementById("home");
   const form = document.getElementById("formulario");
   const titulo = document.getElementById("tipoVueloTitulo");
-  const formBox = document.getElementById("formBox");
 
   // Transición suave
   home.style.opacity = 0;
   setTimeout(() => home.style.display = "none", 600);
 
   form.style.display = "flex";
-  setTimeout(() => {
-    form.style.opacity = 1;
-    // Animación tipo burbuja
-    formBox.style.animation = "bubbleUp 0.6s ease forwards";
-  }, 50);
+  setTimeout(() => form.style.opacity = 1, 50);
 
   // Cambiar título según selección
   titulo.textContent = tipo === "nacional" ? "Vuelo Nacional" : "Vuelo Internacional";
@@ -263,7 +254,7 @@ function cargarAeropuertos() {
   });
 }
 
-// Mostrar u ocultar fecha de regreso
+// Función para mostrar/ocultar fecha de regreso
 function cambiarFechas() {
   const tipo = document.getElementById("tipoViaje").value;
   const fechaRegreso = document.getElementById("fechaRegreso");
@@ -278,7 +269,7 @@ function cambiarFechas() {
   }
 }
 
-// Enviar WhatsApp
+// Función para enviar mensaje a WhatsApp
 function enviarWhatsApp() {
   const origen = document.getElementById("origen").value;
   const destino = document.getElementById("destino").value;
@@ -297,21 +288,16 @@ function enviarWhatsApp() {
   window.open(`https://wa.me/573016791639?text=${msg}`, "_blank");
 }
 
-// Volver al inicio
+// Función para volver a la primera vista
 function volverInicio() {
   const home = document.getElementById("home");
   const form = document.getElementById("formulario");
-  const formBox = document.getElementById("formBox");
 
-  // Ocultar formulario
+  // Ocultar formulario con transición
   form.style.opacity = 0;
-  setTimeout(() => {
-    form.style.display = "none";
-    // Reset animación para la próxima vez
-    formBox.style.animation = "none";
-  }, 600);
+  setTimeout(() => form.style.display = "none", 600);
 
-  // Mostrar home
+  // Mostrar home con transición
   home.style.display = "flex";
   setTimeout(() => home.style.opacity = 1, 50);
 }
