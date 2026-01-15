@@ -257,7 +257,10 @@ const aeropuertosInternacionales = [
  "Buenos Aires (EZE)","Santiago (SCL)","Panamá (PTY)"
 ];
 
+let tipoSeleccionado = "";
+
 function seleccionar(tipo) {
+  tipoSeleccionado = tipo; // Guardar selección
   const home = document.getElementById("home");
   const form = document.getElementById("formulario");
   const titulo = document.getElementById("tipoVueloTitulo");
@@ -284,17 +287,23 @@ function seleccionar(tipo) {
 
   titulo.textContent = tipo === "nacional" ? "Vuelo Nacional" : "Vuelo Internacional";
 
-  cargarAeropuertos();
+  cargarAeropuertos(tipo);
 }
 
-function cargarAeropuertos() {
+// Cargar aeropuertos según tipo seleccionado
+function cargarAeropuertos(tipo) {
   const origen = document.getElementById("origen");
   const destino = document.getElementById("destino");
 
   origen.innerHTML = '<option value="">Origen</option>';
   destino.innerHTML = '<option value="">Destino</option>';
 
-  const lista = [...aeropuertosNacionales, ...aeropuertosInternacionales];
+  let lista = [];
+  if(tipo === "nacional") {
+    lista = aeropuertosNacionales;
+  } else {
+    lista = [...aeropuertosNacionales, ...aeropuertosInternacionales];
+  }
 
   lista.forEach(a => {
     const optionO = document.createElement('option');
