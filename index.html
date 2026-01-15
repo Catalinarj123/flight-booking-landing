@@ -31,17 +31,18 @@ section{
 }
 
 #home,#formulario{
-  background:linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.7)),
-  url("https://images.unsplash.com/photo-1436491865332-7a61a109cc05");
+  background:
+    linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.85)),
+    url("https://images.unsplash.com/photo-1436491865332-7a61a109cc05");
   background-size:cover;
   background-position:center;
 }
 
-/* HOME */
+/* ================= HOME ================= */
 #home{
   flex-direction:column;
   text-align:center;
-  transform:translateY(-60px);
+  transform:translateY(-40px);
   z-index:2;
 }
 #home.oculto{
@@ -50,23 +51,11 @@ section{
   pointer-events:none;
 }
 
-/* FORM */
-#formulario{
-  opacity:0;
-  transform:translateY(40px) scale(.96);
-  pointer-events:none;
-}
-#formulario.activo{
-  opacity:1;
-  transform:translateY(0) scale(1);
-  pointer-events:auto;
-}
-
 /* LOGO */
 .logo-img{
-  width:540px;
+  width:560px;
   max-width:95%;
-  margin-bottom:2px;
+  margin-bottom:6px;
   opacity:0;
   transform:translateY(-30px);
   animation:fadeDown 1s ease forwards .3s;
@@ -75,7 +64,7 @@ section{
 /* SLOGAN */
 .slogan{
   font-size:20px;
-  margin-bottom:30px;
+  margin-bottom:40px;
   opacity:0;
   animation:
     fadeDown 1s ease forwards .6s,
@@ -87,50 +76,82 @@ section{
   50%{transform:translateY(-4px);}
   100%{transform:translateY(0);}
 }
-
 @keyframes fadeDown{
   to{opacity:1;transform:none;}
 }
 
-/* OPTIONS */
-.opciones{display:flex;gap:30px;justify-content:center;}
+/* ================= TARJETAS ================= */
+.opciones{
+  display:flex;
+  gap:36px;
+  justify-content:center;
+}
+
 .opcion{
-  width:220px;
-  height:320px;
-  border-radius:20px;
+  width:240px;
+  height:340px;
+  border-radius:26px;
+  border:none;
+  cursor:pointer;
   color:#fff;
   font-size:22px;
   font-weight:600;
-  border:none;
-  cursor:pointer;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  padding:28px;
   background-size:cover;
   background-position:center;
-  transition:.4s;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 25px 60px rgba(0,0,0,.65);
+  transition:transform .45s cubic-bezier(.2,.8,.2,1),
+             box-shadow .45s ease;
 }
 
-/* ✈️ AVIONES COMERCIALES EN VUELO */
+.opcion::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to top, rgba(0,0,0,.8), rgba(0,0,0,.25));
+}
+
+.opcion span{
+  position:relative;
+  z-index:1;
+  text-shadow:0 6px 18px rgba(0,0,0,.7);
+}
+
+/* AVIONES COMERCIALES (AMBOS) */
 .opcion.nacional{
-  background:
-    linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.8)),
-    url("https://images.unsplash.com/photo-1529070538774-1843cb3265df");
+  background-image:url("https://images.unsplash.com/photo-1529070538774-1843cb3265df");
 }
-
 .opcion.internacional{
-  background:
-    linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.8)),
-    url("https://images.unsplash.com/photo-1464037866556-6812c9d1c72e");
+  background-image:url("https://images.unsplash.com/photo-1464037866556-6812c9d1c72e");
 }
 
-.opcion:hover{transform:translateY(-8px) scale(1.04);}
+.opcion:hover{
+  transform:translateY(-14px) scale(1.04);
+  box-shadow:0 40px 80px rgba(0,0,0,.8);
+}
 
-/* FORM BOX */
+/* ================= FORM ================= */
+#formulario{
+  opacity:0;
+  transform:translateY(40px) scale(.96);
+  pointer-events:none;
+}
+#formulario.activo{
+  opacity:1;
+  transform:translateY(0) scale(1);
+  pointer-events:auto;
+}
+
 .form-box{
-  background:#fff;
-  color:#000;
+  background:#fff;color:#000;
   border-radius:22px;
   padding:30px;
-  max-width:420px;
-  width:100%;
+  max-width:420px;width:100%;
   animation:formPop .7s ease forwards;
 }
 
@@ -142,11 +163,8 @@ section{
 
 label{display:block;margin-top:12px;}
 select,input,button{
-  width:100%;
-  padding:14px;
-  margin-top:6px;
-  border-radius:12px;
-  border:1px solid #ccc;
+  width:100%;padding:14px;margin-top:6px;
+  border-radius:12px;border:1px solid #ccc;
 }
 
 button{background:#c8102e;color:#fff;border:none;margin-top:20px;cursor:pointer;}
@@ -180,8 +198,12 @@ button{background:#c8102e;color:#fff;border:none;margin-top:20px;cursor:pointer;
   <div class="slogan">¡Aquí comienza tu viaje!</div>
 
   <div class="opciones">
-    <button class="opcion nacional" onclick="seleccionar('nacional')">Vuelos Nacionales</button>
-    <button class="opcion internacional" onclick="seleccionar('internacional')">Vuelos Internacionales</button>
+    <button class="opcion nacional" onclick="seleccionar('nacional')">
+      <span>Vuelos Nacionales</span>
+    </button>
+    <button class="opcion internacional" onclick="seleccionar('internacional')">
+      <span>Vuelos Internacionales</span>
+    </button>
   </div>
 </section>
 
@@ -237,8 +259,8 @@ const aeropuertosNacionales=[
 ];
 
 const aeropuertosInternacionales=[
-"Miami (MIA)","New York (JFK)","Los Angeles (LAX)","Madrid (MAD)",
-"Paris (CDG)","Barcelona (BCN)","Londres (LHR)"
+"Miami (MIA)","New York (JFK)","Los Angeles (LAX)",
+"Madrid (MAD)","Paris (CDG)","Barcelona (BCN)","Londres (LHR)"
 ];
 
 function seleccionar(tipo){
