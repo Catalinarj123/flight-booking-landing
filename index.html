@@ -242,20 +242,24 @@ function seleccionar(tipo) {
   const titulo = document.getElementById("tipoVueloTitulo");
   const formBox = document.getElementById("formBox");
 
-  // Ocultar home con transición
+  // Ocultar home
   home.style.opacity = 0;
   setTimeout(() => home.style.display = "none", 600);
 
-  // Mostrar formulario
+  // Mostrar formulario de forma confiable
   form.style.display = "flex";
+  form.style.opacity = 0; // reset opacity
+  formBox.style.animation = "none"; // reset animación
+  form.offsetHeight; // fuerza reflow
   setTimeout(() => {
     form.style.opacity = 1;
     formBox.style.animation = "bubbleUp 0.6s ease forwards";
-  }, 50);
+  }, 20);
 
+  // Cambiar título según tipo de vuelo
   titulo.textContent = tipo === "nacional" ? "Vuelo Nacional" : "Vuelo Internacional";
 
-  // Cargar lista completa de aeropuertos
+  // Cargar aeropuertos
   cargarAeropuertos();
 }
 
@@ -307,9 +311,13 @@ function volverInicio() {
   const home = document.getElementById("home");
   const form = document.getElementById("formulario");
   const formBox = document.getElementById("formBox");
+
+  // Ocultar formulario
   formBox.style.animation = "none";
   form.style.opacity = 0;
   setTimeout(() => form.style.display = "none", 600);
+
+  // Mostrar home
   home.style.display = "flex";
   setTimeout(() => home.style.opacity = 1, 50);
 }
