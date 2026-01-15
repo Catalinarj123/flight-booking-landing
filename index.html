@@ -5,9 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Avianca Travel Assistance</title>
 <meta name="description" content="Cotiza vuelos nacionales e internacionales de Avianca de manera rápida y sencilla.">
+
 <style>
-*{box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;margin:0;padding:0;}
-body{background:#000;color:#fff;overflow:hidden;}
+*{
+  box-sizing:border-box;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;
+  margin:0;
+  padding:0;
+}
+
+body{
+  background:#000;
+  color:#fff;
+  overflow:hidden;
+}
 
 section{
   min-height:100vh;
@@ -28,18 +39,21 @@ section{
   background-position:center;
 }
 
+/* ===== HOME ===== */
 #home{
   flex-direction:column;
   text-align:center;
+  transform:translateY(-60px); /* SUBE TODO EL BLOQUE */
   z-index:2;
 }
 
 #home.oculto{
   opacity:0;
-  transform:translateY(-40px);
+  transform:translateY(-120px);
   pointer-events:none;
 }
 
+/* ===== FORM ===== */
 #formulario{
   opacity:0;
   transform:translateY(40px) scale(.96);
@@ -52,31 +66,41 @@ section{
   pointer-events:auto;
 }
 
-/* ====== BLOQUE COMPACTO SUPERIOR ====== */
+/* ===== LOGO ===== */
 .logo-img{
-  width:520px;
+  width:540px;
   max-width:95%;
-  margin-bottom:4px; /* REDUCIDO AL MÍNIMO */
+  margin-bottom:2px;
   opacity:0;
   transform:translateY(-30px);
   animation:fadeDown 1s ease forwards .3s;
 }
 
+/* ===== SLOGAN ===== */
 .slogan{
   font-size:20px;
   font-style:italic;
   line-height:1.2;
-  margin-top:0;       /* PEGADO AL LOGO */
-  margin-bottom:32px; /* SOLO separa del bloque de tarjetas */
+  margin-bottom:30px;
   opacity:0;
-  animation:fadeDown 1s ease forwards .6s;
+  animation:
+    fadeDown 1s ease forwards .6s,
+    sloganFloat 4s ease-in-out infinite 1.8s;
 }
-/* ===================================== */
 
+/* MICRO ANIMACIÓN PREMIUM */
+@keyframes sloganFloat{
+  0%{transform:translateY(0);opacity:.85;}
+  50%{transform:translateY(-4px);opacity:1;}
+  100%{transform:translateY(0);opacity:.85;}
+}
+
+/* ANIMACIÓN ENTRADA */
 @keyframes fadeDown{
   to{opacity:1;transform:none;}
 }
 
+/* ===== OPCIONES ===== */
 .opciones{
   display:flex;
   gap:30px;
@@ -106,6 +130,7 @@ section{
   box-shadow:0 25px 50px rgba(0,0,0,.6);
 }
 
+/* ===== FORM BOX ===== */
 .form-box{
   background:#fff;
   color:#000;
@@ -130,6 +155,7 @@ select,input,button{
   border-radius:12px;
   border:1px solid #ccc;
 }
+
 button{
   background:#c8102e;
   color:#fff;
@@ -137,6 +163,7 @@ button{
   margin-top:20px;
   cursor:pointer;
 }
+
 .footer{
   margin-top:15px;
   font-size:12px;
@@ -188,7 +215,7 @@ button{
 </section>
 
 <script>
-/* JS intacto, sin cambios */
+/* JS exactamente igual al que ya tenías */
 </script>
 
 </body>
