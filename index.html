@@ -11,32 +11,55 @@ body{background:#000;color:#fff;}
 section{min-height:100vh;display:flex;justify-content:center;align-items:center;padding:40px;position:relative;transition:opacity .6s ease, transform .6s ease;}
 #home,#formulario{background:linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.7)),url("https://images.unsplash.com/photo-1436491865332-7a61a109cc05");background-size:cover;background-position:center;}
 #home{flex-direction:column;text-align:center;opacity:1;}
-.logo{font-size:60px;font-weight:700;color:#c8102e;margin-bottom:10px;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;text-transform:uppercase;letter-spacing:2px;opacity:0;transform:translateY(-30px);animation:fadeDown 1s ease forwards 0.3s;}
+
+.logo-img{
+  width:320px;
+  max-width:90%;
+  margin-bottom:20px;
+  opacity:0;
+  transform:translateY(-30px);
+  animation:fadeDown 1s ease forwards 0.3s;
+}
+
 .slogan{font-size:20px;font-weight:400;color:#fff;margin-bottom:40px;font-style:italic;opacity:0;transform:translateY(-20px);animation:fadeDown 1s ease forwards 0.6s;}
+
 @keyframes fadeDown{
   0%{opacity:0;transform:translateY(-30px);}
   100%{opacity:1;transform:translateY(0);}
 }
+
 .opciones{display:flex;gap:30px;flex-wrap:wrap;justify-content:center;}
 .opcion{width:220px;height:320px;border-radius:20px;display:flex;align-items:flex-end;justify-content:center;padding:20px;font-size:22px;font-weight:600;cursor:pointer;border:none;color:#fff;background:linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.7));transition:transform .3s ease,box-shadow .3s ease;}
 .opcion:hover{transform:scale(1.05);box-shadow:0 20px 40px rgba(0,0,0,.6);}
+
 #formulario{display:none;justify-content:center;align-items:center;opacity:0;}
 .form-box{background:#fff;color:#000;border-radius:20px;padding:30px;width:100%;max-width:420px;transform:scale(0.5);opacity:0;transition:transform .3s ease,opacity .3s ease;}
-@keyframes bubblePop{0%{transform:scale(0.5);opacity:0}60%{transform:scale(1.2);opacity:1}100%{transform:scale(1);opacity:1}}
+
+@keyframes bubblePop{
+  0%{transform:scale(0.5);opacity:0}
+  60%{transform:scale(1.2);opacity:1}
+  100%{transform:scale(1);opacity:1}
+}
+
 .boton-regresa{background:#555;margin-top:10px;color:#fff;border:none;cursor:pointer;border-radius:12px;padding:12px;font-weight:600;animation:bubblePop .5s ease forwards;transition:transform .2s ease,box-shadow .2s ease;}
 .boton-regresa:hover{transform:scale(1.05);box-shadow:0 8px 20px rgba(0,0,0,0.4);}
+
 label{display:block;margin-top:12px;font-weight:500;color:#000;}
 select,input,button{width:100%;padding:14px;margin-top:6px;border-radius:12px;border:1px solid #ccc;font-size:16px;}
 button{background:#c8102e;color:#fff;border:none;cursor:pointer;margin-top:20px;}
 button:hover{background:#a00d25;}
 .footer{margin-top:15px;font-size:12px;text-align:center;color:#666;}
-@media(max-width:600px){.opciones{flex-direction:column;gap:20px;}.opcion{width:100%;height:250px;}}
+
+@media(max-width:600px){
+  .opciones{flex-direction:column;gap:20px;}
+  .opcion{width:100%;height:250px;}
+}
 </style>
 </head>
 <body>
 
 <section id="home">
-  <div class="logo">AVIANCA AIRLINES®</div>
+  <img src="logo-avianca-lat.png" alt="AVIANCA-LAT" class="logo-img">
   <div class="slogan">Tu viaje empieza aquí</div>
   <div class="opciones">
     <button class="opcion" onclick="seleccionar('nacional')">Vuelos Nacionales</button>
@@ -75,7 +98,6 @@ button:hover{background:#a00d25;}
 </section>
 
 <script>
-// Aeropuertos Avianca
 const aeropuertosNacionales = [
   "Bogotá (BOG)","Medellín (MDE)","Cali (CLO)","Cartagena (CTG)",
   "Barranquilla (BAQ)","Bucaramanga (BGA)","Santa Marta (SMR)",
@@ -87,10 +109,6 @@ const aeropuertosInternacionales = [
   {name:"New York (JFK)",flag:"🇺🇸"},
   {name:"Los Angeles (LAX)",flag:"🇺🇸"},
   {name:"San Francisco (SFO)",flag:"🇺🇸"},
-  {name:"Fort Lauderdale (FLL)",flag:"🇺🇸"},
-  {name:"Houston (IAH)",flag:"🇺🇸"},
-  {name:"Dallas‑Fort Worth (DFW)",flag:"🇺🇸"},
-  {name:"Boston (BOS)",flag:"🇺🇸"},
   {name:"Madrid (MAD)",flag:"🇪🇸"},
   {name:"Paris (CDG)",flag:"🇫🇷"},
   {name:"Barcelona (BCN)",flag:"🇪🇸"},
@@ -98,46 +116,33 @@ const aeropuertosInternacionales = [
 ];
 
 function seleccionar(tipo){
-  const home = document.getElementById("home");
-  const form = document.getElementById("formulario");
-  const titulo = document.getElementById("tipoVueloTitulo");
-  const formBox = document.getElementById("formBox");
-
-  home.style.opacity=0;
-  setTimeout(()=>home.style.display="none",300);
-
-  form.style.display="flex";
-  setTimeout(()=>{
-    form.style.opacity=1;
-    formBox.style.animation="bubblePop .5s ease forwards";
-  },50);
-
-  titulo.textContent = tipo==="nacional" ? "Vuelo Nacional" : "Vuelo Internacional";
+  document.getElementById("home").style.opacity=0;
+  setTimeout(()=>document.getElementById("home").style.display="none",300);
+  document.getElementById("formulario").style.display="flex";
+  setTimeout(()=>document.getElementById("formulario").style.opacity=1,50);
+  document.getElementById("tipoVueloTitulo").textContent =
+    tipo==="nacional"?"Vuelo Nacional":"Vuelo Internacional";
   cargarAeropuertos(tipo);
 }
 
 function cargarAeropuertos(tipo){
-  const origen=document.getElementById("origen");
-  const destino=document.getElementById("destino");
-  origen.innerHTML='<option value="">Origen</option>';
-  destino.innerHTML='<option value="">Destino</option>';
-
-  let lista = tipo==="nacional"
-      ? aeropuertosNacionales
-      : [...aeropuertosNacionales, ...aeropuertosInternacionales.map(a=>`${a.flag} ${a.name}`)];
-
+  const o=document.getElementById("origen");
+  const d=document.getElementById("destino");
+  o.innerHTML='<option value="">Origen</option>';
+  d.innerHTML='<option value="">Destino</option>';
+  let lista=tipo==="nacional"?aeropuertosNacionales:
+    [...aeropuertosNacionales,...aeropuertosInternacionales.map(a=>`${a.flag} ${a.name}`)];
   lista.forEach(a=>{
-    origen.appendChild(new Option(a,a));
-    destino.appendChild(new Option(a,a));
+    o.appendChild(new Option(a,a));
+    d.appendChild(new Option(a,a));
   });
 }
 
 function cambiarFechas(){
-  const tipoV=document.getElementById("tipoViaje").value;
-  const fechaRegreso=document.getElementById("fechaRegreso");
-  const labelRegreso=fechaRegreso.previousElementSibling;
-  if(tipoV==="ida-regreso"){fechaRegreso.style.display="block"; labelRegreso.style.display="block";}
-  else{fechaRegreso.style.display="none"; labelRegreso.style.display="none";}
+  const fr=document.getElementById("fechaRegreso");
+  const lr=fr.previousElementSibling;
+  fr.style.display=lr.style.display=
+    document.getElementById("tipoViaje").value==="ida-regreso"?"block":"none";
 }
 
 function enviarWhatsApp(){
@@ -148,19 +153,15 @@ function enviarWhatsApp(){
   const tv=document.getElementById("tipoViaje").value;
   if(!o||!d||!fi||!tv){alert("Completa todos los campos");return;}
   let msg=`✈️ Solicitud de vuelo Avianca%0AOrigen: ${o}%0ADestino: ${d}%0AFecha ida: ${fi}`;
-  if(tv==="ida-regreso") msg+=`%0AFecha regreso: ${fr}`;
+  if(tv==="ida-regreso")msg+=`%0AFecha regreso: ${fr}`;
   window.open(`https://wa.me/573016791639?text=${msg}`,"_blank");
 }
 
 function regresarInicio(){
-  const home=document.getElementById("home");
-  const form=document.getElementById("formulario");
-  const formBox=document.getElementById("formBox");
-  form.style.opacity=0;
-  setTimeout(()=>form.style.display="none",300);
-  home.style.display="flex";
-  setTimeout(()=>home.style.opacity=1,50);
-  formBox.style.animation="bubblePop .5s ease forwards";
+  document.getElementById("formulario").style.opacity=0;
+  setTimeout(()=>document.getElementById("formulario").style.display="none",300);
+  document.getElementById("home").style.display="flex";
+  setTimeout(()=>document.getElementById("home").style.opacity=1,50);
 }
 </script>
 
