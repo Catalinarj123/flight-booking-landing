@@ -76,7 +76,7 @@ section{
   pointer-events:none;
 }
 
-/* LOGO (MISMO PARA SPLASH Y HOME) */
+/* LOGO */
 .logo-img{
   width:560px;
   max-width:95%;
@@ -85,7 +85,6 @@ section{
   transform:translateY(-30px);
   animation:fadeDown 1s ease forwards .3s;
 }
-
 @keyframes fadeDown{
   to{opacity:1;transform:none;}
 }
@@ -129,7 +128,7 @@ section{
   position:relative;
   overflow:hidden;
   box-shadow:0 25px 60px rgba(0,0,0,.65);
-  transition:transform .35s ease, box-shadow .35s ease;
+  transition:transform .35s ease, box-shadow .35s ease, filter .35s ease;
 }
 .opcion:active{transform:scale(.96);}
 .opcion::before{
@@ -142,19 +141,16 @@ section{
 
 .opcion.nacional{
   background-image:url("https://images.unsplash.com/photo-1529070538774-1843cb3265df");
-  transition: transform .35s ease, box-shadow .35s ease, filter .35s ease;
 }
-.opcion.nacional:hover{
-  filter: brightness(1.15) saturate(1.1);
-}
-
 .opcion.internacional{
   background-image:url("https://images.unsplash.com/photo-1464037866556-6812c9d1c72e");
 }
 
+/* EFECTO IGUAL PARA AMBAS */
 .opcion:hover{
   transform:translateY(-14px) scale(1.04);
   box-shadow:0 40px 80px rgba(0,0,0,.8);
+  filter:brightness(1.15) saturate(1.1);
 }
 
 /* FORM */
@@ -212,7 +208,6 @@ button:first-of-type{
 
 #tipoVueloTitulo{text-align:center;}
 
-/* VALIDACIÓN VISUAL */
 input.error, select.error{
   border:2px solid #c8102e;
   background:#fff5f5;
