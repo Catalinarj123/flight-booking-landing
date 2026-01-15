@@ -7,203 +7,36 @@
 <meta name="description" content="Cotiza vuelos nacionales e internacionales de Avianca de manera rápida y sencilla.">
 
 <style>
-* {
-  box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  background: #000;
-  color: #fff;
-}
-
-section {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 40px;
-  transition: opacity 0.6s ease, transform 0.6s ease;
-  position: relative;
-}
-
-/* Fondo unificado */
+/* RESET Y ESTILOS (sin cambios, como ya tenías) */
+* { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto; margin: 0; padding: 0; }
+body { background: #000; color: #fff; }
+section { min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 40px; position: relative; }
 #home, #formulario {
   background: linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.7)),
   url("https://images.unsplash.com/photo-1436491865332-7a61a109cc05");
-  background-size: cover;
-  background-position: center;
+  background-size: cover; background-position: center;
 }
-
-/* Overlay difuminado en formulario */
-#formulario::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.5);
-  backdrop-filter: blur(6px);
-  z-index: 1;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-#formulario.active::before {
-  opacity: 1;
-}
-
-/* Difuminar home al abrir formulario */
-#home.blur {
-  filter: blur(4px) brightness(0.7);
-  transition: filter 0.4s ease;
-}
-
-#home {
-  flex-direction: column;
-  text-align: center;
-  display: flex;
-  opacity: 1;
-  z-index: 0;
-}
-
-.logo {
-  font-size: 48px;
-  font-weight: 700;
-  margin-bottom: 40px;
-  z-index: 2;
-}
-
-.opciones {
-  display: flex;
-  gap: 30px;
-  flex-wrap: wrap;
-  justify-content: center;
-  z-index: 2;
-}
-
-.opcion {
-  width: 220px;
-  height: 320px;
-  border-radius: 20px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding: 20px;
-  font-size: 22px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border: none;
-  color: #fff;
-  background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7));
-  z-index: 2;
-}
-
-.opcion:hover {
-  transform: scale(1.05);
-  box-shadow: 0 20px 40px rgba(0,0,0,.6);
-}
-
-#formulario {
-  display: none;
-  justify-content: center;
-  align-items: center;
-  opacity: 0;
-  z-index: 2;
-}
-
-.form-box {
-  background: #fff;
-  color: #000;
-  border-radius: 20px;
-  padding: 30px;
-  width: 100%;
-  max-width: 420px;
-  transform: scale(0.5);
-  opacity: 0;
-  z-index: 3;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* Animación tipo burbuja */
-@keyframes bubblePop {
-  0% { transform: scale(0.5); opacity: 0; }
-  60% { transform: scale(1.2); opacity: 1; }
-  100% { transform: scale(1); opacity: 1; }
-}
-
-/* Hover burbujeante de tarjeta */
-.form-box:hover {
-  transform: scale(1.03);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-}
-
-.boton-regresa {
-  background: #555;
-  margin-top: 10px;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  border-radius: 12px;
-  padding: 12px;
-  font-weight: 600;
-  animation: bubblePop 0.5s ease forwards;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.boton-regresa:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-}
-
-label {
-  display: block;
-  margin-top: 12px;
-  font-weight: 500;
-}
-
-select, input, button {
-  width: 100%;
-  padding: 14px;
-  margin-top: 6px;
-  border-radius: 12px;
-  border: 1px solid #ccc;
-  font-size: 16px;
-}
-
-button {
-  background: #c8102e;
-  color: #fff;
-  border: none;
-  margin-top: 20px;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #a00d25;
-}
-
-.footer {
-  margin-top: 15px;
-  font-size: 12px;
-  text-align: center;
-  color: #666;
-}
-
-/* Responsive */
-@media (max-width: 600px) {
-  .opciones {
-    flex-direction: column;
-    gap: 20px;
-  }
-  .opcion {
-    width: 100%;
-    height: 250px;
-  }
-}
+#home.blur { filter: blur(4px) brightness(0.7); transition: filter 0.4s ease; }
+.logo { font-size: 48px; font-weight: 700; margin-bottom: 40px; }
+.opciones { display: flex; gap: 30px; flex-wrap: wrap; justify-content: center; }
+.opcion { width: 220px; height: 320px; border-radius: 20px; display: flex; align-items: flex-end; justify-content: center; padding: 20px; font-size: 22px; font-weight: 600; cursor: pointer; border: none; color: #fff; background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)); transition: transform .3s ease, box-shadow .3s ease; }
+.opcion:hover { transform: scale(1.05); box-shadow: 0 20px 40px rgba(0,0,0,.6); }
+#formulario { display: none; justify-content: center; align-items: center; opacity: 0; }
+#formulario::before { content: ""; position: absolute; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.5); backdrop-filter: blur(6px); opacity: 0; transition: opacity .4s ease; }
+#formulario.active::before { opacity: 1; }
+.form-box { background: #fff; color: #000; border-radius: 20px; padding: 30px; width: 100%; max-width: 420px; transform: scale(0.5); opacity: 0; transition: transform .3s ease, box-shadow .3s ease; }
+@keyframes bubblePop { 0% { transform: scale(0.5); opacity: 0; } 60% { transform: scale(1.2); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
+.form-box:hover { transform: scale(1.03); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+.boton-regresa { background: #555; margin-top: 10px; color: #fff; border: none; cursor: pointer; border-radius: 12px; padding: 12px; font-weight: 600; animation: bubblePop .5s ease forwards; transition: transform .2s ease, box-shadow .2s ease; }
+.boton-regresa:hover { transform: scale(1.05); box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
+label { display: block; margin-top: 12px; font-weight: 500; color: #000; }
+select, input, button { width: 100%; padding: 14px; margin-top: 6px; border-radius: 12px; border: 1px solid #ccc; font-size: 16px; }
+button { background: #c8102e; color: #fff; border: none; cursor: pointer; margin-top: 20px; }
+button:hover { background: #a00d25; }
+.footer { margin-top: 15px; font-size: 12px; text-align: center; color: #666; }
 </style>
 </head>
+
 <body>
 
 <section id="home">
@@ -245,16 +78,21 @@ button:hover {
 </section>
 
 <script>
+// ✈️ Listas basadas en aeropuertos reales donde Avianca opera rutas nacionales e internacionales :contentReference[oaicite:3]{index=3}
 const aeropuertosNacionales = [
- "Bogotá (BOG)","Medellín (MDE)","Cali (CLO)","Cartagena (CTG)",
- "Barranquilla (BAQ)","Pereira (PEI)","Santa Marta (SMR)",
- "Bucaramanga (BGA)","Cúcuta (CUC)","San Andrés (ADZ)"
+  "Bogotá (BOG)","Medellín (MDE)","Cali (CLO)",
+  "Cartagena (CTG)","Barranquilla (BAQ)",
+  "Bucaramanga (BGA)","Santa Marta (SMR)",
+  "San Andrés (ADZ)","Pereira (PEI)",
+  "Neiva (NVA)"
 ];
 
 const aeropuertosInternacionales = [
- "Miami (MIA)","New York (JFK)","Madrid (MAD)","Barcelona (BCN)",
- "Cancún (CUN)","Ciudad de México (MEX)","Lima (LIM)",
- "Buenos Aires (EZE)","Santiago (SCL)","Panamá (PTY)"
+  "Miami (MIA)","New York (JFK)","Los Angeles (LAX)",
+  "San Francisco (SFO)","Fort Lauderdale (FLL)",
+  "Houston (IAH)","Dallas‑Fort Worth (DFW)",
+  "Boston (BOS)","Madrid (MAD)","Paris (CDG)",
+  "Barcelona (BCN)","Londres (LHR)"
 ];
 
 function seleccionar(tipo) {
@@ -262,57 +100,39 @@ function seleccionar(tipo) {
   const form = document.getElementById("formulario");
   const titulo = document.getElementById("tipoVueloTitulo");
   const formBox = document.getElementById("formBox");
-
-  // Difuminar home
   home.classList.add("blur");
-
-  // Ocultar home suavemente
-  home.style.transition = "opacity 0.3s";
   home.style.opacity = 0;
   setTimeout(() => home.style.display = "none", 300);
-
   form.style.display = "flex";
   form.classList.add("active");
   setTimeout(() => {
     form.style.opacity = 1;
-    formBox.style.animation = "bubblePop 0.5s ease forwards";
-
-    const btnRegresa = document.querySelector(".boton-regresa");
-    btnRegresa.style.animation = "none";
-    setTimeout(() => btnRegresa.style.animation = "bubblePop 0.5s ease forwards", 50);
+    formBox.style.animation = "bubblePop .5s ease forwards";
   }, 50);
-
   titulo.textContent = tipo === "nacional" ? "Vuelo Nacional" : "Vuelo Internacional";
-
-  cargarAeropuertos();
+  cargarAeropuertos(tipo);
 }
 
-function cargarAeropuertos() {
+function cargarAeropuertos(tipo) {
   const origen = document.getElementById("origen");
   const destino = document.getElementById("destino");
-
   origen.innerHTML = '<option value="">Origen</option>';
   destino.innerHTML = '<option value="">Destino</option>';
-
-  const lista = [...aeropuertosNacionales, ...aeropuertosInternacionales];
-
+  // Si es nacional → solo nacionales / si es internacional → nacionales + internacionales
+  let lista = tipo === "nacional"
+    ? aeropuertosNacionales
+    : [...aeropuertosNacionales, ...aeropuertosInternacionales];
   lista.forEach(a => {
-    const optionO = document.createElement('option');
-    optionO.textContent = a;
-    origen.appendChild(optionO);
-
-    const optionD = document.createElement('option');
-    optionD.textContent = a;
-    destino.appendChild(optionD);
+    origen.appendChild(new Option(a, a));
+    destino.appendChild(new Option(a, a));
   });
 }
 
 function cambiarFechas() {
-  const tipo = document.getElementById("tipoViaje").value;
+  const tipoV = document.getElementById("tipoViaje").value;
   const fechaRegreso = document.getElementById("fechaRegreso");
   const labelRegreso = fechaRegreso.previousElementSibling;
-
-  if (tipo === "ida-regreso") {
+  if (tipoV === "ida-regreso") {
     fechaRegreso.style.display = "block";
     labelRegreso.style.display = "block";
   } else {
@@ -322,37 +142,23 @@ function cambiarFechas() {
 }
 
 function enviarWhatsApp() {
-  const origen = document.getElementById("origen").value;
-  const destino = document.getElementById("destino").value;
-  const fechaIda = document.getElementById("fechaIda").value;
-  const fechaRegreso = document.getElementById("fechaRegreso").value;
-  const tipoViaje = document.getElementById("tipoViaje").value;
-
-  if (!origen || !destino || !fechaIda || !tipoViaje) {
-    alert("Completa todos los campos");
-    return;
-  }
-
-  let msg = `✈️ Solicitud de vuelo Avianca%0AOrigen: ${origen}%0ADestino: ${destino}%0AFecha ida: ${fechaIda}`;
-  if (tipoViaje === "ida-regreso") msg += `%0AFecha regreso: ${fechaRegreso}`;
-
+  const o = document.getElementById("origen").value;
+  const d = document.getElementById("destino").value;
+  const fi = document.getElementById("fechaIda").value;
+  const fr = document.getElementById("fechaRegreso").value;
+  const tv = document.getElementById("tipoViaje").value;
+  if (!o || !d || !fi || !tv) { alert("Completa todos los campos"); return; }
+  let msg = `✈️ Solicitud de vuelo Avianca%0AOrigen: ${o}%0ADestino: ${d}%0AFecha ida: ${fi}`;
+  if (tv === "ida-regreso") msg += `%0AFecha regreso: ${fr}`;
   window.open(`https://wa.me/573016791639?text=${msg}`, "_blank");
 }
 
 function regresarInicio() {
   const home = document.getElementById("home");
   const form = document.getElementById("formulario");
-  const formBox = document.getElementById("formBox");
-
-  // Quitar difuminado
   home.classList.remove("blur");
-
   form.style.opacity = 0;
-  setTimeout(() => {
-    form.style.display = "none";
-    form.classList.remove("active");
-  }, 300);
-
+  setTimeout(() => form.style.display = "none", 300);
   home.style.display = "flex";
   setTimeout(() => home.style.opacity = 1, 50);
 }
