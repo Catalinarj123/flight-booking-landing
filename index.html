@@ -26,6 +26,8 @@ select,input,button{width:100%;padding:14px;margin-top:6px;border-radius:12px;bo
 button{background:#c8102e;color:#fff;border:none;cursor:pointer;margin-top:20px;}
 button:hover{background:#a00d25;}
 .footer{margin-top:15px;font-size:12px;text-align:center;color:#666;}
+/* Agregando estilo para opciones con ícono */
+option::before{content:"✈️ "; margin-right:5px;}
 @media(max-width:600px){.opciones{flex-direction:column;gap:20px;}.opcion{width:100%;height:250px;}}
 </style>
 </head>
@@ -72,8 +74,26 @@ button:hover{background:#a00d25;}
 
 <script>
 // Aeropuertos que opera Avianca
-const aeropuertosNacionales = ["Bogotá (BOG)","Medellín (MDE)","Cali (CLO)","Cartagena (CTG)","Barranquilla (BAQ)","Bucaramanga (BGA)","Santa Marta (SMR)","San Andrés (ADZ)","Pereira (PEI)","Neiva (NVA)"];
-const aeropuertosInternacionales = ["Miami (MIA)","New York (JFK)","Los Angeles (LAX)","San Francisco (SFO)","Fort Lauderdale (FLL)","Houston (IAH)","Dallas‑Fort Worth (DFW)","Boston (BOS)","Madrid (MAD)","Paris (CDG)","Barcelona (BCN)","Londres (LHR)"];
+const aeropuertosNacionales = [
+  "Bogotá (BOG)","Medellín (MDE)","Cali (CLO)","Cartagena (CTG)",
+  "Barranquilla (BAQ)","Bucaramanga (BGA)","Santa Marta (SMR)",
+  "San Andrés (ADZ)","Pereira (PEI)","Neiva (NVA)"
+];
+
+const aeropuertosInternacionales = [
+  {name:"Miami (MIA)",flag:"🇺🇸"},
+  {name:"New York (JFK)",flag:"🇺🇸"},
+  {name:"Los Angeles (LAX)",flag:"🇺🇸"},
+  {name:"San Francisco (SFO)",flag:"🇺🇸"},
+  {name:"Fort Lauderdale (FLL)",flag:"🇺🇸"},
+  {name:"Houston (IAH)",flag:"🇺🇸"},
+  {name:"Dallas‑Fort Worth (DFW)",flag:"🇺🇸"},
+  {name:"Boston (BOS)",flag:"🇺🇸"},
+  {name:"Madrid (MAD)",flag:"🇪🇸"},
+  {name:"Paris (CDG)",flag:"🇫🇷"},
+  {name:"Barcelona (BCN)",flag:"🇪🇸"},
+  {name:"Londres (LHR)",flag:"🇬🇧"}
+];
 
 // Mostrar formulario según tipo de vuelo
 function seleccionar(tipo){
@@ -102,7 +122,9 @@ function cargarAeropuertos(tipo){
   origen.innerHTML='<option value="">Origen</option>';
   destino.innerHTML='<option value="">Destino</option>';
 
-  let lista = tipo==="nacional"? aeropuertosNacionales : [...aeropuertosNacionales,...aeropuertosInternacionales];
+  let lista = tipo==="nacional"
+      ? aeropuertosNacionales
+      : [...aeropuertosNacionales, ...aeropuertosInternacionales.map(a=>`${a.flag} ${a.name}`)];
 
   lista.forEach(a=>{
     origen.appendChild(new Option(a,a));
