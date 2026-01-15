@@ -53,6 +53,12 @@ section {
   opacity: 1;
 }
 
+/* Difuminar home al abrir formulario */
+#home.blur {
+  filter: blur(4px) brightness(0.7);
+  transition: filter 0.4s ease;
+}
+
 #home {
   flex-direction: column;
   text-align: center;
@@ -257,6 +263,10 @@ function seleccionar(tipo) {
   const titulo = document.getElementById("tipoVueloTitulo");
   const formBox = document.getElementById("formBox");
 
+  // Difuminar home
+  home.classList.add("blur");
+
+  // Ocultar home suavemente
   home.style.transition = "opacity 0.3s";
   home.style.opacity = 0;
   setTimeout(() => home.style.display = "none", 300);
@@ -333,6 +343,9 @@ function regresarInicio() {
   const home = document.getElementById("home");
   const form = document.getElementById("formulario");
   const formBox = document.getElementById("formBox");
+
+  // Quitar difuminado
+  home.classList.remove("blur");
 
   form.style.opacity = 0;
   setTimeout(() => {
