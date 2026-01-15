@@ -11,8 +11,12 @@ body{background:#000;color:#fff;}
 section{min-height:100vh;display:flex;justify-content:center;align-items:center;padding:40px;position:relative;transition:opacity .6s ease, transform .6s ease;}
 #home,#formulario{background:linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.7)),url("https://images.unsplash.com/photo-1436491865332-7a61a109cc05");background-size:cover;background-position:center;}
 #home{flex-direction:column;text-align:center;opacity:1;}
-.logo{font-size:60px;font-weight:700;color:#c8102e;margin-bottom:10px;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;text-transform:uppercase;letter-spacing:2px;}
-.slogan{font-size:20px;font-weight:400;color:#fff;margin-bottom:40px;font-style:italic;}
+.logo{font-size:60px;font-weight:700;color:#c8102e;margin-bottom:10px;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;text-transform:uppercase;letter-spacing:2px;opacity:0;transform:translateY(-30px);animation:fadeDown 1s ease forwards 0.3s;}
+.slogan{font-size:20px;font-weight:400;color:#fff;margin-bottom:40px;font-style:italic;opacity:0;transform:translateY(-20px);animation:fadeDown 1s ease forwards 0.6s;}
+@keyframes fadeDown{
+  0%{opacity:0;transform:translateY(-30px);}
+  100%{opacity:1;transform:translateY(0);}
+}
 .opciones{display:flex;gap:30px;flex-wrap:wrap;justify-content:center;}
 .opcion{width:220px;height:320px;border-radius:20px;display:flex;align-items:flex-end;justify-content:center;padding:20px;font-size:22px;font-weight:600;cursor:pointer;border:none;color:#fff;background:linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.7));transition:transform .3s ease,box-shadow .3s ease;}
 .opcion:hover{transform:scale(1.05);box-shadow:0 20px 40px rgba(0,0,0,.6);}
@@ -26,8 +30,6 @@ select,input,button{width:100%;padding:14px;margin-top:6px;border-radius:12px;bo
 button{background:#c8102e;color:#fff;border:none;cursor:pointer;margin-top:20px;}
 button:hover{background:#a00d25;}
 .footer{margin-top:15px;font-size:12px;text-align:center;color:#666;}
-/* Agregando estilo para opciones con ícono */
-option::before{content:"✈️ "; margin-right:5px;}
 @media(max-width:600px){.opciones{flex-direction:column;gap:20px;}.opcion{width:100%;height:250px;}}
 </style>
 </head>
@@ -73,7 +75,7 @@ option::before{content:"✈️ "; margin-right:5px;}
 </section>
 
 <script>
-// Aeropuertos que opera Avianca
+// Aeropuertos Avianca
 const aeropuertosNacionales = [
   "Bogotá (BOG)","Medellín (MDE)","Cali (CLO)","Cartagena (CTG)",
   "Barranquilla (BAQ)","Bucaramanga (BGA)","Santa Marta (SMR)",
