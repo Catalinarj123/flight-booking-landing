@@ -7,9 +7,10 @@
 <meta name="description" content="Cotiza vuelos nacionales e internacionales de Avianca de manera rápida y sencilla.">
 
 <style>
+/* ===== Reset y tipografía ===== */
 * {
   box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -19,18 +20,21 @@ body {
   color: #fff;
 }
 
+/* ===== Secciones ===== */
 section {
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 40px;
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  position: relative;
+  overflow: hidden;
+  transition: opacity 0.6s ease;
 }
 
-/* Fondo unificado */
+/* ===== Fondo unificado ===== */
 #home, #formulario {
-  background: linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.7)),
+  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
   url("https://images.unsplash.com/photo-1436491865332-7a61a109cc05");
   background-size: cover;
   background-position: center;
@@ -39,15 +43,26 @@ section {
 #home {
   flex-direction: column;
   text-align: center;
-  opacity: 1;
+  opacity: 0;
+  animation: fadeInHome 1s forwards;
 }
 
+/* ===== Logo y subtítulo ===== */
 .logo {
   font-size: 48px;
   font-weight: 700;
-  margin-bottom: 40px;
+  margin-bottom: 10px;
 }
 
+.subtitulo {
+  font-size: 20px;
+  font-weight: 400;
+  margin-bottom: 40px;
+  color: #f0f0f0;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
+
+/* ===== Botones de opciones ===== */
 .opciones {
   display: flex;
   gap: 30px;
@@ -62,22 +77,25 @@ section {
   background-size: cover;
   background-position: center;
   display: flex;
-  align-items: flex-end;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
   padding: 20px;
   font-size: 22px;
   font-weight: 600;
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
   border: none;
   color: #fff;
+  background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7));
 }
 
 .opcion:hover {
   transform: scale(1.05);
-  box-shadow: 0 20px 40px rgba(0,0,0,.6);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
 }
 
+/* ===== Segunda vista - formulario ===== */
 #formulario {
   display: none;
   justify-content: center;
@@ -96,7 +114,7 @@ section {
   opacity: 0;
 }
 
-/* Animación tipo burbuja */
+/* Animación tipo burbuja al abrir formulario */
 @keyframes bubbleUp {
   0% { transform: scale(0.8); opacity: 0; }
   60% { transform: scale(1.05); opacity: 1; }
@@ -104,6 +122,13 @@ section {
   100% { transform: scale(1); }
 }
 
+/* Animación fadeIn home */
+@keyframes fadeInHome {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Formulario y inputs ===== */
 label {
   display: block;
   margin-top: 12px;
@@ -131,13 +156,6 @@ button:hover {
   background: #a00d25;
 }
 
-.footer {
-  margin-top: 15px;
-  font-size: 12px;
-  text-align: center;
-  color: #666;
-}
-
 /* Botón volver */
 .button-volver {
   background: #555;
@@ -146,6 +164,14 @@ button:hover {
 
 .button-volver:hover {
   background: #333;
+}
+
+/* Footer */
+.footer {
+  margin-top: 15px;
+  font-size: 12px;
+  text-align: center;
+  color: #666;
 }
 
 /* Responsive */
@@ -163,16 +189,17 @@ button:hover {
 </head>
 <body>
 
-<!-- Primera vista -->
+<!-- ===== Primera vista ===== -->
 <section id="home">
   <div class="logo">AVIANCA</div>
+  <div class="subtitulo">Tu viaje empieza aquí</div>
   <div class="opciones">
-    <button class="opcion" onclick="seleccionar('nacional')">Vuelos Nacionales</button>
-    <button class="opcion" onclick="seleccionar('internacional')">Vuelos Internacionales</button>
+    <button class="opcion" onclick="seleccionar('nacional')">✈️ Vuelos Nacionales</button>
+    <button class="opcion" onclick="seleccionar('internacional')">🌍 Vuelos Internacionales</button>
   </div>
 </section>
 
-<!-- Segunda vista -->
+<!-- ===== Segunda vista ===== -->
 <section id="formulario">
   <div class="form-box" id="formBox">
     <h2 id="tipoVueloTitulo">Solicita tu vuelo</h2>
@@ -199,76 +226,57 @@ button:hover {
     <button type="button" onclick="enviarWhatsApp()">Cotizar por WhatsApp</button>
     <button type="button" class="button-volver" onclick="volverInicio()">← Volver</button>
 
-    <div class="footer">Vuelos operados por AVIANCA SAS.</div>
+    <div class="footer">Vuelos operados por AVIANCA</div>
   </div>
 </section>
 
 <script>
-// Aeropuertos nacionales e internacionales
-const aeropuertosNacionales = [
- "Bogotá (BOG)","Medellín (MDE)","Cali (CLO)","Cartagena (CTG)",
- "Barranquilla (BAQ)","Pereira (PEI)","Santa Marta (SMR)",
- "Bucaramanga (BGA)","Cúcuta (CUC)","San Andrés (ADZ)"
-];
+// ===== Datos de aeropuertos =====
+const aeropuertosNacionales = ["Bogotá (BOG)","Medellín (MDE)","Cali (CLO)","Cartagena (CTG)","Barranquilla (BAQ)","Pereira (PEI)","Santa Marta (SMR)","Bucaramanga (BGA)","Cúcuta (CUC)","San Andrés (ADZ)"];
+const aeropuertosInternacionales = ["Miami (MIA)","New York (JFK)","Madrid (MAD)","Barcelona (BCN)","Cancún (CUN)","Ciudad de México (MEX)","Lima (LIM)","Buenos Aires (EZE)","Santiago (SCL)","Panamá (PTY)"];
 
-const aeropuertosInternacionales = [
- "Miami (MIA)","New York (JFK)","Madrid (MAD)","Barcelona (BCN)",
- "Cancún (CUN)","Ciudad de México (MEX)","Lima (LIM)",
- "Buenos Aires (EZE)","Santiago (SCL)","Panamá (PTY)"
-];
-
-// Función para seleccionar tipo de vuelo
+// ===== Función seleccionar tipo de vuelo =====
 function seleccionar(tipo) {
   const home = document.getElementById("home");
   const form = document.getElementById("formulario");
   const titulo = document.getElementById("tipoVueloTitulo");
   const formBox = document.getElementById("formBox");
 
-  // Transición suave
+  // Ocultar home con transición
   home.style.opacity = 0;
   setTimeout(() => home.style.display = "none", 600);
 
+  // Mostrar formulario
   form.style.display = "flex";
   setTimeout(() => {
     form.style.opacity = 1;
-    // Animación tipo burbuja
     formBox.style.animation = "bubbleUp 0.6s ease forwards";
   }, 50);
 
-  // Cambiar título según selección
   titulo.textContent = tipo === "nacional" ? "Vuelo Nacional" : "Vuelo Internacional";
 
-  // Cargar todos los aeropuertos
+  // Cargar lista completa de aeropuertos
   cargarAeropuertos();
 }
 
-// Función para cargar todos los aeropuertos
+// ===== Cargar todos los aeropuertos =====
 function cargarAeropuertos() {
   const origen = document.getElementById("origen");
   const destino = document.getElementById("destino");
-
   origen.innerHTML = '<option value="">Origen</option>';
   destino.innerHTML = '<option value="">Destino</option>';
-
   const lista = [...aeropuertosNacionales, ...aeropuertosInternacionales];
-
   lista.forEach(a => {
-    const optionO = document.createElement('option');
-    optionO.textContent = a;
-    origen.appendChild(optionO);
-
-    const optionD = document.createElement('option');
-    optionD.textContent = a;
-    destino.appendChild(optionD);
+    origen.appendChild(new Option(a, a));
+    destino.appendChild(new Option(a, a));
   });
 }
 
-// Mostrar u ocultar fecha de regreso
+// ===== Mostrar/ocultar fecha regreso =====
 function cambiarFechas() {
   const tipo = document.getElementById("tipoViaje").value;
   const fechaRegreso = document.getElementById("fechaRegreso");
   const labelRegreso = fechaRegreso.previousElementSibling;
-
   if (tipo === "ida-regreso") {
     fechaRegreso.style.display = "block";
     labelRegreso.style.display = "block";
@@ -278,44 +286,33 @@ function cambiarFechas() {
   }
 }
 
-// Enviar WhatsApp
+// ===== Enviar mensaje a WhatsApp =====
 function enviarWhatsApp() {
   const origen = document.getElementById("origen").value;
   const destino = document.getElementById("destino").value;
   const fechaIda = document.getElementById("fechaIda").value;
   const fechaRegreso = document.getElementById("fechaRegreso").value;
   const tipoViaje = document.getElementById("tipoViaje").value;
-
   if (!origen || !destino || !fechaIda || !tipoViaje) {
     alert("Completa todos los campos");
     return;
   }
-
   let msg = `✈️ Solicitud de vuelo Avianca%0AOrigen: ${origen}%0ADestino: ${destino}%0AFecha ida: ${fechaIda}`;
   if (tipoViaje === "ida-regreso") msg += `%0AFecha regreso: ${fechaRegreso}`;
-
   window.open(`https://wa.me/573016791639?text=${msg}`, "_blank");
 }
 
-// Volver al inicio
+// ===== Botón volver funcional =====
 function volverInicio() {
   const home = document.getElementById("home");
   const form = document.getElementById("formulario");
   const formBox = document.getElementById("formBox");
-
-  // Ocultar formulario
+  formBox.style.animation = "none";
   form.style.opacity = 0;
-  setTimeout(() => {
-    form.style.display = "none";
-    // Reset animación para la próxima vez
-    formBox.style.animation = "none";
-  }, 600);
-
-  // Mostrar home
+  setTimeout(() => form.style.display = "none", 600);
   home.style.display = "flex";
   setTimeout(() => home.style.opacity = 1, 50);
 }
 </script>
-
 </body>
 </html>
