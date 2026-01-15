@@ -181,7 +181,7 @@ button:hover {
     <input type="date" id="fechaRegreso" style="display:none;">
 
     <button type="button" onclick="enviarWhatsApp()">COTIZA AHORA</button>
-<button type="button" onclick="regresarInicio()" style="background:#555; margin-top:10px; color:#fff; border:none; cursor:pointer;">← Regresa</button>
+    <button type="button" onclick="regresarInicio()" style="background:#555; margin-top:10px; color:#fff; border:none; cursor:pointer;">← Regresa</button>
 
     <div class="footer">Vuelos operados por AVIANCA AIRLINES</div>
   </div>
@@ -221,7 +221,7 @@ function seleccionar(tipo) {
   cargarAeropuertos();
 }
 
-// Cargar **todos los aeropuertos** en origen y destino
+// Cargar todos los aeropuertos en origen y destino
 function cargarAeropuertos() {
   const origen = document.getElementById("origen");
   const destino = document.getElementById("destino");
@@ -274,6 +274,20 @@ function enviarWhatsApp() {
   if (tipoViaje === "ida-regreso") msg += `%0AFecha regreso: ${fechaRegreso}`;
 
   window.open(`https://wa.me/573016791639?text=${msg}`, "_blank");
+}
+
+// Botón "Regresa" funcional
+function regresarInicio() {
+  const home = document.getElementById("home");
+  const form = document.getElementById("formulario");
+
+  // Ocultar formulario
+  form.style.opacity = 0;
+  setTimeout(() => form.style.display = "none", 300);
+
+  // Mostrar home
+  home.style.display = "flex";
+  setTimeout(() => home.style.opacity = 1, 50);
 }
 </script>
 
