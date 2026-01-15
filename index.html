@@ -114,6 +114,23 @@ select,input,button{
 
 button{background:#c8102e;color:#fff;border:none;margin-top:20px;cursor:pointer;}
 .footer{margin-top:15px;font-size:12px;color:#666;}
+
+/* 🔥 ANIMACIÓN SOLO BOTONES SEGUNDA VISTA */
+.form-box button{
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+.form-box button:hover{
+  transform:translateY(-3px);
+  box-shadow:0 12px 28px rgba(0,0,0,.35);
+}
+.form-box button:first-of-type{
+  animation:ctaPulse 3s ease-in-out infinite;
+}
+@keyframes ctaPulse{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.03);}
+  100%{transform:scale(1);}
+}
 </style>
 </head>
 
@@ -121,7 +138,7 @@ button{background:#c8102e;color:#fff;border:none;margin-top:20px;cursor:pointer;
 
 <section id="home">
   <img src="logo-avianca-lat.png" class="logo-img">
-  <div class="slogan">¡Aquí comienza tu viaje!</div>
+  <div class="slogan">Tu viaje empieza aquí</div>
 
   <div class="opciones">
     <button class="opcion" onclick="seleccionar('nacional')">Vuelos Nacionales</button>
@@ -146,7 +163,6 @@ button{background:#c8102e;color:#fff;border:none;margin-top:20px;cursor:pointer;
       <option value="ida-regreso">Ida y regreso</option>
     </select>
 
-    <!-- NUEVO: PASAJEROS -->
     <label>Número de pasajeros</label>
     <select id="pasajeros">
       <option value="">Selecciona</option>
@@ -222,7 +238,34 @@ function regresarInicio(){
   document.getElementById("home").classList.remove("oculto");
 }
 
-function enviarWhatsApp(){}
+function enviarWhatsApp(){
+  const origen=document.getElementById("origen").value;
+  const destino=document.getElementById("destino").value;
+  const tipoViaje=document.getElementById("tipoViaje").value;
+  const pasajeros=document.getElementById("pasajeros").value;
+  const fechaIda=document.getElementById("fechaIda").value;
+  const fechaRegreso=document.getElementById("fechaRegreso").value;
+
+  if(!origen||!destino||!tipoViaje||!pasajeros||!fechaIda){
+    alert("Completa todos los campos");
+    return;
+  }
+
+  let msg =
+`✈️ Cotización de vuelo Avianca
+Origen: ${origen}
+Destino: ${destino}
+Tipo de viaje: ${tipoViaje}
+Pasajeros: ${pasajeros}
+Fecha ida: ${fechaIda}`;
+
+  if(tipoViaje==="ida-regreso"){
+    msg+=`\nFecha regreso: ${fechaRegreso}`;
+  }
+
+  const url=`https://wa.me/573016791639?text=${encodeURIComponent(msg)}`;
+  window.open(url,"_blank");
+}
 </script>
 
 </body>
