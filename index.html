@@ -4,39 +4,31 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Avianca Travel Assistance</title>
-<meta name="description" content="Cotiza vuelos nacionales e internacionales de Avianca de manera rápida y sencilla.">
-
 <style>
-/* RESET Y ESTILOS (sin cambios, como ya tenías) */
-* { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto; margin: 0; padding: 0; }
-body { background: #000; color: #fff; }
-section { min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 40px; position: relative; }
-#home, #formulario {
-  background: linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.7)),
-  url("https://images.unsplash.com/photo-1436491865332-7a61a109cc05");
-  background-size: cover; background-position: center;
-}
-#home.blur { filter: blur(4px) brightness(0.7); transition: filter 0.4s ease; }
-.logo { font-size: 48px; font-weight: 700; margin-bottom: 40px; }
-.opciones { display: flex; gap: 30px; flex-wrap: wrap; justify-content: center; }
-.opcion { width: 220px; height: 320px; border-radius: 20px; display: flex; align-items: flex-end; justify-content: center; padding: 20px; font-size: 22px; font-weight: 600; cursor: pointer; border: none; color: #fff; background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)); transition: transform .3s ease, box-shadow .3s ease; }
-.opcion:hover { transform: scale(1.05); box-shadow: 0 20px 40px rgba(0,0,0,.6); }
-#formulario { display: none; justify-content: center; align-items: center; opacity: 0; }
-#formulario::before { content: ""; position: absolute; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.5); backdrop-filter: blur(6px); opacity: 0; transition: opacity .4s ease; }
-#formulario.active::before { opacity: 1; }
-.form-box { background: #fff; color: #000; border-radius: 20px; padding: 30px; width: 100%; max-width: 420px; transform: scale(0.5); opacity: 0; transition: transform .3s ease, box-shadow .3s ease; }
-@keyframes bubblePop { 0% { transform: scale(0.5); opacity: 0; } 60% { transform: scale(1.2); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
-.form-box:hover { transform: scale(1.03); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
-.boton-regresa { background: #555; margin-top: 10px; color: #fff; border: none; cursor: pointer; border-radius: 12px; padding: 12px; font-weight: 600; animation: bubblePop .5s ease forwards; transition: transform .2s ease, box-shadow .2s ease; }
-.boton-regresa:hover { transform: scale(1.05); box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
-label { display: block; margin-top: 12px; font-weight: 500; color: #000; }
-select, input, button { width: 100%; padding: 14px; margin-top: 6px; border-radius: 12px; border: 1px solid #ccc; font-size: 16px; }
-button { background: #c8102e; color: #fff; border: none; cursor: pointer; margin-top: 20px; }
-button:hover { background: #a00d25; }
-.footer { margin-top: 15px; font-size: 12px; text-align: center; color: #666; }
+*{box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;margin:0;padding:0;}
+body{background:#000;color:#fff;}
+section{min-height:100vh;display:flex;justify-content:center;align-items:center;padding:40px;position:relative;}
+#home, #formulario{background:linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.7)),url("https://images.unsplash.com/photo-1436491865332-7a61a109cc05");background-size:cover;background-position:center;}
+#home.blur{filter:blur(4px) brightness(0.7);transition:filter .4s ease;}
+.logo{font-size:48px;font-weight:700;margin-bottom:40px;}
+.opciones{display:flex;gap:30px;flex-wrap:wrap;justify-content:center;}
+.opcion{width:220px;height:320px;border-radius:20px;display:flex;align-items:flex-end;justify-content:center;padding:20px;font-size:22px;font-weight:600;cursor:pointer;border:none;color:#fff;background:linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7));transition:transform .3s ease,box-shadow .3s ease;}
+.opcion:hover{transform:scale(1.05);box-shadow:0 20px 40px rgba(0,0,0,.6);}
+#formulario{display:none;justify-content:center;align-items:center;opacity:0;}
+#formulario::before{content:"";position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(6px);opacity:0;transition:opacity .4s ease;}
+#formulario.active::before{opacity:1;}
+.form-box{background:#fff;color:#000;border-radius:20px;padding:30px;width:100%;max-width:420px;transform:scale(0.5);opacity:0;transition:transform .3s ease,box-shadow .3s ease;}
+@keyframes bubblePop{0%{transform:scale(0.5);opacity:0}60%{transform:scale(1.2);opacity:1}100%{transform:scale(1);opacity:1}}
+.form-box:hover{transform:scale(1.03);box-shadow:0 20px 40px rgba(0,0,0,0.3);}
+.boton-regresa{background:#555;margin-top:10px;color:#fff;border:none;cursor:pointer;border-radius:12px;padding:12px;font-weight:600;animation:bubblePop .5s ease forwards;transition:transform .2s ease,box-shadow .2s ease;}
+.boton-regresa:hover{transform:scale(1.05);box-shadow:0 8px 20px rgba(0,0,0,0.4);}
+label{display:block;margin-top:12px;font-weight:500;color:#000;}
+select,input,button{width:100%;padding:14px;margin-top:6px;border-radius:12px;border:1px solid #ccc;font-size:16px;}
+button{background:#c8102e;color:#fff;border:none;cursor:pointer;margin-top:20px;}
+button:hover{background:#a00d25;}
+.footer{margin-top:15px;font-size:12px;text-align:center;color:#666;}
 </style>
 </head>
-
 <body>
 
 <section id="home">
@@ -50,117 +42,86 @@ button:hover { background: #a00d25; }
 <section id="formulario">
   <div class="form-box" id="formBox">
     <h2 id="tipoVueloTitulo">Solicita tu vuelo</h2>
-
     <label for="origen">Origen</label>
     <select id="origen"></select>
-
     <label for="destino">Destino</label>
     <select id="destino"></select>
-
     <label for="tipoViaje">Tipo de viaje</label>
     <select id="tipoViaje" onchange="cambiarFechas()">
       <option value="">Selecciona tipo de viaje</option>
       <option value="ida">Solo ida</option>
       <option value="ida-regreso">Ida y regreso</option>
     </select>
-
     <label for="fechaIda">Fecha ida</label>
     <input type="date" id="fechaIda">
-
     <label for="fechaRegreso" style="display:none;">Fecha regreso</label>
     <input type="date" id="fechaRegreso" style="display:none;">
-
     <button type="button" onclick="enviarWhatsApp()">COTIZA AHORA</button>
     <button type="button" class="boton-regresa" onclick="regresarInicio()">← Regresa</button>
-
     <div class="footer">Vuelos operados por AVIANCA AIRLINES</div>
   </div>
 </section>
 
 <script>
-// ✈️ Listas basadas en aeropuertos reales donde Avianca opera rutas nacionales e internacionales :contentReference[oaicite:3]{index=3}
-const aeropuertosNacionales = [
-  "Bogotá (BOG)","Medellín (MDE)","Cali (CLO)",
-  "Cartagena (CTG)","Barranquilla (BAQ)",
-  "Bucaramanga (BGA)","Santa Marta (SMR)",
-  "San Andrés (ADZ)","Pereira (PEI)",
-  "Neiva (NVA)"
-];
+// Aeropuertos que opera Avianca
+const aeropuertosNacionales = ["Bogotá (BOG)","Medellín (MDE)","Cali (CLO)","Cartagena (CTG)","Barranquilla (BAQ)","Bucaramanga (BGA)","Santa Marta (SMR)","San Andrés (ADZ)","Pereira (PEI)","Neiva (NVA)"];
+const aeropuertosInternacionales = ["Miami (MIA)","New York (JFK)","Los Angeles (LAX)","San Francisco (SFO)","Fort Lauderdale (FLL)","Houston (IAH)","Dallas‑Fort Worth (DFW)","Boston (BOS)","Madrid (MAD)","Paris (CDG)","Barcelona (BCN)","Londres (LHR)"];
 
-const aeropuertosInternacionales = [
-  "Miami (MIA)","New York (JFK)","Los Angeles (LAX)",
-  "San Francisco (SFO)","Fort Lauderdale (FLL)",
-  "Houston (IAH)","Dallas‑Fort Worth (DFW)",
-  "Boston (BOS)","Madrid (MAD)","Paris (CDG)",
-  "Barcelona (BCN)","Londres (LHR)"
-];
-
-function seleccionar(tipo) {
+function seleccionar(tipo){
   const home = document.getElementById("home");
   const form = document.getElementById("formulario");
   const titulo = document.getElementById("tipoVueloTitulo");
   const formBox = document.getElementById("formBox");
-  home.classList.add("blur");
-  home.style.opacity = 0;
-  setTimeout(() => home.style.display = "none", 300);
-  form.style.display = "flex";
-  form.classList.add("active");
-  setTimeout(() => {
-    form.style.opacity = 1;
-    formBox.style.animation = "bubblePop .5s ease forwards";
-  }, 50);
-  titulo.textContent = tipo === "nacional" ? "Vuelo Nacional" : "Vuelo Internacional";
+
+  home.classList.add("blur"); home.style.opacity=0; setTimeout(()=>home.style.display="none",300);
+  form.style.display="flex"; form.classList.add("active");
+  setTimeout(()=>{ form.style.opacity=1; formBox.style.animation="bubblePop .5s ease forwards"; },50);
+
+  titulo.textContent = tipo==="nacional" ? "Vuelo Nacional" : "Vuelo Internacional";
   cargarAeropuertos(tipo);
 }
 
-function cargarAeropuertos(tipo) {
+function cargarAeropuertos(tipo){
   const origen = document.getElementById("origen");
   const destino = document.getElementById("destino");
-  origen.innerHTML = '<option value="">Origen</option>';
-  destino.innerHTML = '<option value="">Destino</option>';
-  // Si es nacional → solo nacionales / si es internacional → nacionales + internacionales
-  let lista = tipo === "nacional"
-    ? aeropuertosNacionales
-    : [...aeropuertosNacionales, ...aeropuertosInternacionales];
-  lista.forEach(a => {
-    origen.appendChild(new Option(a, a));
-    destino.appendChild(new Option(a, a));
+  origen.innerHTML='<option value="">Origen</option>'; destino.innerHTML='<option value="">Destino</option>';
+  
+  let lista = tipo==="nacional"? aeropuertosNacionales : [...aeropuertosNacionales,...aeropuertosInternacionales];
+
+  lista.forEach(a=>{
+    origen.appendChild(new Option(a,a));
+    destino.appendChild(new Option(a,a));
   });
 }
 
-function cambiarFechas() {
-  const tipoV = document.getElementById("tipoViaje").value;
-  const fechaRegreso = document.getElementById("fechaRegreso");
-  const labelRegreso = fechaRegreso.previousElementSibling;
-  if (tipoV === "ida-regreso") {
-    fechaRegreso.style.display = "block";
-    labelRegreso.style.display = "block";
-  } else {
-    fechaRegreso.style.display = "none";
-    labelRegreso.style.display = "none";
-  }
+function cambiarFechas(){
+  const tipoV=document.getElementById("tipoViaje").value;
+  const fechaRegreso=document.getElementById("fechaRegreso");
+  const labelRegreso=fechaRegreso.previousElementSibling;
+  if(tipoV==="ida-regreso"){fechaRegreso.style.display="block"; labelRegreso.style.display="block";}
+  else{fechaRegreso.style.display="none"; labelRegreso.style.display="none";}
 }
 
-function enviarWhatsApp() {
-  const o = document.getElementById("origen").value;
-  const d = document.getElementById("destino").value;
-  const fi = document.getElementById("fechaIda").value;
-  const fr = document.getElementById("fechaRegreso").value;
-  const tv = document.getElementById("tipoViaje").value;
-  if (!o || !d || !fi || !tv) { alert("Completa todos los campos"); return; }
-  let msg = `✈️ Solicitud de vuelo Avianca%0AOrigen: ${o}%0ADestino: ${d}%0AFecha ida: ${fi}`;
-  if (tv === "ida-regreso") msg += `%0AFecha regreso: ${fr}`;
-  window.open(`https://wa.me/573016791639?text=${msg}`, "_blank");
+function enviarWhatsApp(){
+  const o=document.getElementById("origen").value;
+  const d=document.getElementById("destino").value;
+  const fi=document.getElementById("fechaIda").value;
+  const fr=document.getElementById("fechaRegreso").value;
+  const tv=document.getElementById("tipoViaje").value;
+  if(!o||!d||!fi||!tv){alert("Completa todos los campos"); return;}
+  let msg=`✈️ Solicitud de vuelo Avianca%0AOrigen: ${o}%0ADestino: ${d}%0AFecha ida: ${fi}`;
+  if(tv==="ida-regreso") msg+=`%0AFecha regreso: ${fr}`;
+  window.open(`https://wa.me/573016791639?text=${msg}`,"_blank");
 }
 
-function regresarInicio() {
-  const home = document.getElementById("home");
-  const form = document.getElementById("formulario");
+function regresarInicio(){
+  const home=document.getElementById("home");
+  const form=document.getElementById("formulario");
   home.classList.remove("blur");
-  form.style.opacity = 0;
-  setTimeout(() => form.style.display = "none", 300);
-  home.style.display = "flex";
-  setTimeout(() => home.style.opacity = 1, 50);
+  form.style.opacity=0;
+  setTimeout(()=>{form.style.display="none"; form.classList.remove("active");},300);
+  home.style.display="flex";
+  setTimeout(()=>home.style.opacity=1,50);
 }
 </script>
 
