@@ -4,21 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Avianca Travel Assistance</title>
-<meta name="description" content="Cotiza vuelos nacionales e internacionales de Avianca de manera rápida y sencilla.">
 
 <style>
-*{
-  box-sizing:border-box;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;
-  margin:0;
-  padding:0;
-}
-
-body{
-  background:#000;
-  color:#fff;
-  overflow:hidden;
-}
+*{box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;margin:0;padding:0;}
+body{background:#000;color:#fff;overflow:hidden;}
 
 section{
   min-height:100vh;
@@ -32,41 +21,38 @@ section{
 }
 
 #home,#formulario{
-  background:
-    linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.7)),
-    url("https://images.unsplash.com/photo-1436491865332-7a61a109cc05");
+  background:linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.7)),
+  url("https://images.unsplash.com/photo-1436491865332-7a61a109cc05");
   background-size:cover;
   background-position:center;
 }
 
-/* ===== HOME ===== */
+/* HOME */
 #home{
   flex-direction:column;
   text-align:center;
-  transform:translateY(-60px); /* SUBE TODO EL BLOQUE */
+  transform:translateY(-60px);
   z-index:2;
 }
-
 #home.oculto{
   opacity:0;
   transform:translateY(-120px);
   pointer-events:none;
 }
 
-/* ===== FORM ===== */
+/* FORM */
 #formulario{
   opacity:0;
   transform:translateY(40px) scale(.96);
   pointer-events:none;
 }
-
 #formulario.activo{
   opacity:1;
   transform:translateY(0) scale(1);
   pointer-events:auto;
 }
 
-/* ===== LOGO ===== */
+/* LOGO */
 .logo-img{
   width:540px;
   max-width:95%;
@@ -76,11 +62,9 @@ section{
   animation:fadeDown 1s ease forwards .3s;
 }
 
-/* ===== SLOGAN ===== */
+/* SLOGAN */
 .slogan{
   font-size:20px;
-  font-style:italic;
-  line-height:1.2;
   margin-bottom:30px;
   opacity:0;
   animation:
@@ -88,94 +72,55 @@ section{
     sloganFloat 4s ease-in-out infinite 1.8s;
 }
 
-/* MICRO ANIMACIÓN PREMIUM */
 @keyframes sloganFloat{
-  0%{transform:translateY(0);opacity:.85;}
-  50%{transform:translateY(-4px);opacity:1;}
-  100%{transform:translateY(0);opacity:.85;}
+  0%{transform:translateY(0);}
+  50%{transform:translateY(-4px);}
+  100%{transform:translateY(0);}
 }
 
-/* ANIMACIÓN ENTRADA */
 @keyframes fadeDown{
   to{opacity:1;transform:none;}
 }
 
-/* ===== OPCIONES ===== */
-.opciones{
-  display:flex;
-  gap:30px;
-  flex-wrap:wrap;
-  justify-content:center;
-}
-
+/* OPTIONS */
+.opciones{display:flex;gap:30px;justify-content:center;}
 .opcion{
-  width:220px;
-  height:320px;
-  border-radius:20px;
-  display:flex;
-  align-items:flex-end;
-  justify-content:center;
-  padding:20px;
-  font-size:22px;
-  font-weight:600;
+  width:220px;height:320px;border-radius:20px;
   background:linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.7));
-  border:none;
-  color:#fff;
-  cursor:pointer;
-  transition:transform .4s ease, box-shadow .4s ease;
+  color:#fff;font-size:22px;font-weight:600;
+  border:none;cursor:pointer;
+  transition:.4s;
 }
+.opcion:hover{transform:translateY(-8px) scale(1.04);}
 
-.opcion:hover{
-  transform:translateY(-8px) scale(1.04);
-  box-shadow:0 25px 50px rgba(0,0,0,.6);
-}
-
-/* ===== FORM BOX ===== */
+/* FORM BOX */
 .form-box{
-  background:#fff;
-  color:#000;
-  border-radius:22px;
-  padding:30px;
-  max-width:420px;
-  width:100%;
+  background:#fff;color:#000;border-radius:22px;
+  padding:30px;max-width:420px;width:100%;
   animation:formPop .7s ease forwards;
 }
 
 @keyframes formPop{
   0%{opacity:0;transform:scale(.85);}
-  60%{opacity:1;transform:scale(1.05);}
+  60%{transform:scale(1.05);}
   100%{opacity:1;transform:scale(1);}
 }
 
 label{display:block;margin-top:12px;}
 select,input,button{
-  width:100%;
-  padding:14px;
-  margin-top:6px;
-  border-radius:12px;
-  border:1px solid #ccc;
+  width:100%;padding:14px;margin-top:6px;
+  border-radius:12px;border:1px solid #ccc;
 }
 
-button{
-  background:#c8102e;
-  color:#fff;
-  border:none;
-  margin-top:20px;
-  cursor:pointer;
-}
-
-.footer{
-  margin-top:15px;
-  font-size:12px;
-  color:#666;
-}
+button{background:#c8102e;color:#fff;border:none;margin-top:20px;cursor:pointer;}
+.footer{margin-top:15px;font-size:12px;color:#666;}
 </style>
 </head>
 
 <body>
 
 <section id="home">
-  <img src="logo-avianca-lat.png" class="logo-img" alt="AVIANCA-LAT">
+  <img src="logo-avianca-lat.png" class="logo-img">
   <div class="slogan">Tu viaje empieza aquí</div>
 
   <div class="opciones">
@@ -215,7 +160,56 @@ button{
 </section>
 
 <script>
-/* JS exactamente igual al que ya tenías */
+const aeropuertosNacionales=[
+"Bogotá (BOG)","Medellín (MDE)","Cali (CLO)","Cartagena (CTG)",
+"Barranquilla (BAQ)","Bucaramanga (BGA)","Santa Marta (SMR)",
+"San Andrés (ADZ)","Pereira (PEI)","Neiva (NVA)"
+];
+
+const aeropuertosInternacionales=[
+"Miami (MIA)","New York (JFK)","Los Angeles (LAX)","Madrid (MAD)",
+"Paris (CDG)","Barcelona (BCN)","Londres (LHR)"
+];
+
+function seleccionar(tipo){
+  document.getElementById("home").classList.add("oculto");
+  const form=document.getElementById("formulario");
+  form.classList.add("activo");
+
+  document.getElementById("tipoVueloTitulo").textContent =
+    tipo==="nacional"?"Vuelo Nacional":"Vuelo Internacional";
+
+  const lista = tipo==="nacional"
+    ? aeropuertosNacionales
+    : [...aeropuertosNacionales,...aeropuertosInternacionales];
+
+  cargar(lista);
+}
+
+function cargar(lista){
+  const o=document.getElementById("origen");
+  const d=document.getElementById("destino");
+  o.innerHTML='<option>Origen</option>';
+  d.innerHTML='<option>Destino</option>';
+  lista.forEach(a=>{
+    o.appendChild(new Option(a,a));
+    d.appendChild(new Option(a,a));
+  });
+}
+
+function cambiarFechas(){
+  const fr=document.getElementById("fechaRegreso");
+  const lr=document.getElementById("labelRegreso");
+  const show=document.getElementById("tipoViaje").value==="ida-regreso";
+  fr.style.display=lr.style.display=show?"block":"none";
+}
+
+function regresarInicio(){
+  document.getElementById("formulario").classList.remove("activo");
+  document.getElementById("home").classList.remove("oculto");
+}
+
+function enviarWhatsApp(){}
 </script>
 
 </body>
