@@ -273,10 +273,10 @@ button{
     <datalist id="aeropuertos"></datalist>
 
     <label>Tipo de viaje</label>
-    <select id="tipoViaje">
+    <select id="tipoViaje" onchange="toggleRegreso()">
       <option value="">Selecciona</option>
-      <option>Solo ida</option>
-      <option>Ida y regreso</option>
+      <option value="Solo ida">Solo ida</option>
+      <option value="Ida y regreso">Ida y regreso</option>
     </select>
 
     <label>Pasajeros</label>
@@ -287,7 +287,13 @@ button{
     </select>
 
     <label>Fecha ida</label>
-    <input type="date" id="fechaIda">
+    <input type="date" id="fechaIda" onchange="ajustarRegreso()">
+
+    <!-- NUEVO CAMPO DE REGRESO -->
+    <div id="regresoContainer" style="display:none;">
+      <label>Fecha regreso</label>
+      <input type="date" id="fechaRegreso">
+    </div>
 
     <label>Tarifa</label>
     <div class="tarifas">
@@ -389,6 +395,38 @@ function tarifaSel(el,val){
   el.classList.add("selected");
 }
 
+function toggleRegreso(){
+  const tipo = document.getElementById("tipoViaje").value;
+  const cont = document.getElementById("regresoContainer");
+  cont.style.display = tipo === "Ida y regreso" ? "block" : "none";
+
+  // si es solo ida, limpiar fecha regreso
+  if(tipo !== "Ida y regreso"){
+    document.getElementById("fechaRegreso").value = "";
+  }
+
+  ajustarRegreso();
+}
+
+function ajustarRegreso(){
+  const ida = document.getElementById("fechaIda").value;
+  const regreso = document.getElementById("fechaRegreso");
+
+  // si no hay ida, no hay mínimo
+  if(!ida){
+    regreso.removeAttribute("min");
+    return;
+  }
+
+  // ajustar mínimo
+  regreso.min = ida;
+
+  // si ya hay regreso pero es menor que ida, limpiar
+  if(regreso.value && regreso.value < ida){
+    regreso.value = "";
+  }
+}
+
 function enviar(){
   let campos=["origen","destino","tipoViaje","pasajeros","fechaIda"];
   let ok=true;
@@ -397,6 +435,24 @@ function enviar(){
     e.classList.remove("error");
     if(!e.value){e.classList.add("error");ok=false}
   });
+
+  // Validación adicional para regreso
+  if(document.getElementById("tipoViaje").value==="Ida y regreso"){
+    const fechaRegreso = document.getElementById("fechaRegreso");
+    fechaRegreso.classList.remove("error");
+    if(!fechaRegreso.value){fechaRegreso.classList.add("error");ok=false}
+    else{
+      // Validación: regreso NO puede ser antes que ida
+      const ida = new Date(document.getElementById("fechaIda").value);
+      const regreso = new Date(fechaRegreso.value);
+      if(regreso < ida){
+        fechaRegreso.classList.add("error");
+        ok=false;
+        alert("La fecha de regreso no puede ser anterior a la fecha de ida.");
+      }
+    }
+  }
+
   if(!tarifa){alert("Selecciona una tarifa");return}
   if(!ok)return;
 
@@ -405,7 +461,8 @@ Origen: ${origen.value}
 Destino: ${destino.value}
 Viaje: ${tipoViaje.value}
 Pasajeros: ${pasajeros.value}
-Fecha: ${fechaIda.value}
+Fecha ida: ${fechaIda.value}
+${tipoViaje.value==="Ida y regreso" ? "Fecha regreso: " + fechaRegreso.value : ""}
 Tarifa: ${tarifa}`;
   window.open(`https://wa.me/573016791639?text=${encodeURIComponent(msg)}`,"_blank");
 }
