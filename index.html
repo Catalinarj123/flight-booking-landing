@@ -206,18 +206,30 @@ button{
 /* FIX FORMULARIO EN MOVIL */
 @media(max-width:600px){
   #formulario{
-    position:relative;
-    min-height:100vh;
+    position:fixed;
+    inset:0;
     display:flex;
-    justify-content:center;
-    align-items:center;
+    justify-content:flex-start;
+    align-items:flex-start;
     padding:20px;
-    overflow:visible;
+    overflow:auto;
+    background:
+      linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.8)),
+      url("https://images.unsplash.com/photo-1436491865332-7a61a109cc05");
+    background-size:cover;
+    background-position:center;
   }
   #formulario .form-box{
     max-width:100%;
     width:100%;
   }
+}
+
+/* ❗ SOLUCIÓN FINAL: EL FORMULARIO OCUPA PANTALLA COMPLETA AL ACTIVARSE */
+#formulario.activo{
+  position:fixed;
+  inset:0;
+  z-index:10;
 }
 </style>
 </head>
