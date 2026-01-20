@@ -16,7 +16,6 @@
   margin:0;
   padding:0;
 }
-
 body{background:#000;color:#fff;overflow:hidden;}
 
 section{
@@ -55,9 +54,7 @@ section{
   animation:splashLogo 1.4s ease forwards;
 }
 @keyframes splashLogo{
-  0%{opacity:0;transform:scale(.85);}
-  60%{opacity:1;transform:scale(1.05);}
-  100%{opacity:1;transform:scale(1);}
+  to{opacity:1;transform:scale(1);}
 }
 @keyframes splashOut{
   to{opacity:0;pointer-events:none;}
@@ -85,70 +82,29 @@ section{
   transform:translateY(-30px);
   animation:fadeDown 1s ease forwards .3s;
 }
-@keyframes fadeDown{
-  to{opacity:1;transform:none;}
-}
+@keyframes fadeDown{to{opacity:1;transform:none;}}
 
-/* SLOGAN */
 .slogan{
   font-size:20px;
   margin-bottom:40px;
-  opacity:0;
-  animation:
-    fadeDown 1s ease forwards .6s,
-    sloganFloat 4s ease-in-out infinite 1.8s;
-}
-@keyframes sloganFloat{
-  0%{transform:translateY(0);}
-  50%{transform:translateY(-4px);}
-  100%{transform:translateY(0);}
 }
 
 /* TARJETAS */
-.opciones{
-  display:flex;
-  gap:36px;
-  justify-content:center;
-}
+.opciones{display:flex;gap:36px;}
 .opcion{
-  width:240px;
-  height:340px;
-  border-radius:26px;
-  border:none;
-  cursor:pointer;
-  color:#fff;
-  font-size:22px;
-  font-weight:600;
-  display:flex;
-  align-items:flex-end;
-  justify-content:center;
-  padding:28px;
-  background-size:cover;
-  background-position:center;
-  position:relative;
-  overflow:hidden;
-  box-shadow:0 25px 60px rgba(0,0,0,.65);
-  transition:transform .35s ease, box-shadow .35s ease, filter .35s ease;
+  width:240px;height:340px;border-radius:26px;
+  cursor:pointer;font-size:22px;font-weight:600;
+  display:flex;align-items:flex-end;justify-content:center;
+  padding:28px;color:#fff;
+  background-size:cover;background-position:center;
+  transition:.35s;
 }
-.opcion:active{transform:scale(.96);}
-.opcion::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(to top, rgba(0,0,0,.8), rgba(0,0,0,.25));
-}
-.opcion span{position:relative;z-index:1;}
-
+.opcion:hover{transform:translateY(-14px) scale(1.04);}
 .opcion.nacional{
   background-image:url("https://images.unsplash.com/photo-1529070538774-1843cb3265df");
 }
 .opcion.internacional{
   background-image:url("https://images.unsplash.com/photo-1464037866556-6812c9d1c72e");
-}
-.opcion:hover{
-  transform:translateY(-14px) scale(1.04);
-  box-shadow:0 40px 80px rgba(0,0,0,.8);
-  filter: brightness(1.15) saturate(1.1);
 }
 
 /* FORM */
@@ -159,7 +115,7 @@ section{
 }
 #formulario.activo{
   opacity:1;
-  transform:translateY(0) scale(1);
+  transform:none;
   pointer-events:auto;
 }
 
@@ -169,58 +125,40 @@ section{
   padding:30px;
   max-width:420px;width:100%;
 }
-
 label{display:block;margin-top:12px;}
-select,input,button{
+input,select,button{
   width:100%;padding:14px;margin-top:6px;
   border-radius:12px;border:1px solid #ccc;
 }
-
-button{
-  background:#c8102e;
-  color:#fff;
-  border:none;
-  margin-top:20px;
-  cursor:pointer;
-}
-.footer{
-  margin-top:15px;
-  font-size:12px;
-  color:#666;
-  text-align:center;
-}
-
-/* VALIDACIÓN */
-input.error{border:2px solid #c8102e;background:#fff5f5;}
-input.ok{border:2px solid #2ecc71;background:#f3fff7;}
+button{background:#c8102e;color:#fff;border:none;cursor:pointer;}
 
 .tarifa-info{
   margin-top:8px;
   font-size:14px;
-  color:#444;
   background:#f6f6f6;
-  padding:10px 12px;
+  padding:10px;
   border-radius:10px;
 }
+.footer{text-align:center;font-size:12px;margin-top:15px;}
 </style>
 </head>
 
 <body>
 
 <div id="splash">
-  <img src="avianca_logo_transparent.png" alt="Avianca">
+  <img src="avianca_logo_transparent.png">
 </div>
 
 <section id="home">
-  <img src="avianca_logo_transparent.png" class="logo-img" alt="Avianca">
+  <img src="avianca_logo_transparent.png" class="logo-img">
   <div class="slogan">¡El cielo es de todos!</div>
 
   <div class="opciones">
     <button class="opcion nacional" onclick="seleccionar('nacional')">
-      <span>Vuelos Nacionales</span>
+      Vuelos Nacionales
     </button>
     <button class="opcion internacional" onclick="seleccionar('internacional')">
-      <span>Vuelos Internacionales</span>
+      Vuelos Internacionales
     </button>
   </div>
 </section>
@@ -230,10 +168,10 @@ input.ok{border:2px solid #2ecc71;background:#f3fff7;}
     <h2 id="tipoVueloTitulo">Solicita tu vuelo</h2>
 
     <label>Origen</label>
-    <input id="origen" list="listaAeropuertos" placeholder="Escribe origen">
+    <input id="origen" list="listaAeropuertos">
 
     <label>Destino</label>
-    <input id="destino" list="listaAeropuertos" placeholder="Escribe destino">
+    <input id="destino" list="listaAeropuertos">
 
     <datalist id="listaAeropuertos"></datalist>
 
@@ -254,12 +192,10 @@ input.ok{border:2px solid #2ecc71;background:#f3fff7;}
 
     <div id="descripcionTarifa" class="tarifa-info" style="display:none;"></div>
 
-    <label>Número de pasajeros</label>
+    <label>Pasajeros</label>
     <select id="pasajeros">
-      <option value="">Selecciona</option>
-      <option value="1">1 pasajero</option>
-      <option value="2">2 pasajeros</option>
-      <option value="3">3 pasajeros</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
     </select>
 
     <label>Fecha ida</label>
@@ -277,15 +213,43 @@ input.ok{border:2px solid #2ecc71;background:#f3fff7;}
 <script>
 setTimeout(()=>document.getElementById("splash").remove(),3600);
 
+function seleccionar(tipo){
+  home.classList.add("oculto");
+  formulario.classList.add("activo");
+  tipoVueloTitulo.textContent =
+    tipo==="nacional" ? "Vuelos Nacionales" : "Vuelos Internacionales";
+
+  listaAeropuertos.innerHTML = "";
+  const aeropuertos = tipo==="nacional"
+    ? ["Bogotá (BOG)","Medellín (MDE)","Cali (CLO)"]
+    : ["Bogotá (BOG)","Miami (MIA)","Madrid (MAD)","México (MEX)"];
+
+  aeropuertos.forEach(a=>{
+    const o=document.createElement("option");
+    o.value=a;
+    listaAeropuertos.appendChild(o);
+  });
+}
+
+function cambiarFechas(){
+  const mostrar = tipoViaje.value==="ida-regreso";
+  labelRegreso.style.display = mostrar?"block":"none";
+  fechaRegreso.style.display = mostrar?"block":"none";
+}
+
 function mostrarDescripcionTarifa(){
-  if(tipoTarifa.value==="BASIC"){
-    descripcionTarifa.textContent="Incluye solo un (1) morral.";
-  }else if(tipoTarifa.value==="CLASSIC"){
-    descripcionTarifa.textContent="Incluye un (1) morral y equipaje de mano de 12Kg.";
-  }else{
-    descripcionTarifa.textContent="Incluye asiento preferencial, acceso a sala de espera VIP, equipaje de mano de 12Kg y equipaje de bodega 23Kg.";
-  }
-  descripcionTarifa.style.display="block";
+  const d=descripcionTarifa;
+  if(tipoTarifa.value==="BASIC")
+    d.textContent="Incluye solo un (1) morral.";
+  else if(tipoTarifa.value==="CLASSIC")
+    d.textContent="Incluye un (1) morral y equipaje de mano.";
+  else
+    d.textContent="Incluye equipaje completo y beneficios Business.";
+  d.style.display="block";
+}
+
+function enviarWhatsApp(){
+  window.open("https://wa.me/573000000000","_blank");
 }
 </script>
 
