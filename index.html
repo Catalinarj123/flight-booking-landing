@@ -19,27 +19,7 @@
 body{
   background:#000;
   color:#fff;
-  -webkit-font-smoothing:antialiased;
-}
-body.home-lock{
   overflow:hidden;
-}
-section{
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:24px;
-  position:absolute;
-  inset:0;
-  transition:opacity .6s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.2,.8,.2,1);
-}
-#home,#formulario{
-  background:
-    linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.85)),
-    url("https://images.unsplash.com/photo-1436491865332-7a61a109cc05");
-  background-size:cover;
-  background-position:center;
 }
 
 /* SPLASH */
@@ -56,51 +36,47 @@ section{
 #splash img{
   width:260px;
   opacity:0;
-  animation:splashLogo 1.4s cubic-bezier(.2,.8,.2,1) forwards;
+  animation:splashLogo 1.4s ease forwards;
 }
 @keyframes splashLogo{
-  0%{opacity:0;transform:scale(.85);}
-  100%{opacity:1;transform:scale(1);}
+  to{opacity:1;transform:scale(1)}
 }
 @keyframes splashOut{
-  to{opacity:0;pointer-events:none;}
+  to{opacity:0;pointer-events:none}
+}
+
+/* VISTAS */
+section{
+  position:absolute;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:30px;
 }
 
 /* HOME */
 #home{
   flex-direction:column;
   text-align:center;
-  transform:translateY(-40px);
-  z-index:2;
+  overflow:hidden;
 }
 #home.oculto{
   opacity:0;
-  transform:translateY(-120px) scale(.98);
   pointer-events:none;
 }
 
 /* LOGO */
 .logo-img{
   width:520px;
-  max-width:90%;
+  max-width:95%;
   margin-bottom:10px;
-  opacity:0;
-  transform:translateY(-30px);
-  animation:fadeDown 1s cubic-bezier(.2,.8,.2,1) forwards .3s;
-}
-@keyframes fadeDown{to{opacity:1;transform:none;}}
-
-.slogan{
-  font-size:18px;
-  margin-bottom:32px;
-  opacity:0;
-  animation:fadeDown 1s cubic-bezier(.2,.8,.2,1) forwards .6s;
 }
 
-/* TARJETAS HOME */
+/* TARJETAS VUELO */
 .opciones{
   display:flex;
-  gap:20px;
+  gap:24px;
   flex-wrap:wrap;
   justify-content:center;
 }
@@ -116,16 +92,15 @@ section{
   display:flex;
   align-items:flex-end;
   justify-content:center;
-  padding:24px;
+  padding:26px;
   background-size:cover;
   position:relative;
-  overflow:hidden;
   box-shadow:0 25px 60px rgba(0,0,0,.65);
-  transition:.5s;
+  transition:.4s;
 }
-.opcion:hover{transform:translateY(-10px) scale(1.05);}
-.opcion.nacional{background-image:url("https://images.unsplash.com/photo-1529070538774-1843cb3265df");}
-.opcion.internacional{background-image:url("https://images.unsplash.com/photo-1464037866556-6812c9d1c72e");}
+.opcion:hover{transform:scale(1.05)}
+.opcion.nacional{background-image:url("https://images.unsplash.com/photo-1529070538774-1843cb3265df")}
+.opcion.internacional{background-image:url("https://images.unsplash.com/photo-1464037866556-6812c9d1c72e")}
 .opcion::before{
   content:"";
   position:absolute;
@@ -134,91 +109,92 @@ section{
 }
 .opcion span{z-index:1}
 
-/* FORM */
+/* FORMULARIO */
 #formulario{
+  background:#f5f5f7;
+  color:#000;
   opacity:0;
-  transform:translateY(40px) scale(.96);
   pointer-events:none;
   overflow-y:auto;
 }
 #formulario.activo{
   opacity:1;
-  transform:none;
   pointer-events:auto;
 }
 .form-box{
   background:#fff;
-  color:#000;
-  border-radius:22px;
+  border-radius:24px;
   padding:26px;
-  max-width:480px;
+  max-width:460px;
   width:100%;
   margin:auto;
+  box-shadow:0 40px 100px rgba(0,0,0,.25);
 }
-label{display:block;margin-top:14px;}
-input,select,button{
+label{
+  display:block;
+  margin-top:14px;
+  font-weight:600;
+}
+input,select{
   width:100%;
   padding:14px;
   margin-top:6px;
-  border-radius:12px;
+  border-radius:14px;
   border:1px solid #ccc;
 }
-input.error,select.error{border-color:#c8102e;}
-button{
-  background:#c8102e;
-  color:#fff;
-  border:none;
-  margin-top:20px;
-  cursor:pointer;
+input.error,select.error{
+  border:2px solid #ff3b30;
 }
 
 /* TARIFAS */
 .tarifas{
   display:grid;
+  grid-template-columns:1fr;
   gap:14px;
-  margin-top:8px;
+  margin-top:10px;
 }
-.tarjeta-tarifa{
-  border:1.5px solid #ddd;
-  border-radius:16px;
+.tarifa{
+  border:1px solid #d1d1d6;
+  border-radius:18px;
   padding:14px;
   cursor:pointer;
-  transition:.3s;
+  transition:.25s;
 }
-.tarjeta-tarifa.activa{
-  border-color:#007aff;
-  box-shadow:0 0 0 2px rgba(0,122,255,.2);
-  background:#f5faff;
-}
-.error-text{
-  color:#c8102e;
-  font-size:13px;
-  display:none;
+.tarifa strong{font-size:16px}
+.tarifa.selected{
+  border:2px solid #007aff;
+  background:#f0f6ff;
 }
 
-.footer{
-  margin-top:15px;
-  font-size:12px;
-  text-align:center;
-  color:#666;
+/* BOTONES */
+button{
+  width:100%;
+  padding:16px;
+  margin-top:22px;
+  border-radius:18px;
+  border:none;
+  font-weight:600;
+  cursor:pointer;
 }
+.btn-main{background:#c8102e;color:#fff}
+.btn-back{background:#e5e5ea;color:#000}
 
+/* MOBILE */
 @media(max-width:600px){
-  .opciones{gap:14px;}
-  .opcion{width:160px;height:240px;font-size:16px;}
+  .opciones{flex-direction:column}
+  .opcion{width:100%}
 }
 </style>
 </head>
 
-<body class="home-lock">
+<body>
 
 <div id="splash">
-  <img src="avianca_logo_transparent.png" alt="Avianca">
+  <img src="avianca_logo_transparent.png">
 </div>
 
 <section id="home">
   <img src="avianca_logo_transparent.png" class="logo-img">
-  <div class="slogan">¡El cielo es de todos!</div>
   <div class="opciones">
     <button class="opcion nacional" onclick="seleccionar('nacional')"><span>Vuelos Nacionales</span></button>
     <button class="opcion internacional" onclick="seleccionar('internacional')"><span>Vuelos Internacionales</span></button>
@@ -227,21 +203,21 @@ button{
 
 <section id="formulario">
   <div class="form-box">
-    <h2 id="tipoVueloTitulo"></h2>
+    <h2 id="titulo"></h2>
 
     <label>Origen</label>
-    <input id="origen" list="listaAeropuertos">
+    <input id="origen" list="aeropuertos">
 
     <label>Destino</label>
-    <input id="destino" list="listaAeropuertos">
+    <input id="destino" list="aeropuertos">
 
-    <datalist id="listaAeropuertos"></datalist>
+    <datalist id="aeropuertos"></datalist>
 
     <label>Tipo de viaje</label>
-    <select id="tipoViaje" onchange="cambiarFechas()">
+    <select id="tipoViaje">
       <option value="">Selecciona</option>
-      <option value="ida">Solo ida</option>
-      <option value="ida-regreso">Ida y regreso</option>
+      <option value="Solo ida">Solo ida</option>
+      <option value="Ida y regreso">Ida y regreso</option>
     </select>
 
     <label>Pasajeros</label>
@@ -251,98 +227,74 @@ button{
       <option>5</option><option>6</option><option>7</option><option>8</option><option>9</option>
     </select>
 
-    <label>Tarifa</label>
-    <div class="tarifas" id="tarifasBox">
-      <div class="tarjeta-tarifa" onclick="seleccionarTarifa(this,'Basic')"><strong>Basic</strong><br><small>Solo un (1) morral</small></div>
-      <div class="tarjeta-tarifa" onclick="seleccionarTarifa(this,'Classic')"><strong>Classic</strong><br><small>Morral + equipaje de mano 12Kg</small></div>
-      <div class="tarjeta-tarifa" onclick="seleccionarTarifa(this,'Business')"><strong>Business</strong><br><small>Equipaje de mano, bodega y beneficios</small></div>
-    </div>
-    <div class="error-text" id="errorTarifa">Selecciona una tarifa</div>
-
     <label>Fecha ida</label>
     <input type="date" id="fechaIda">
 
-    <label id="labelRegreso" style="display:none">Fecha regreso</label>
-    <input type="date" id="fechaRegreso" style="display:none">
+    <label>Tarifa</label>
+    <div class="tarifas">
+      <div class="tarifa" onclick="tarifaSel(this,'Basic')"><strong>Basic</strong><br>Solo un (1) morral</div>
+      <div class="tarifa" onclick="tarifaSel(this,'Classic')"><strong>Classic</strong><br>Morral + equipaje de mano 12Kg</div>
+      <div class="tarifa" onclick="tarifaSel(this,'Business')"><strong>Business</strong><br>Equipaje completo + beneficios Business</div>
+    </div>
 
-    <button onclick="enviarWhatsApp()">COTIZA AHORA</button>
-    <button onclick="regresarInicio()">← Regresar</button>
-
-    <div class="footer">Vuelos operados por AVIANCA AIRLINES</div>
+    <button class="btn-main" onclick="enviar()">COTIZA AHORA</button>
+    <button class="btn-back" onclick="volver()">← Regresar</button>
   </div>
 </section>
 
 <script>
-setTimeout(()=>document.getElementById("splash").remove(),3600);
-
 const aeropuertos=[
 "Colombia - Bogotá (BOG)","Colombia - Medellín (MDE)","Colombia - Cali (CLO)",
 "Colombia - Cartagena (CTG)","Colombia - Barranquilla (BAQ)",
 "Colombia - Santa Marta (SMR)","Colombia - San Andrés (ADZ)",
-"Colombia - Pereira (PEI)","Colombia - Bucaramanga (BGA)",
-"Colombia - Cúcuta (CUC)","Colombia - Armenia (AXM)",
-"Colombia - Manizales (MZL)","Colombia - Pasto (PSO)",
-"Colombia - Neiva (NVA)","Colombia - Villavicencio (VVC)",
-"Colombia - Leticia (LET)","Colombia - Yopal (EYP)",
 "Panamá - Ciudad de Panamá (PTY)",
 "Estados Unidos - Miami (MIA)","Estados Unidos - Nueva York (JFK)",
-"Estados Unidos - Orlando (MCO)","Estados Unidos - Fort Lauderdale (FLL)",
-"Estados Unidos - Chicago (ORD)","Estados Unidos - Dallas (DFW)",
-"Estados Unidos - Los Ángeles (LAX)","Estados Unidos - Washington (IAD)",
-"Estados Unidos - Boston (BOS)",
-"México - Ciudad de México (MEX)","México - Cancún (CUN)",
-"El Salvador - San Salvador (SAL)",
-"Costa Rica - San José (SJO)",
-"Guatemala - Ciudad de Guatemala (GUA)",
-"Perú - Lima (LIM)","Ecuador - Quito (UIO)",
-"Chile - Santiago (SCL)","Argentina - Buenos Aires (EZE)",
-"Uruguay - Montevideo (MVD)","Brasil - São Paulo (GRU)",
-"España - Madrid (MAD)","España - Barcelona (BCN)",
-"Francia - París (CDG)","Reino Unido - Londres (LHR)"
+"Estados Unidos - Orlando (MCO)","México - Cancún (CUN)",
+"España - Madrid (MAD)","Francia - París (CDG)",
+"Reino Unido - Londres (LHR)"
 ];
 
-let tarifaSeleccionada="";
+const dl=document.getElementById("aeropuertos");
+aeropuertos.forEach(a=>dl.appendChild(new Option(a,a)));
+
+let tarifa="";
+
 function seleccionar(tipo){
-  document.body.classList.remove("home-lock");
-  home.classList.add("oculto");
-  formulario.classList.add("activo");
-  tipoVueloTitulo.textContent=tipo==="nacional"?"Vuelo Nacional":"Vuelo Internacional";
-  listaAeropuertos.innerHTML="";
-  aeropuertos.forEach(a=>{
-    if(tipo==="nacional" && !a.startsWith("Colombia")) return;
-    listaAeropuertos.appendChild(new Option(a,a));
-  });
+  document.getElementById("home").classList.add("oculto");
+  document.getElementById("formulario").classList.add("activo");
+  document.getElementById("titulo").textContent=tipo==="nacional"?"Vuelo Nacional":"Vuelo Internacional";
 }
-function seleccionarTarifa(card,valor){
-  document.querySelectorAll(".tarjeta-tarifa").forEach(t=>t.classList.remove("activa"));
-  card.classList.add("activa");
-  tarifaSeleccionada=valor;
-  errorTarifa.style.display="none";
+
+function tarifaSel(el,val){
+  tarifa=val;
+  document.querySelectorAll(".tarifa").forEach(t=>t.classList.remove("selected"));
+  el.classList.add("selected");
 }
-function cambiarFechas(){
-  const show=tipoViaje.value==="ida-regreso";
-  fechaRegreso.style.display=labelRegreso.style.display=show?"block":"none";
-}
-function regresarInicio(){
-  location.reload();
-}
-function enviarWhatsApp(){
+
+function enviar(){
+  let campos=["origen","destino","tipoViaje","pasajeros","fechaIda"];
   let ok=true;
-  document.querySelectorAll("input,select").forEach(i=>{
-    if(!i.value){i.classList.add("error");ok=false;}
-    else i.classList.remove("error");
+  campos.forEach(id=>{
+    let e=document.getElementById(id);
+    e.classList.remove("error");
+    if(!e.value){e.classList.add("error");ok=false}
   });
-  if(!tarifaSeleccionada){errorTarifa.style.display="block";ok=false;}
-  if(!ok) return;
-  let msg=`✈️ Cotización Avianca
+  if(!tarifa){alert("Selecciona una tarifa");return}
+  if(!ok)return;
+
+  let msg=`Cotización Avianca
 Origen: ${origen.value}
 Destino: ${destino.value}
 Viaje: ${tipoViaje.value}
 Pasajeros: ${pasajeros.value}
-Tarifa: ${tarifaSeleccionada}
-Fecha ida: ${fechaIda.value}`;
-  if(tipoViaje.value==="ida-regreso") msg+=`\nFecha regreso: ${fechaRegreso.value}`;
+Fecha: ${fechaIda.value}
+Tarifa: ${tarifa}`;
   window.open(`https://wa.me/573016791639?text=${encodeURIComponent(msg)}`,"_blank");
+}
+
+function volver(){
+  document.getElementById("formulario").classList.remove("activo");
+  document.getElementById("home").classList.remove("oculto");
 }
 </script>
 
