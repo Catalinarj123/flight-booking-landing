@@ -298,7 +298,10 @@ function seleccionar(tipo){
   formulario.classList.add("activo");
   tipoVueloTitulo.textContent=tipo==="nacional"?"Vuelo Nacional":"Vuelo Internacional";
   listaAeropuertos.innerHTML="";
-  aeropuertos.forEach(a=>listaAeropuertos.appendChild(new Option(a,a)));
+  aeropuertos.forEach(a=>{
+    if(tipo==="nacional" && !a.startsWith("Colombia -")) return;
+    listaAeropuertos.appendChild(new Option(a,a));
+  });
 }
 
 function cambiarFechas(){
