@@ -16,16 +16,10 @@
   margin:0;
   padding:0;
 }
-
-/* FONDO GLOBAL (HOME + FORMULARIO) */
 body{
+  background:#000;
   color:#fff;
   overflow:hidden;
-  background:
-    linear-gradient(rgba(0,0,0,.72),rgba(0,0,0,.88)),
-    url("https://images.unsplash.com/photo-1436491865332-7a61a109cc05");
-  background-size:cover;
-  background-position:center;
 }
 
 /* SPLASH */
@@ -37,20 +31,15 @@ body{
   align-items:center;
   justify-content:center;
   z-index:9999;
-  animation:splashOut 2s cubic-bezier(.4,0,.2,1) forwards 1.8s;
+  animation:splashOut 2s ease forwards 1.8s;
 }
 #splash img{
   width:260px;
   opacity:0;
-  animation:splashLogo 1.4s cubic-bezier(.2,.8,.2,1) forwards;
+  animation:splashLogo 1.4s ease forwards;
 }
-@keyframes splashLogo{
-  from{opacity:0;transform:scale(.9)}
-  to{opacity:1;transform:scale(1)}
-}
-@keyframes splashOut{
-  to{opacity:0;pointer-events:none}
-}
+@keyframes splashLogo{to{opacity:1;transform:scale(1)}}
+@keyframes splashOut{to{opacity:0;pointer-events:none}}
 
 /* VISTAS */
 section{
@@ -60,30 +49,33 @@ section{
   justify-content:center;
   align-items:center;
   padding:30px;
+  background:
+    linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.8)),
+    url("https://images.unsplash.com/photo-1436491865332-7a61a109cc05");
+  background-size:cover;
+  background-position:center;
 }
 
 /* HOME */
 #home{
   flex-direction:column;
   text-align:center;
+  overflow:hidden;
 }
-#home.oculto{
-  opacity:0;
-  pointer-events:none;
-}
+#home.oculto{opacity:0;pointer-events:none}
 
 /* LOGO */
 .logo-img{
-  width:560px;
+  width:520px;
   max-width:95%;
-  margin-bottom:12px;
+  margin-bottom:20px;
 }
 
-/* TARJETAS HOME – ESTILO APPLE */
+/* TARJETAS HOME */
 .opciones{
   display:flex;
-  gap:36px;
-  perspective:1200px;
+  gap:32px;
+  justify-content:center;
 }
 .opcion{
   width:240px;
@@ -102,59 +94,43 @@ section{
   position:relative;
   overflow:hidden;
   box-shadow:
-    0 25px 60px rgba(0,0,0,.55),
+    0 25px 60px rgba(0,0,0,.6),
     inset 0 1px 0 rgba(255,255,255,.15);
-  transition:
-    transform .6s cubic-bezier(.2,.8,.2,1),
-    box-shadow .6s cubic-bezier(.2,.8,.2,1);
+  transition:.45s cubic-bezier(.2,.8,.2,1);
 }
 .opcion:hover{
-  transform:translateY(-14px) scale(1.06);
-  box-shadow:
-    0 50px 100px rgba(0,0,0,.8),
-    inset 0 1px 0 rgba(255,255,255,.25);
-}
-.opcion.nacional{
-  background-image:url("https://images.unsplash.com/photo-1529070538774-1843cb3265df");
-}
-.opcion.internacional{
-  background-image:url("https://images.unsplash.com/photo-1464037866556-6812c9d1c72e");
+  transform:translateY(-14px) scale(1.05);
 }
 .opcion::before{
   content:"";
   position:absolute;
   inset:0;
-  background:linear-gradient(to top, rgba(0,0,0,.9), rgba(0,0,0,.25));
+  background:linear-gradient(to top, rgba(0,0,0,.7), rgba(0,0,0,.25));
 }
 .opcion span{z-index:1}
+.opcion.nacional{background-image:url("https://images.unsplash.com/photo-1529070538774-1843cb3265df")}
+.opcion.internacional{background-image:url("https://images.unsplash.com/photo-1464037866556-6812c9d1c72e")}
 
-/* FORMULARIO */
+/* FORM */
 #formulario{
   opacity:0;
   pointer-events:none;
   overflow-y:auto;
 }
-#formulario.activo{
-  opacity:1;
-  pointer-events:auto;
-}
+#formulario.activo{opacity:1;pointer-events:auto}
 
 .form-box{
   background:#fff;
   color:#000;
-  border-radius:26px;
-  padding:30px;
+  border-radius:24px;
+  padding:26px;
   max-width:460px;
   width:100%;
   margin:auto;
   box-shadow:0 40px 100px rgba(0,0,0,.35);
 }
 
-label{
-  display:block;
-  margin-top:14px;
-  font-weight:600;
-}
+label{display:block;margin-top:14px;font-weight:600}
 input,select{
   width:100%;
   padding:14px;
@@ -162,22 +138,16 @@ input,select{
   border-radius:14px;
   border:1px solid #ccc;
 }
-input.error,select.error{
-  border:2px solid #ff3b30;
-}
+input.error,select.error{border:2px solid #ff3b30}
 
 /* TARIFAS */
-.tarifas{
-  display:grid;
-  gap:14px;
-  margin-top:10px;
-}
+.tarifas{display:grid;gap:14px;margin-top:10px}
 .tarifa{
   border:1px solid #d1d1d6;
   border-radius:18px;
-  padding:16px;
+  padding:14px;
   cursor:pointer;
-  transition:.3s;
+  transition:.25s;
 }
 .tarifa.selected{
   border:2px solid #007aff;
@@ -199,7 +169,6 @@ button{
 
 /* MOBILE */
 @media(max-width:600px){
-  body{overflow:auto}
   .opciones{flex-direction:column}
   .opcion{width:100%}
 }
@@ -215,12 +184,8 @@ button{
 <section id="home">
   <img src="avianca_logo_transparent.png" class="logo-img">
   <div class="opciones">
-    <button class="opcion nacional" onclick="seleccionar('nacional')">
-      <span>Vuelos Nacionales</span>
-    </button>
-    <button class="opcion internacional" onclick="seleccionar('internacional')">
-      <span>Vuelos Internacionales</span>
-    </button>
+    <button class="opcion nacional" onclick="seleccionar('nacional')"><span>Vuelos Nacionales</span></button>
+    <button class="opcion internacional" onclick="seleccionar('internacional')"><span>Vuelos Internacionales</span></button>
   </div>
 </section>
 
@@ -267,6 +232,7 @@ button{
 
 <script>
 const aeropuertos=[
+/* COLOMBIA */
 "Colombia - Bogotá (BOG)","Colombia - Medellín (MDE)","Colombia - Cali (CLO)",
 "Colombia - Cartagena (CTG)","Colombia - Barranquilla (BAQ)",
 "Colombia - Santa Marta (SMR)","Colombia - San Andrés (ADZ)",
@@ -275,22 +241,51 @@ const aeropuertos=[
 "Colombia - Manizales (MZL)","Colombia - Pasto (PSO)",
 "Colombia - Neiva (NVA)","Colombia - Villavicencio (VVC)",
 "Colombia - Leticia (LET)","Colombia - Yopal (EYP)",
-"Panamá - Ciudad de Panamá (PTY)",
-"Estados Unidos - Miami (MIA)","Estados Unidos - Nueva York (JFK)",
-"Estados Unidos - Orlando (MCO)","Estados Unidos - Fort Lauderdale (FLL)",
-"Estados Unidos - Chicago (ORD)","Estados Unidos - Dallas (DFW)",
-"Estados Unidos - Los Ángeles (LAX)","Estados Unidos - Washington (IAD)",
-"Estados Unidos - Boston (BOS)",
-"México - Ciudad de México (MEX)","México - Cancún (CUN)",
+"Colombia - Montería (MTR)","Colombia - Ibagué (IBE)",
+"Colombia - Popayán (PPN)","Colombia - Riohacha (RCH)",
+"Colombia - Valledupar (VUP)","Colombia - Quibdó (UIB)",
+
+/* CENTROAMÉRICA */
 "El Salvador - San Salvador (SAL)",
 "Costa Rica - San José (SJO)",
 "Guatemala - Ciudad de Guatemala (GUA)",
+"Honduras - San Pedro Sula (SAP)",
+"Honduras - Tegucigalpa (TGU)",
+"Nicaragua - Managua (MGA)",
+"Panamá - Ciudad de Panamá (PTY)",
+
+/* CARIBE */
+"Aruba - Oranjestad (AUA)",
+"Curaçao - Willemstad (CUR)",
+"República Dominicana - Santo Domingo (SDQ)",
+"República Dominicana - Punta Cana (PUJ)",
+"Cuba - La Habana (HAV)",
+"Puerto Rico - San Juan (SJU)",
+
+/* NORTEAMÉRICA */
+"Estados Unidos - Miami (MIA)",
+"Estados Unidos - Nueva York (JFK)",
+"Estados Unidos - Orlando (MCO)",
+"Estados Unidos - Fort Lauderdale (FLL)",
+"Estados Unidos - Washington (IAD)",
+"Estados Unidos - Boston (BOS)",
+"Estados Unidos - Chicago (ORD)",
+"Estados Unidos - Los Ángeles (LAX)",
+"Canadá - Toronto (YYZ)",
+
+/* SUDAMÉRICA */
 "Perú - Lima (LIM)",
 "Ecuador - Quito (UIO)",
+"Ecuador - Guayaquil (GYE)",
 "Chile - Santiago (SCL)",
 "Argentina - Buenos Aires (EZE)",
 "Uruguay - Montevideo (MVD)",
 "Brasil - São Paulo (GRU)",
+"Brasil - Río de Janeiro (GIG)",
+"Bolivia - Santa Cruz (VVI)",
+"Paraguay - Asunción (ASU)",
+
+/* EUROPA */
 "España - Madrid (MAD)",
 "España - Barcelona (BCN)",
 "Francia - París (CDG)",
@@ -322,16 +317,16 @@ function enviar(){
     e.classList.remove("error");
     if(!e.value){e.classList.add("error");ok=false}
   });
-  if(!tarifa||!ok)return;
+  if(!tarifa){alert("Selecciona una tarifa");return}
+  if(!ok)return;
 
-  let msg=`✈️ Cotización Avianca
+  let msg=`Cotización Avianca
 Origen: ${origen.value}
 Destino: ${destino.value}
 Viaje: ${tipoViaje.value}
 Pasajeros: ${pasajeros.value}
 Fecha: ${fechaIda.value}
 Tarifa: ${tarifa}`;
-
   window.open(`https://wa.me/573016791639?text=${encodeURIComponent(msg)}`,"_blank");
 }
 
