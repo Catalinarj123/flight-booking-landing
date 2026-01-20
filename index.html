@@ -207,16 +207,16 @@ button:first-of-type{
 }
 
 /* VALIDACIÓN */
-input.error, select.error{
+input.error{
   border:2px solid #c8102e;
   background:#fff5f5;
 }
-input.ok, select.ok{
+input.ok{
   border:2px solid #2ecc71;
   background:#f3fff7;
 }
 
-/* NUEVO: INFO TARIFA */
+/* INFO TARIFA */
 .tarifa-info{
   margin-top:8px;
   font-size:14px;
@@ -261,10 +261,12 @@ input.ok, select.ok{
     <h2 id="tipoVueloTitulo">Solicita tu vuelo</h2>
 
     <label>Origen</label>
-    <select id="origen"></select>
+    <input id="origen" list="listaAeropuertos" placeholder="Escribe origen">
 
     <label>Destino</label>
-    <select id="destino"></select>
+    <input id="destino" list="listaAeropuertos" placeholder="Escribe destino">
+
+    <datalist id="listaAeropuertos"></datalist>
 
     <label>Tipo de viaje</label>
     <select id="tipoViaje" onchange="cambiarFechas()">
@@ -273,7 +275,6 @@ input.ok, select.ok{
       <option value="ida-regreso">Ida y regreso</option>
     </select>
 
-    <!-- NUEVO CAMPO -->
     <label>Tipo de tarifa</label>
     <select id="tipoTarifa" onchange="mostrarDescripcionTarifa()">
       <option value="">Selecciona</option>
@@ -316,8 +317,23 @@ setTimeout(()=>document.getElementById("splash").remove(),3600);
 
 let tipoSeleccionado="nacional";
 
-const aeropuertosNacionales=["Bogotá (BOG)","Medellín (MDE)","Cali (CLO)","Cartagena (CTG)","Barranquilla (BAQ)","Bucaramanga (BGA)","Santa Marta (SMR)","San Andrés (ADZ)","Pereira (PEI)","Neiva (NVA)"];
-const aeropuertosInternacionales=["Miami (MIA)","New York (JFK)","Los Angeles (LAX)","Madrid (MAD)","Paris (CDG)","Barcelona (BCN)","Londres (LHR)"];
+const aeropuertosNacionales=[
+"Bogotá (BOG)","Medellín (MDE)","Cali (CLO)","Cartagena (CTG)","Barranquilla (BAQ)",
+"Bucaramanga (BGA)","Cúcuta (CUC)","Santa Marta (SMR)","San Andrés (ADZ)",
+"Pereira (PEI)","Armenia (AXM)","Manizales (MZL)","Ibagué (IBE)","Neiva (NVA)",
+"Villavicencio (VVC)","Montería (MTR)","Riohacha (RCH)","Valledupar (VUP)",
+"Yopal (EYP)","Leticia (LET)","Pasto (PSO)","Popayán (PPN)","Quibdó (UIB)"
+];
+
+const aeropuertosInternacionales=[
+"Miami (MIA)","New York (JFK)","Los Angeles (LAX)","Orlando (MCO)",
+"Fort Lauderdale (FLL)","Tampa (TPA)","Chicago (ORD)",
+"Madrid (MAD)","Barcelona (BCN)","Londres (LHR)","Paris (CDG)",
+"Ciudad de México (MEX)","Cancún (CUN)",
+"San Salvador (SAL)","San José (SJO)","Guatemala (GUA)","Managua (MGA)",
+"Lima (LIM)","Quito (UIO)","Guayaquil (GYE)","Santiago (SCL)",
+"Buenos Aires (EZE)","Montevideo (MVD)","São Paulo (GRU)"
+];
 
 function seleccionar(tipo){
   tipoSeleccionado=tipo;
@@ -328,11 +344,9 @@ function seleccionar(tipo){
 }
 
 function cargar(lista){
-  origen.innerHTML='<option value="">Origen</option>';
-  destino.innerHTML='<option value="">Destino</option>';
+  listaAeropuertos.innerHTML="";
   lista.forEach(a=>{
-    origen.add(new Option(a,a));
-    destino.add(new Option(a,a));
+    listaAeropuertos.appendChild(new Option(a,a));
   });
 }
 
@@ -363,16 +377,15 @@ function mostrarDescripcionTarifa(){
 
 function enviarWhatsApp(){
 
-  const campos = [origen, destino, tipoViaje, tipoTarifa, pasajeros, fechaIda];
-  if(tipoViaje.value === "ida-regreso") campos.push(fechaRegreso);
+  const campos=[origen,destino,tipoViaje,tipoTarifa,pasajeros,fechaIda];
+  if(tipoViaje.value==="ida-regreso") campos.push(fechaRegreso);
 
-  let valido = true;
-
+  let valido=true;
   campos.forEach(c=>{
     if(!c.value){
       c.classList.add("error");
       c.classList.remove("ok");
-      valido = false;
+      valido=false;
     }else{
       c.classList.remove("error");
       c.classList.add("ok");
@@ -384,13 +397,8 @@ function enviarWhatsApp(){
     return;
   }
 
-  const titulo =
-    tipoSeleccionado==="internacional"
-    ?"✈️ Cotización de vuelo Avianca Internacional"
-    :"✈️ Cotización de vuelo Avianca";
-
-  let mensaje =
-`${titulo}
+  let mensaje=
+`✈️ Cotización de vuelo Avianca
 Origen: ${origen.value}
 Destino: ${destino.value}
 Tipo de viaje: ${tipoViaje.value}
