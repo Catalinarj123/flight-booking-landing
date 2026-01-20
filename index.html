@@ -24,20 +24,22 @@ body{
 body.home-lock{
   overflow:hidden;
 }
-
-/* SECCIONES */
 section{
   min-height:100vh;
-  width:100%;
   display:flex;
   justify-content:center;
   align-items:center;
-  padding:40px 20px;
+  padding:24px;
   position:absolute;
   inset:0;
-  transition:
-    opacity .6s cubic-bezier(.4,0,.2,1),
-    transform .8s cubic-bezier(.2,.8,.2,1);
+  transition:opacity .6s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.2,.8,.2,1);
+}
+#home,#formulario{
+  background:
+    linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.85)),
+    url("https://images.unsplash.com/photo-1436491865332-7a61a109cc05");
+  background-size:cover;
+  background-position:center;
 }
 
 /* SPLASH */
@@ -57,121 +59,103 @@ section{
   animation:splashLogo 1.4s cubic-bezier(.2,.8,.2,1) forwards;
 }
 @keyframes splashLogo{
-  0%{opacity:0;transform:scale(.85)}
-  100%{opacity:1;transform:scale(1)}
+  0%{opacity:0;transform:scale(.85);}
+  100%{opacity:1;transform:scale(1);}
 }
 @keyframes splashOut{
-  to{opacity:0;pointer-events:none}
+  to{opacity:0;pointer-events:none;}
 }
 
 /* HOME */
 #home{
-  background:
-    linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.85)),
-    url("https://images.unsplash.com/photo-1436491865332-7a61a109cc05");
-  background-size:cover;
-  background-position:center;
   flex-direction:column;
   text-align:center;
+  transform:translateY(-40px);
+  z-index:2;
 }
 #home.oculto{
   opacity:0;
-  pointer-events:none;
   transform:translateY(-120px) scale(.98);
+  pointer-events:none;
 }
 
 /* LOGO */
 .logo-img{
-  width:560px;
-  max-width:95%;
+  width:520px;
+  max-width:90%;
   margin-bottom:10px;
   opacity:0;
   transform:translateY(-30px);
-  animation:fadeDown 1s cubic-bezier(.2,.8,.2,1) forwards .4s;
+  animation:fadeDown 1s cubic-bezier(.2,.8,.2,1) forwards .3s;
 }
-@keyframes fadeDown{
-  to{opacity:1;transform:none}
-}
+@keyframes fadeDown{to{opacity:1;transform:none;}}
+
 .slogan{
-  font-size:20px;
-  margin-bottom:40px;
+  font-size:18px;
+  margin-bottom:32px;
   opacity:0;
-  animation:fadeDown 1s cubic-bezier(.2,.8,.2,1) forwards .7s;
+  animation:fadeDown 1s cubic-bezier(.2,.8,.2,1) forwards .6s;
 }
 
 /* TARJETAS HOME */
 .opciones{
   display:flex;
-  gap:36px;
+  gap:20px;
+  flex-wrap:wrap;
+  justify-content:center;
 }
 .opcion{
-  width:240px;
-  height:340px;
+  width:220px;
+  height:320px;
   border-radius:26px;
+  border:none;
   cursor:pointer;
   color:#fff;
-  font-size:22px;
+  font-size:20px;
   font-weight:600;
   display:flex;
   align-items:flex-end;
   justify-content:center;
-  padding:28px;
+  padding:24px;
   background-size:cover;
   position:relative;
   overflow:hidden;
-  border:none;
   box-shadow:0 25px 60px rgba(0,0,0,.65);
-  transition:.6s cubic-bezier(.2,.8,.2,1);
+  transition:.5s;
 }
-.opcion:hover{
-  transform:translateY(-14px) scale(1.05);
-  box-shadow:0 50px 100px rgba(0,0,0,.9);
-}
+.opcion:hover{transform:translateY(-10px) scale(1.05);}
+.opcion.nacional{background-image:url("https://images.unsplash.com/photo-1529070538774-1843cb3265df");}
+.opcion.internacional{background-image:url("https://images.unsplash.com/photo-1464037866556-6812c9d1c72e");}
 .opcion::before{
   content:"";
   position:absolute;
   inset:0;
-  background:linear-gradient(to top,rgba(0,0,0,.85),rgba(0,0,0,.25));
+  background:linear-gradient(to top, rgba(0,0,0,.85), rgba(0,0,0,.25));
 }
 .opcion span{z-index:1}
-.nacional{
-  background-image:url("https://images.unsplash.com/photo-1529070538774-1843cb3265df");
-}
-.internacional{
-  background-image:url("https://images.unsplash.com/photo-1464037866556-6812c9d1c72e");
-}
 
-/* FORMULARIO */
+/* FORM */
 #formulario{
-  background:
-    linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.85)),
-    url("https://images.unsplash.com/photo-1436491865332-7a61a109cc05");
-  background-size:cover;
-  background-position:center;
   opacity:0;
+  transform:translateY(40px) scale(.96);
   pointer-events:none;
   overflow-y:auto;
 }
 #formulario.activo{
   opacity:1;
+  transform:none;
   pointer-events:auto;
 }
-
-/* CAJA */
 .form-box{
   background:#fff;
   color:#000;
   border-radius:22px;
-  padding:30px;
-  width:100%;
+  padding:26px;
   max-width:480px;
+  width:100%;
   margin:auto;
 }
-label{
-  display:block;
-  margin-top:14px;
-  font-weight:500;
-}
+label{display:block;margin-top:14px;}
 input,select,button{
   width:100%;
   padding:14px;
@@ -179,35 +163,7 @@ input,select,button{
   border-radius:12px;
   border:1px solid #ccc;
 }
-
-/* TARIFAS estilo Apple */
-.tarifas{
-  display:grid;
-  gap:14px;
-  margin-top:8px;
-}
-.tarjeta-tarifa{
-  border:1px solid #d2d2d7;
-  border-radius:18px;
-  padding:16px;
-  cursor:pointer;
-  transition:.3s;
-}
-.tarjeta-tarifa:hover{
-  background:#f5f5f7;
-}
-.tarjeta-tarifa.activa{
-  border-color:#0071e3;
-  background:#f0f7ff;
-  box-shadow:0 0 0 2px rgba(0,113,227,.25);
-}
-.error-text{
-  display:none;
-  color:#c8102e;
-  font-size:13px;
-  margin-top:6px;
-}
-
+input.error,select.error{border-color:#c8102e;}
 button{
   background:#c8102e;
   color:#fff;
@@ -216,11 +172,40 @@ button{
   cursor:pointer;
 }
 
+/* TARIFAS */
+.tarifas{
+  display:grid;
+  gap:14px;
+  margin-top:8px;
+}
+.tarjeta-tarifa{
+  border:1.5px solid #ddd;
+  border-radius:16px;
+  padding:14px;
+  cursor:pointer;
+  transition:.3s;
+}
+.tarjeta-tarifa.activa{
+  border-color:#007aff;
+  box-shadow:0 0 0 2px rgba(0,122,255,.2);
+  background:#f5faff;
+}
+.error-text{
+  color:#c8102e;
+  font-size:13px;
+  display:none;
+}
+
 .footer{
-  margin-top:14px;
+  margin-top:15px;
   font-size:12px;
   text-align:center;
   color:#666;
+}
+
+@media(max-width:600px){
+  .opciones{gap:14px;}
+  .opcion{width:160px;height:240px;font-size:16px;}
 }
 </style>
 </head>
@@ -268,17 +253,11 @@ button{
 
     <label>Tarifa</label>
     <div class="tarifas" id="tarifasBox">
-      <div class="tarjeta-tarifa" onclick="seleccionarTarifa(this,'Basic')">
-        <strong>Basic</strong><br>Solo un (1) morral
-      </div>
-      <div class="tarjeta-tarifa" onclick="seleccionarTarifa(this,'Classic')">
-        <strong>Classic</strong><br>Morral + equipaje de mano 12Kg
-      </div>
-      <div class="tarjeta-tarifa" onclick="seleccionarTarifa(this,'Business')">
-        <strong>Business</strong><br>Equipaje de mano, bodega y beneficios Business
-      </div>
+      <div class="tarjeta-tarifa" onclick="seleccionarTarifa(this,'Basic')"><strong>Basic</strong><br><small>Solo un (1) morral</small></div>
+      <div class="tarjeta-tarifa" onclick="seleccionarTarifa(this,'Classic')"><strong>Classic</strong><br><small>Morral + equipaje de mano 12Kg</small></div>
+      <div class="tarjeta-tarifa" onclick="seleccionarTarifa(this,'Business')"><strong>Business</strong><br><small>Equipaje de mano, bodega y beneficios</small></div>
     </div>
-    <div class="error-text" id="errorTarifa">Debes seleccionar una tarifa</div>
+    <div class="error-text" id="errorTarifa">Selecciona una tarifa</div>
 
     <label>Fecha ida</label>
     <input type="date" id="fechaIda">
@@ -289,50 +268,41 @@ button{
     <button onclick="enviarWhatsApp()">COTIZA AHORA</button>
     <button onclick="regresarInicio()">← Regresar</button>
 
-    <div class="footer">Vuelos operados por Avianca Airlines</div>
+    <div class="footer">Vuelos operados por AVIANCA AIRLINES</div>
   </div>
 </section>
 
 <script>
 setTimeout(()=>document.getElementById("splash").remove(),3600);
 
-/* LISTA COMPLETA CON PAISES */
 const aeropuertos=[
-  "Colombia - Bogotá (BOG)","Colombia - Medellín (MDE)","Colombia - Cali (CLO)",
-  "Colombia - Cartagena (CTG)","Colombia - Barranquilla (BAQ)",
-  "Colombia - Santa Marta (SMR)","Colombia - San Andrés (ADZ)",
-  "Colombia - Pereira (PEI)","Colombia - Bucaramanga (BGA)",
-  "Colombia - Cúcuta (CUC)","Colombia - Armenia (AXM)",
-  "Colombia - Manizales (MZL)","Colombia - Pasto (PSO)",
-  "Colombia - Neiva (NVA)","Colombia - Villavicencio (VVC)",
-  "Colombia - Leticia (LET)","Colombia - Yopal (EYP)",
-
-  "Panamá - Ciudad de Panamá (PTY)",
-  "Estados Unidos - Miami (MIA)","Estados Unidos - Nueva York (JFK)",
-  "Estados Unidos - Orlando (MCO)","Estados Unidos - Fort Lauderdale (FLL)",
-  "Estados Unidos - Chicago (ORD)","Estados Unidos - Dallas (DFW)",
-  "Estados Unidos - Los Ángeles (LAX)","Estados Unidos - Washington (IAD)",
-  "Estados Unidos - Boston (BOS)",
-  "México - Ciudad de México (MEX)","México - Cancún (CUN)",
-  "El Salvador - San Salvador (SAL)",
-  "Costa Rica - San José (SJO)",
-  "Guatemala - Ciudad de Guatemala (GUA)",
-  "Perú - Lima (LIM)",
-  "Ecuador - Quito (UIO)",
-  "Chile - Santiago (SCL)",
-  "Argentina - Buenos Aires (EZE)",
-  "Uruguay - Montevideo (MVD)",
-  "Brasil - São Paulo (GRU)",
-  "España - Madrid (MAD)","España - Barcelona (BCN)",
-  "Francia - París (CDG)",
-  "Reino Unido - Londres (LHR)"
+"Colombia - Bogotá (BOG)","Colombia - Medellín (MDE)","Colombia - Cali (CLO)",
+"Colombia - Cartagena (CTG)","Colombia - Barranquilla (BAQ)",
+"Colombia - Santa Marta (SMR)","Colombia - San Andrés (ADZ)",
+"Colombia - Pereira (PEI)","Colombia - Bucaramanga (BGA)",
+"Colombia - Cúcuta (CUC)","Colombia - Armenia (AXM)",
+"Colombia - Manizales (MZL)","Colombia - Pasto (PSO)",
+"Colombia - Neiva (NVA)","Colombia - Villavicencio (VVC)",
+"Colombia - Leticia (LET)","Colombia - Yopal (EYP)",
+"Panamá - Ciudad de Panamá (PTY)",
+"Estados Unidos - Miami (MIA)","Estados Unidos - Nueva York (JFK)",
+"Estados Unidos - Orlando (MCO)","Estados Unidos - Fort Lauderdale (FLL)",
+"Estados Unidos - Chicago (ORD)","Estados Unidos - Dallas (DFW)",
+"Estados Unidos - Los Ángeles (LAX)","Estados Unidos - Washington (IAD)",
+"Estados Unidos - Boston (BOS)",
+"México - Ciudad de México (MEX)","México - Cancún (CUN)",
+"El Salvador - San Salvador (SAL)",
+"Costa Rica - San José (SJO)",
+"Guatemala - Ciudad de Guatemala (GUA)",
+"Perú - Lima (LIM)","Ecuador - Quito (UIO)",
+"Chile - Santiago (SCL)","Argentina - Buenos Aires (EZE)",
+"Uruguay - Montevideo (MVD)","Brasil - São Paulo (GRU)",
+"España - Madrid (MAD)","España - Barcelona (BCN)",
+"Francia - París (CDG)","Reino Unido - Londres (LHR)"
 ];
 
 let tarifaSeleccionada="";
-let tipoActual="";
-
 function seleccionar(tipo){
-  tipoActual=tipo;
   document.body.classList.remove("home-lock");
   home.classList.add("oculto");
   formulario.classList.add("activo");
@@ -343,34 +313,27 @@ function seleccionar(tipo){
     listaAeropuertos.appendChild(new Option(a,a));
   });
 }
-
-function seleccionarTarifa(card,val){
-  document.querySelectorAll(".tarjeta-tarifa").forEach(c=>c.classList.remove("activa"));
+function seleccionarTarifa(card,valor){
+  document.querySelectorAll(".tarjeta-tarifa").forEach(t=>t.classList.remove("activa"));
   card.classList.add("activa");
-  tarifaSeleccionada=val;
+  tarifaSeleccionada=valor;
   errorTarifa.style.display="none";
 }
-
 function cambiarFechas(){
   const show=tipoViaje.value==="ida-regreso";
   fechaRegreso.style.display=labelRegreso.style.display=show?"block":"none";
 }
-
 function regresarInicio(){
-  document.body.classList.add("home-lock");
-  formulario.classList.remove("activo");
-  home.classList.remove("oculto");
+  location.reload();
 }
-
 function enviarWhatsApp(){
-  if(!origen.value||!destino.value||!tipoViaje.value||!pasajeros.value||!fechaIda.value||!tarifaSeleccionada){
-    alert("Completa todos los campos");
-    return;
-  }
-  if(tipoViaje.value==="ida-regreso"&&!fechaRegreso.value){
-    alert("Selecciona fecha de regreso");
-    return;
-  }
+  let ok=true;
+  document.querySelectorAll("input,select").forEach(i=>{
+    if(!i.value){i.classList.add("error");ok=false;}
+    else i.classList.remove("error");
+  });
+  if(!tarifaSeleccionada){errorTarifa.style.display="block";ok=false;}
+  if(!ok) return;
   let msg=`✈️ Cotización Avianca
 Origen: ${origen.value}
 Destino: ${destino.value}
@@ -385,4 +348,3 @@ Fecha ida: ${fechaIda.value}`;
 
 </body>
 </html>
-
