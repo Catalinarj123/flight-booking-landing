@@ -76,7 +76,7 @@ section{
   pointer-events:none;
 }
 
-/* LOGO (MISMO PARA SPLASH Y HOME) */
+/* LOGO */
 .logo-img{
   width:560px;
   max-width:95%;
@@ -141,14 +141,12 @@ section{
 
 .opcion.nacional{
   background-image:url("https://images.unsplash.com/photo-1529070538774-1843cb3265df");
-  animation:none; /* ← QUITA EL MOVIMIENTO AUTOMÁTICO */
 }
 
 .opcion.internacional{
   background-image:url("https://images.unsplash.com/photo-1464037866556-6812c9d1c72e");
 }
 
-/* MISMA ANIMACIÓN PARA AMBAS */
 .opcion:hover{
   transform:translateY(-14px) scale(1.04);
   box-shadow:0 40px 80px rgba(0,0,0,.8);
@@ -208,9 +206,7 @@ button:first-of-type{
   text-align:center;
 }
 
-#tipoVueloTitulo{text-align:center;}
-
-/* VALIDACIÓN VISUAL */
+/* VALIDACIÓN */
 input.error, select.error{
   border:2px solid #c8102e;
   background:#fff5f5;
@@ -218,6 +214,16 @@ input.error, select.error{
 input.ok, select.ok{
   border:2px solid #2ecc71;
   background:#f3fff7;
+}
+
+/* NUEVO: INFO TARIFA */
+.tarifa-info{
+  margin-top:8px;
+  font-size:14px;
+  color:#444;
+  background:#f6f6f6;
+  padding:10px 12px;
+  border-radius:10px;
 }
 
 @media (max-width:768px){
@@ -266,6 +272,17 @@ input.ok, select.ok{
       <option value="ida">Solo ida</option>
       <option value="ida-regreso">Ida y regreso</option>
     </select>
+
+    <!-- NUEVO CAMPO -->
+    <label>Tipo de tarifa</label>
+    <select id="tipoTarifa" onchange="mostrarDescripcionTarifa()">
+      <option value="">Selecciona</option>
+      <option value="BASIC">Basic</option>
+      <option value="CLASSIC">Classic</option>
+      <option value="BUSINESS">Business</option>
+    </select>
+
+    <div id="descripcionTarifa" class="tarifa-info" style="display:none;"></div>
 
     <label>Número de pasajeros</label>
     <select id="pasajeros">
@@ -329,9 +346,24 @@ function regresarInicio(){
   home.classList.remove("oculto");
 }
 
+function mostrarDescripcionTarifa(){
+  if(!tipoTarifa.value){
+    descripcionTarifa.style.display="none";
+    return;
+  }
+  if(tipoTarifa.value==="BASIC"){
+    descripcionTarifa.textContent="Incluye solo un (1) morral.";
+  }else if(tipoTarifa.value==="CLASSIC"){
+    descripcionTarifa.textContent="Incluye un (1) morral y equipaje de bodega de hasta 12 kg.";
+  }else{
+    descripcionTarifa.textContent="Incluye equipaje de mano y equipaje de bodega.";
+  }
+  descripcionTarifa.style.display="block";
+}
+
 function enviarWhatsApp(){
 
-  const campos = [origen, destino, tipoViaje, pasajeros, fechaIda];
+  const campos = [origen, destino, tipoViaje, tipoTarifa, pasajeros, fechaIda];
   if(tipoViaje.value === "ida-regreso") campos.push(fechaRegreso);
 
   let valido = true;
@@ -362,6 +394,7 @@ function enviarWhatsApp(){
 Origen: ${origen.value}
 Destino: ${destino.value}
 Tipo de viaje: ${tipoViaje.value}
+Tipo de tarifa: ${tipoTarifa.value}
 Pasajeros: ${pasajeros.value}
 Fecha ida: ${fechaIda.value}`;
 
