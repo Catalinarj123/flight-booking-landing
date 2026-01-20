@@ -16,15 +16,16 @@
   margin:0;
   padding:0;
 }
+
+/* FONDO GLOBAL (HOME + FORMULARIO) */
 body{
   color:#fff;
   overflow:hidden;
   background:
-    linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.85)),
+    linear-gradient(rgba(0,0,0,.72),rgba(0,0,0,.88)),
     url("https://images.unsplash.com/photo-1436491865332-7a61a109cc05");
   background-size:cover;
   background-position:center;
-  background-attachment:fixed;
 }
 
 /* SPLASH */
@@ -36,15 +37,20 @@ body{
   align-items:center;
   justify-content:center;
   z-index:9999;
-  animation:splashOut 2s ease forwards 1.8s;
+  animation:splashOut 2s cubic-bezier(.4,0,.2,1) forwards 1.8s;
 }
 #splash img{
   width:260px;
   opacity:0;
-  animation:splashLogo 1.4s ease forwards;
+  animation:splashLogo 1.4s cubic-bezier(.2,.8,.2,1) forwards;
 }
-@keyframes splashLogo{to{opacity:1}}
-@keyframes splashOut{to{opacity:0;pointer-events:none}}
+@keyframes splashLogo{
+  from{opacity:0;transform:scale(.9)}
+  to{opacity:1;transform:scale(1)}
+}
+@keyframes splashOut{
+  to{opacity:0;pointer-events:none}
+}
 
 /* VISTAS */
 section{
@@ -60,71 +66,95 @@ section{
 #home{
   flex-direction:column;
   text-align:center;
-  overflow:hidden;
 }
-#home.oculto{opacity:0;pointer-events:none}
+#home.oculto{
+  opacity:0;
+  pointer-events:none;
+}
 
 /* LOGO */
 .logo-img{
-  width:520px;
+  width:560px;
   max-width:95%;
-  margin-bottom:10px;
+  margin-bottom:12px;
 }
 
-/* TARJETAS */
+/* TARJETAS HOME – ESTILO APPLE */
 .opciones{
   display:flex;
-  gap:24px;
-  justify-content:center;
+  gap:36px;
+  perspective:1200px;
 }
 .opcion{
-  width:220px;
-  height:320px;
-  border-radius:26px;
+  width:240px;
+  height:340px;
+  border-radius:32px;
+  border:none;
   cursor:pointer;
   color:#fff;
-  font-size:20px;
+  font-size:22px;
   font-weight:600;
   display:flex;
   align-items:flex-end;
   justify-content:center;
-  padding:26px;
+  padding:28px;
   background-size:cover;
   position:relative;
-  box-shadow:0 25px 60px rgba(0,0,0,.65);
-  transition:.4s;
+  overflow:hidden;
+  box-shadow:
+    0 25px 60px rgba(0,0,0,.55),
+    inset 0 1px 0 rgba(255,255,255,.15);
+  transition:
+    transform .6s cubic-bezier(.2,.8,.2,1),
+    box-shadow .6s cubic-bezier(.2,.8,.2,1);
 }
-.opcion:hover{transform:scale(1.05)}
-.opcion.nacional{background-image:url("https://images.unsplash.com/photo-1529070538774-1843cb3265df")}
-.opcion.internacional{background-image:url("https://images.unsplash.com/photo-1464037866556-6812c9d1c72e")}
+.opcion:hover{
+  transform:translateY(-14px) scale(1.06);
+  box-shadow:
+    0 50px 100px rgba(0,0,0,.8),
+    inset 0 1px 0 rgba(255,255,255,.25);
+}
+.opcion.nacional{
+  background-image:url("https://images.unsplash.com/photo-1529070538774-1843cb3265df");
+}
+.opcion.internacional{
+  background-image:url("https://images.unsplash.com/photo-1464037866556-6812c9d1c72e");
+}
 .opcion::before{
   content:"";
   position:absolute;
   inset:0;
-  background:linear-gradient(to top, rgba(0,0,0,.85), rgba(0,0,0,.25));
+  background:linear-gradient(to top, rgba(0,0,0,.9), rgba(0,0,0,.25));
 }
 .opcion span{z-index:1}
 
 /* FORMULARIO */
 #formulario{
-  background:rgba(245,245,247,.96);
-  color:#000;
   opacity:0;
   pointer-events:none;
   overflow-y:auto;
 }
-#formulario.activo{opacity:1;pointer-events:auto}
+#formulario.activo{
+  opacity:1;
+  pointer-events:auto;
+}
 
 .form-box{
   background:#fff;
-  border-radius:24px;
-  padding:26px;
+  color:#000;
+  border-radius:26px;
+  padding:30px;
   max-width:460px;
   width:100%;
   margin:auto;
-  box-shadow:0 40px 100px rgba(0,0,0,.25);
+  box-shadow:0 40px 100px rgba(0,0,0,.35);
 }
-label{display:block;margin-top:14px;font-weight:600}
+
+label{
+  display:block;
+  margin-top:14px;
+  font-weight:600;
+}
 input,select{
   width:100%;
   padding:14px;
@@ -132,15 +162,22 @@ input,select{
   border-radius:14px;
   border:1px solid #ccc;
 }
-input.error,select.error{border:2px solid #ff3b30}
+input.error,select.error{
+  border:2px solid #ff3b30;
+}
 
 /* TARIFAS */
-.tarifas{display:grid;gap:14px;margin-top:10px}
+.tarifas{
+  display:grid;
+  gap:14px;
+  margin-top:10px;
+}
 .tarifa{
   border:1px solid #d1d1d6;
   border-radius:18px;
-  padding:14px;
+  padding:16px;
   cursor:pointer;
+  transition:.3s;
 }
 .tarifa.selected{
   border:2px solid #007aff;
@@ -162,6 +199,7 @@ button{
 
 /* MOBILE */
 @media(max-width:600px){
+  body{overflow:auto}
   .opciones{flex-direction:column}
   .opcion{width:100%}
 }
@@ -177,8 +215,12 @@ button{
 <section id="home">
   <img src="avianca_logo_transparent.png" class="logo-img">
   <div class="opciones">
-    <button class="opcion nacional" onclick="seleccionar('nacional')"><span>Vuelos Nacionales</span></button>
-    <button class="opcion internacional" onclick="seleccionar('internacional')"><span>Vuelos Internacionales</span></button>
+    <button class="opcion nacional" onclick="seleccionar('nacional')">
+      <span>Vuelos Nacionales</span>
+    </button>
+    <button class="opcion internacional" onclick="seleccionar('internacional')">
+      <span>Vuelos Internacionales</span>
+    </button>
   </div>
 </section>
 
@@ -224,38 +266,35 @@ button{
 </section>
 
 <script>
-const aeropuertos = [
-/* COLOMBIA */
+const aeropuertos=[
 "Colombia - Bogotá (BOG)","Colombia - Medellín (MDE)","Colombia - Cali (CLO)",
 "Colombia - Cartagena (CTG)","Colombia - Barranquilla (BAQ)",
 "Colombia - Santa Marta (SMR)","Colombia - San Andrés (ADZ)",
-"Colombia - Bucaramanga (BGA)","Colombia - Pereira (PEI)",
-"Colombia - Armenia (AXM)","Colombia - Cúcuta (CUC)",
-"Colombia - Pasto (PSO)","Colombia - Montería (MTR)",
-"Colombia - Valledupar (VUP)","Colombia - Villavicencio (VVC)",
-
-/* LATAM */
-"Argentina - Buenos Aires (EZE)","Chile - Santiago (SCL)",
-"Perú - Lima (LIM)","Brasil - São Paulo (GRU)",
-"Ecuador - Quito (UIO)","Ecuador - Guayaquil (GYE)",
-"Panamá - Ciudad de Panamá (PTY)","Costa Rica - San José (SJO)",
-"El Salvador - San Salvador (SAL)","Guatemala - Ciudad de Guatemala (GUA)",
-
-/* USA */
+"Colombia - Pereira (PEI)","Colombia - Bucaramanga (BGA)",
+"Colombia - Cúcuta (CUC)","Colombia - Armenia (AXM)",
+"Colombia - Manizales (MZL)","Colombia - Pasto (PSO)",
+"Colombia - Neiva (NVA)","Colombia - Villavicencio (VVC)",
+"Colombia - Leticia (LET)","Colombia - Yopal (EYP)",
+"Panamá - Ciudad de Panamá (PTY)",
 "Estados Unidos - Miami (MIA)","Estados Unidos - Nueva York (JFK)",
-"Estados Unidos - Orlando (MCO)","Estados Unidos - Los Ángeles (LAX)",
-"Estados Unidos - Dallas (DFW)","Estados Unidos - Houston (IAH)",
-"Estados Unidos - Chicago (ORD)","Estados Unidos - Atlanta (ATL)",
-
-/* EUROPA */
-"España - Madrid (MAD)","España - Barcelona (BCN)",
-"Francia - París (CDG)","Italia - Roma (FCO)",
-"Reino Unido - Londres (LHR)","Alemania - Frankfurt (FRA)",
-"Países Bajos - Ámsterdam (AMS)",
-
-/* OTROS */
-"México - Cancún (CUN)","México - Ciudad de México (MEX)",
-"Canadá - Toronto (YYZ)","Canadá - Montreal (YUL)"
+"Estados Unidos - Orlando (MCO)","Estados Unidos - Fort Lauderdale (FLL)",
+"Estados Unidos - Chicago (ORD)","Estados Unidos - Dallas (DFW)",
+"Estados Unidos - Los Ángeles (LAX)","Estados Unidos - Washington (IAD)",
+"Estados Unidos - Boston (BOS)",
+"México - Ciudad de México (MEX)","México - Cancún (CUN)",
+"El Salvador - San Salvador (SAL)",
+"Costa Rica - San José (SJO)",
+"Guatemala - Ciudad de Guatemala (GUA)",
+"Perú - Lima (LIM)",
+"Ecuador - Quito (UIO)",
+"Chile - Santiago (SCL)",
+"Argentina - Buenos Aires (EZE)",
+"Uruguay - Montevideo (MVD)",
+"Brasil - São Paulo (GRU)",
+"España - Madrid (MAD)",
+"España - Barcelona (BCN)",
+"Francia - París (CDG)",
+"Reino Unido - Londres (LHR)"
 ];
 
 const dl=document.getElementById("aeropuertos");
@@ -285,7 +324,7 @@ function enviar(){
   });
   if(!tarifa||!ok)return;
 
-  let msg=`Cotización Avianca
+  let msg=`✈️ Cotización Avianca
 Origen: ${origen.value}
 Destino: ${destino.value}
 Viaje: ${tipoViaje.value}
