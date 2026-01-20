@@ -17,30 +17,14 @@
   padding:0;
 }
 body{
-  background:#000;
   color:#fff;
-  -webkit-font-smoothing:antialiased;
-}
-
-/* SECCIONES */
-section{
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:40px 20px;
-  position:absolute;
-  inset:0;
-  transition:opacity .6s, transform .6s;
-}
-
-/* FONDO */
-#home,#formulario{
+  overflow:hidden;
   background:
     linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.85)),
     url("https://images.unsplash.com/photo-1436491865332-7a61a109cc05");
   background-size:cover;
   background-position:center;
+  background-attachment:fixed;
 }
 
 /* SPLASH */
@@ -60,13 +44,23 @@ section{
   animation:splashLogo 1.4s ease forwards;
 }
 @keyframes splashLogo{
-  to{opacity:1;transform:scale(1);}
+  to{opacity:1;transform:scale(1)}
 }
 @keyframes splashOut{
-  to{opacity:0;pointer-events:none;}
+  to{opacity:0;pointer-events:none}
 }
 
-/* HOME (SIN SCROLL) */
+/* VISTAS */
+section{
+  position:absolute;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:30px;
+}
+
+/* HOME */
 #home{
   flex-direction:column;
   text-align:center;
@@ -74,33 +68,25 @@ section{
 }
 #home.oculto{
   opacity:0;
-  transform:translateY(-80px);
   pointer-events:none;
 }
 
 /* LOGO */
 .logo-img{
   width:520px;
-  max-width:90%;
+  max-width:95%;
   margin-bottom:10px;
 }
 
-/* SLOGAN */
-.slogan{
-  font-size:18px;
-  margin-bottom:30px;
-}
-
-/* TARJETAS HOME */
+/* TARJETAS VUELO */
 .opciones{
   display:flex;
   gap:24px;
-}
-@media(max-width:640px){
-  .opciones{flex-direction:column;}
+  flex-wrap:wrap;
+  justify-content:center;
 }
 .opcion{
-  width:240px;
+  width:220px;
   height:320px;
   border-radius:26px;
   border:none;
@@ -111,92 +97,97 @@ section{
   display:flex;
   align-items:flex-end;
   justify-content:center;
-  padding:24px;
+  padding:26px;
   background-size:cover;
   position:relative;
+  box-shadow:0 25px 60px rgba(0,0,0,.65);
+  transition:.4s;
 }
+.opcion:hover{transform:scale(1.05)}
+.opcion.nacional{background-image:url("https://images.unsplash.com/photo-1529070538774-1843cb3265df")}
+.opcion.internacional{background-image:url("https://images.unsplash.com/photo-1464037866556-6812c9d1c72e")}
 .opcion::before{
   content:"";
   position:absolute;
   inset:0;
-  background:linear-gradient(to top,rgba(0,0,0,.85),rgba(0,0,0,.25));
+  background:linear-gradient(to top, rgba(0,0,0,.85), rgba(0,0,0,.25));
 }
 .opcion span{z-index:1}
-.opcion.nacional{
-  background-image:url("https://images.unsplash.com/photo-1529070538774-1843cb3265df");
-}
-.opcion.internacional{
-  background-image:url("https://images.unsplash.com/photo-1464037866556-6812c9d1c72e");
-}
 
-/* FORMULARIO (CON SCROLL) */
+/* FORMULARIO */
 #formulario{
+  background:rgba(245,245,247,.96);
+  color:#000;
   opacity:0;
   pointer-events:none;
-  transform:translateY(40px);
   overflow-y:auto;
 }
 #formulario.activo{
   opacity:1;
   pointer-events:auto;
-  transform:none;
 }
-
-/* CAJA FORM */
 .form-box{
   background:#fff;
-  color:#000;
-  border-radius:22px;
-  padding:30px;
-  max-width:480px;
+  border-radius:24px;
+  padding:26px;
+  max-width:460px;
   width:100%;
+  margin:auto;
+  box-shadow:0 40px 100px rgba(0,0,0,.25);
 }
-
-/* INPUTS */
-label{display:block;margin-top:14px;}
-input,select,button{
+label{
+  display:block;
+  margin-top:14px;
+  font-weight:600;
+}
+input,select{
   width:100%;
   padding:14px;
   margin-top:6px;
-  border-radius:12px;
+  border-radius:14px;
   border:1px solid #ccc;
 }
 input.error,select.error{
-  border-color:#c8102e;
-  background:#fff5f6;
+  border:2px solid #ff3b30;
 }
 
 /* TARIFAS */
 .tarifas{
   display:grid;
-  gap:12px;
+  grid-template-columns:1fr;
+  gap:14px;
+  margin-top:10px;
 }
-.tarjeta-tarifa{
-  border:2px solid #ddd;
+.tarifa{
+  border:1px solid #d1d1d6;
   border-radius:18px;
-  padding:16px;
+  padding:14px;
   cursor:pointer;
+  transition:.25s;
 }
-.tarjeta-tarifa.activa{
-  border-color:#007aff;
-  background:#f2f7ff;
+.tarifa strong{font-size:16px}
+.tarifa.selected{
+  border:2px solid #007aff;
+  background:#f0f6ff;
 }
 
 /* BOTONES */
 button{
-  background:#c8102e;
-  color:#fff;
+  width:100%;
+  padding:16px;
+  margin-top:22px;
+  border-radius:18px;
   border:none;
-  margin-top:20px;
+  font-weight:600;
   cursor:pointer;
 }
+.btn-main{background:#c8102e;color:#fff}
+.btn-back{background:#e5e5ea;color:#000}
 
-/* FOOTER */
-.footer{
-  margin-top:14px;
-  font-size:12px;
-  text-align:center;
-  color:#666;
+/* MOBILE */
+@media(max-width:600px){
+  .opciones{flex-direction:column}
+  .opcion{width:100%}
 }
 </style>
 </head>
@@ -209,7 +200,6 @@ button{
 
 <section id="home">
   <img src="avianca_logo_transparent.png" class="logo-img">
-  <div class="slogan">¡El cielo es de todos!</div>
   <div class="opciones">
     <button class="opcion nacional" onclick="seleccionar('nacional')"><span>Vuelos Nacionales</span></button>
     <button class="opcion internacional" onclick="seleccionar('internacional')"><span>Vuelos Internacionales</span></button>
@@ -218,90 +208,98 @@ button{
 
 <section id="formulario">
   <div class="form-box">
-    <h2 id="tipoVueloTitulo"></h2>
+    <h2 id="titulo"></h2>
 
     <label>Origen</label>
-    <input id="origen" list="listaAeropuertos">
+    <input id="origen" list="aeropuertos">
 
     <label>Destino</label>
-    <input id="destino" list="listaAeropuertos">
+    <input id="destino" list="aeropuertos">
 
-    <datalist id="listaAeropuertos"></datalist>
+    <datalist id="aeropuertos"></datalist>
 
     <label>Tipo de viaje</label>
-    <select id="tipoViaje" onchange="cambiarFechas()">
+    <select id="tipoViaje">
       <option value="">Selecciona</option>
-      <option value="ida">Solo ida</option>
-      <option value="ida-regreso">Ida y regreso</option>
+      <option value="Solo ida">Solo ida</option>
+      <option value="Ida y regreso">Ida y regreso</option>
     </select>
 
     <label>Pasajeros</label>
     <select id="pasajeros">
       <option value="">Selecciona</option>
-      <option>1</option><option>2</option><option>3</option>
+      <option>1</option><option>2</option><option>3</option><option>4</option>
+      <option>5</option><option>6</option><option>7</option><option>8</option><option>9</option>
     </select>
-
-    <label>Tarifa</label>
-    <div class="tarifas">
-      <div class="tarjeta-tarifa" onclick="seleccionarTarifa(this,'Basic')">Basic – Solo morral</div>
-      <div class="tarjeta-tarifa" onclick="seleccionarTarifa(this,'Classic')">Classic – Morral + 12Kg</div>
-      <div class="tarjeta-tarifa" onclick="seleccionarTarifa(this,'Business')">Business – Beneficios completos</div>
-    </div>
 
     <label>Fecha ida</label>
     <input type="date" id="fechaIda">
 
-    <label id="labelRegreso" style="display:none">Fecha regreso</label>
-    <input type="date" id="fechaRegreso" style="display:none">
+    <label>Tarifa</label>
+    <div class="tarifas">
+      <div class="tarifa" onclick="tarifaSel(this,'Basic')"><strong>Basic</strong><br>Solo un (1) morral</div>
+      <div class="tarifa" onclick="tarifaSel(this,'Classic')"><strong>Classic</strong><br>Morral + equipaje de mano 12Kg</div>
+      <div class="tarifa" onclick="tarifaSel(this,'Business')"><strong>Business</strong><br>Equipaje completo + beneficios Business</div>
+    </div>
 
-    <button onclick="enviarWhatsApp()">COTIZA AHORA</button>
-    <button onclick="regresarInicio()">← Regresar</button>
-
-    <div class="footer">Vuelos operados por AVIANCA AIRLINES</div>
+    <button class="btn-main" onclick="enviar()">COTIZA AHORA</button>
+    <button class="btn-back" onclick="volver()">← Regresar</button>
   </div>
 </section>
 
 <script>
-setTimeout(()=>document.getElementById("splash").remove(),3600);
+const aeropuertos=[
+"Colombia - Bogotá (BOG)","Colombia - Medellín (MDE)","Colombia - Cali (CLO)",
+"Colombia - Cartagena (CTG)","Colombia - Barranquilla (BAQ)",
+"Colombia - Santa Marta (SMR)","Colombia - San Andrés (ADZ)",
+"Panamá - Ciudad de Panamá (PTY)",
+"Estados Unidos - Miami (MIA)","Estados Unidos - Nueva York (JFK)",
+"Estados Unidos - Orlando (MCO)","México - Cancún (CUN)",
+"España - Madrid (MAD)","Francia - París (CDG)",
+"Reino Unido - Londres (LHR)"
+];
 
-const aeropuertos=[/* LISTA COMPLETA IGUAL A TU VERSION */];
+const dl=document.getElementById("aeropuertos");
+aeropuertos.forEach(a=>dl.appendChild(new Option(a,a)));
 
-let tarifaSeleccionada="";
+let tarifa="";
 
 function seleccionar(tipo){
-  home.classList.add("oculto");
-  formulario.classList.add("activo");
-  tipoVueloTitulo.textContent=tipo==="nacional"?"Vuelo Nacional":"Vuelo Internacional";
-  listaAeropuertos.innerHTML="";
-  aeropuertos.forEach(a=>{
-    if(tipo==="nacional" && !a.startsWith("Colombia")) return;
-    listaAeropuertos.appendChild(new Option(a,a));
+  document.getElementById("home").classList.add("oculto");
+  document.getElementById("formulario").classList.add("activo");
+  document.getElementById("titulo").textContent=tipo==="nacional"?"Vuelo Nacional":"Vuelo Internacional";
+}
+
+function tarifaSel(el,val){
+  tarifa=val;
+  document.querySelectorAll(".tarifa").forEach(t=>t.classList.remove("selected"));
+  el.classList.add("selected");
+}
+
+function enviar(){
+  let campos=["origen","destino","tipoViaje","pasajeros","fechaIda"];
+  let ok=true;
+  campos.forEach(id=>{
+    let e=document.getElementById(id);
+    e.classList.remove("error");
+    if(!e.value){e.classList.add("error");ok=false}
   });
+  if(!tarifa){alert("Selecciona una tarifa");return}
+  if(!ok)return;
+
+  let msg=`Cotización Avianca
+Origen: ${origen.value}
+Destino: ${destino.value}
+Viaje: ${tipoViaje.value}
+Pasajeros: ${pasajeros.value}
+Fecha: ${fechaIda.value}
+Tarifa: ${tarifa}`;
+  window.open(`https://wa.me/573016791639?text=${encodeURIComponent(msg)}`,"_blank");
 }
 
-function seleccionarTarifa(el,val){
-  document.querySelectorAll(".tarjeta-tarifa").forEach(t=>t.classList.remove("activa"));
-  el.classList.add("activa");
-  tarifaSeleccionada=val;
-}
-
-function cambiarFechas(){
-  const show=tipoViaje.value==="ida-regreso";
-  fechaRegreso.style.display=labelRegreso.style.display=show?"block":"none";
-}
-
-function regresarInicio(){
-  formulario.classList.remove("activo");
-  home.classList.remove("oculto");
-}
-
-function enviarWhatsApp(){
-  if(!origen.value||!destino.value||!tipoViaje.value||!pasajeros.value||!fechaIda.value||!tarifaSeleccionada){
-    alert("Completa todos los campos");
-    return;
-  }
-  let msg=`Cotización Avianca\nOrigen: ${origen.value}\nDestino: ${destino.value}\nTarifa: ${tarifaSeleccionada}`;
-  window.open(`https://wa.me/573016791639?text=${encodeURIComponent(msg)}`);
+function volver(){
+  document.getElementById("formulario").classList.remove("activo");
+  document.getElementById("home").classList.remove("oculto");
 }
 </script>
 
