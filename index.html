@@ -167,13 +167,13 @@ button{
 .btn-main{background:#c8102e;color:#fff}
 .btn-back{background:#e5e5ea;color:#000}
 
-/* MOBILE ORIGINAL */
+/* MOBILE */
 @media(max-width:600px){
   .opciones{flex-direction:column}
   .opcion{width:100%}
 }
 
-/* 🔧 FIX DEFINITIVO HOME EN MÓVIL */
+/* FIX HOME EN MOVIL */
 @media(max-width:600px){
   body{
     overflow:auto;
@@ -200,6 +200,23 @@ button{
     height:200px;
     font-size:20px;
     padding:20px;
+  }
+}
+
+/* FIX FORMULARIO EN MOVIL */
+@media(max-width:600px){
+  #formulario{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    overflow:visible;
+  }
+  #formulario .form-box{
+    max-width:100%;
+    width:100%;
   }
 }
 </style>
@@ -329,6 +346,7 @@ function cargarAeropuertos(tipo){
   const lista = tipo==="nacional"
     ? aeropuertos.filter(a=>a.startsWith("Colombia"))
     : aeropuertos;
+
   lista.forEach(a=>dl.appendChild(new Option(a,a)));
 }
 
@@ -376,4 +394,3 @@ function volver(){
 
 </body>
 </html>
-
