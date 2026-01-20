@@ -172,6 +172,29 @@ button{
   .opciones{flex-direction:column}
   .opcion{width:100%}
 }
+
+/* FIX + OPTIMIZACIÓN HOME MÓVIL */
+@media(max-width:600px){
+  body{
+    overflow:auto;
+  }
+  section{
+    position:relative;
+    min-height:100vh;
+  }
+  .logo-img{
+    width:280px;
+    margin-bottom:16px;
+  }
+  .opciones{
+    gap:18px;
+  }
+  .opcion{
+    height:220px;
+    font-size:20px;
+    padding:22px;
+  }
+}
 </style>
 </head>
 
@@ -347,4 +370,3 @@ function volver(){
 
 </body>
 </html>
-
