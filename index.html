@@ -293,7 +293,15 @@ const aeropuertos=[
 ];
 
 const dl=document.getElementById("aeropuertos");
-aeropuertos.forEach(a=>dl.appendChild(new Option(a,a)));
+
+function cargarAeropuertos(tipo){
+  dl.innerHTML="";
+  const lista = tipo==="nacional"
+    ? aeropuertos.filter(a=>a.startsWith("Colombia"))
+    : aeropuertos;
+
+  lista.forEach(a=>dl.appendChild(new Option(a,a)));
+}
 
 let tarifa="";
 
@@ -301,6 +309,7 @@ function seleccionar(tipo){
   home.classList.add("oculto");
   formulario.classList.add("activo");
   titulo.textContent=tipo==="nacional"?"Vuelo Nacional":"Vuelo Internacional";
+  cargarAeropuertos(tipo);
 }
 
 function tarifaSel(el,val){
@@ -338,3 +347,4 @@ function volver(){
 
 </body>
 </html>
+
