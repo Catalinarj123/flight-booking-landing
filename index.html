@@ -23,8 +23,6 @@ body{
   overflow-y:auto;
   -webkit-font-smoothing:antialiased;
 }
-
-/* SECTIONS */
 section{
   min-height:100vh;
   display:flex;
@@ -62,8 +60,7 @@ section{
   animation:splashLogo 1.4s cubic-bezier(.2,.8,.2,1) forwards;
 }
 @keyframes splashLogo{
-  0%{opacity:0;transform:scale(.85);}
-  100%{opacity:1;transform:scale(1);}
+  to{opacity:1;transform:scale(1);}
 }
 @keyframes splashOut{
   to{opacity:0;pointer-events:none;}
@@ -76,11 +73,9 @@ section{
 }
 #home.oculto{
   opacity:0;
-  transform:translateY(-120px) scale(.98);
+  transform:translateY(-120px);
   pointer-events:none;
 }
-
-/* LOGO */
 .logo-img{
   width:560px;
   max-width:95%;
@@ -92,8 +87,6 @@ section{
 @keyframes fadeDown{
   to{opacity:1;transform:none;}
 }
-
-/* SLOGAN */
 .slogan{
   font-size:20px;
   margin-bottom:40px;
@@ -125,10 +118,11 @@ section{
   position:relative;
   overflow:hidden;
   box-shadow:0 25px 60px rgba(0,0,0,.65);
-  transition:.5s;
+  transition:.6s cubic-bezier(.2,.8,.2,1);
 }
 .opcion:hover{
-  transform:translateY(-10px) scale(1.04);
+  transform:translateY(-12px) scale(1.04);
+  box-shadow:0 50px 100px rgba(0,0,0,.9);
 }
 .opcion.nacional{
   background-image:url("https://images.unsplash.com/photo-1529070538774-1843cb3265df");
@@ -149,7 +143,6 @@ section{
   opacity:0;
   transform:translateY(40px);
   pointer-events:none;
-  position:relative;
 }
 #formulario.activo{
   opacity:1;
@@ -173,8 +166,12 @@ input,select,button{
   border-radius:12px;
   border:1px solid #ccc;
 }
+input.error,select.error{
+  border-color:#c8102e;
+  animation:shake .35s;
+}
 button{
-  background:#c8102e;
+  background:#111;
   color:#fff;
   border:none;
   margin-top:18px;
@@ -188,32 +185,31 @@ button{
   margin-top:8px;
 }
 .tarjeta-tarifa{
-  border:2px solid #ddd;
+  border:1px solid #d1d1d6;
   border-radius:18px;
   padding:16px;
   cursor:pointer;
-  transition:.35s;
+  transition:.35s cubic-bezier(.2,.8,.2,1);
+  background:#fff;
 }
 .tarjeta-tarifa:hover{
-  transform:translateY(-6px) scale(1.02);
-  box-shadow:0 15px 35px rgba(0,0,0,.15);
+  transform:translateY(-4px);
+}
+.tarjeta-tarifa.activa{
+  border-color:#1d1d1f;
+  box-shadow:
+    0 0 0 1px #1d1d1f,
+    0 18px 40px rgba(0,0,0,.15);
+  transform:scale(1.02);
 }
 .tarjeta-tarifa h4{margin-bottom:6px;}
 .tarjeta-tarifa p{font-size:14px;color:#555;}
-.tarjeta-tarifa.activa{
-  border-color:#c8102e;
-  background:#fff5f6;
-  box-shadow:0 0 0 2px rgba(200,16,46,.25),0 20px 40px rgba(200,16,46,.25);
-  transform:scale(1.03);
-}
-.tarifas.error{animation:shake .4s;}
+
 @keyframes shake{
-  0%{transform:translateX(0)}
   25%{transform:translateX(-6px)}
   50%{transform:translateX(6px)}
-  75%{transform:translateX(-4px)}
-  100%{transform:translateX(0)}
 }
+
 .error-text{
   color:#c8102e;
   font-size:13px;
@@ -226,13 +222,6 @@ button{
   font-size:12px;
   text-align:center;
   color:#666;
-}
-
-/* MOBILE */
-@media(max-width:768px){
-  .opcion{width:100%;height:220px;}
-  .logo-img{width:360px;}
-  .slogan{font-size:16px;}
 }
 </style>
 </head>
@@ -261,12 +250,10 @@ button{
     <h2 id="tipoVueloTitulo"></h2>
 
     <label>Origen</label>
-    <input id="origen" list="listaAeropuertos">
+    <input id="origen">
 
     <label>Destino</label>
-    <input id="destino" list="listaAeropuertos">
-
-    <datalist id="listaAeropuertos"></datalist>
+    <input id="destino">
 
     <label>Tipo de viaje</label>
     <select id="tipoViaje" onchange="cambiarFechas()">
@@ -278,8 +265,9 @@ button{
     <label>Pasajeros</label>
     <select id="pasajeros">
       <option value="">Selecciona</option>
-      <option>1</option><option>2</option><option>3</option><option>4</option>
-      <option>5</option><option>6</option><option>7</option><option>8</option><option>9</option>
+      <option>1</option><option>2</option><option>3</option>
+      <option>4</option><option>5</option><option>6</option>
+      <option>7</option><option>8</option><option>9</option>
     </select>
 
     <label>Tarifa</label>
@@ -289,7 +277,7 @@ button{
         <p>Solo un (1) morral</p>
       </div>
       <div class="tarjeta-tarifa" onclick="seleccionarTarifa(this,'Classic – Morral + equipaje de mano 12Kg')">
-        <h4>Basic</h4>
+        <h4>Classic</h4>
         <p>Un (1) morral y equipaje de mano de 12Kg</p>
       </div>
       <div class="tarjeta-tarifa" onclick="seleccionarTarifa(this,'Business – Beneficios Business')">
@@ -297,7 +285,7 @@ button{
         <p>Equipaje de mano, equipaje de bodega y beneficios Business</p>
       </div>
     </div>
-    <div class="error-text" id="errorTarifa">Debes seleccionar una tarifa para continuar</div>
+    <div class="error-text" id="errorTarifa">Debes seleccionar una tarifa</div>
 
     <label>Fecha ida</label>
     <input type="date" id="fechaIda">
@@ -315,48 +303,12 @@ button{
 <script>
 setTimeout(()=>document.getElementById("splash").remove(),3600);
 
-const aeropuertos=[
-"Colombia - Bogotá (BOG)","Colombia - Medellín (MDE)","Colombia - Cali (CLO)",
-"Colombia - Cartagena (CTG)","Colombia - Barranquilla (BAQ)",
-"Colombia - Santa Marta (SMR)","Colombia - San Andrés (ADZ)",
-"Colombia - Pereira (PEI)","Colombia - Bucaramanga (BGA)",
-"Colombia - Cúcuta (CUC)","Colombia - Armenia (AXM)",
-"Colombia - Manizales (MZL)","Colombia - Pasto (PSO)",
-"Colombia - Neiva (NVA)","Colombia - Villavicencio (VVC)",
-"Colombia - Leticia (LET)","Colombia - Yopal (EYP)",
-"Panamá - Ciudad de Panamá (PTY)",
-"Estados Unidos - Miami (MIA)","Estados Unidos - Nueva York (JFK)",
-"Estados Unidos - Orlando (MCO)","Estados Unidos - Fort Lauderdale (FLL)",
-"Estados Unidos - Chicago (ORD)","Estados Unidos - Dallas (DFW)",
-"Estados Unidos - Los Ángeles (LAX)","Estados Unidos - Washington (IAD)",
-"Estados Unidos - Boston (BOS)",
-"México - Ciudad de México (MEX)","México - Cancún (CUN)",
-"El Salvador - San Salvador (SAL)",
-"Costa Rica - San José (SJO)",
-"Guatemala - Ciudad de Guatemala (GUA)",
-"Perú - Lima (LIM)",
-"Ecuador - Quito (UIO)",
-"Chile - Santiago (SCL)",
-"Argentina - Buenos Aires (EZE)",
-"Uruguay - Montevideo (MVD)",
-"Brasil - São Paulo (GRU)",
-"España - Madrid (MAD)",
-"España - Barcelona (BCN)",
-"Francia - París (CDG)",
-"Reino Unido - Londres (LHR)"
-];
-
 let tarifaSeleccionada="";
 
 function seleccionar(tipo){
   home.classList.add("oculto");
   formulario.classList.add("activo");
   tipoVueloTitulo.textContent=tipo==="nacional"?"Vuelo Nacional":"Vuelo Internacional";
-  listaAeropuertos.innerHTML="";
-  aeropuertos.forEach(a=>{
-    if(tipo==="nacional" && !a.startsWith("Colombia")) return;
-    listaAeropuertos.appendChild(new Option(a,a));
-  });
 }
 
 function seleccionarTarifa(card,valor){
@@ -364,7 +316,6 @@ function seleccionarTarifa(card,valor){
   card.classList.add("activa");
   tarifaSeleccionada=valor;
   errorTarifa.style.display="none";
-  tarifasBox.classList.remove("error");
 }
 
 function cambiarFechas(){
@@ -378,20 +329,39 @@ function regresarInicio(){
 }
 
 function enviarWhatsApp(){
+  let valido=true;
+
+  document.querySelectorAll("input,select").forEach(el=>{
+    el.classList.remove("error");
+    if(!el.value && el.offsetParent!==null){
+      el.classList.add("error");
+      valido=false;
+    }
+  });
+
   if(!tarifaSeleccionada){
     errorTarifa.style.display="block";
-    tarifasBox.classList.add("error");
-    return;
+    valido=false;
   }
-  let msg=`✈️ Cotización Avianca
+
+  if(!valido) return;
+
+  const msg=`✈️ Cotización Avianca
 Origen: ${origen.value}
 Destino: ${destino.value}
 Viaje: ${tipoViaje.value}
 Pasajeros: ${pasajeros.value}
 Tarifa: ${tarifaSeleccionada}
 Fecha ida: ${fechaIda.value}`;
-  if(tipoViaje.value==="ida-regreso") msg+=`\nFecha regreso: ${fechaRegreso.value}`;
-  window.open(`https://wa.me/573016791639?text=${encodeURIComponent(msg)}`,"_blank");
+
+  if(tipoViaje.value==="ida-regreso"){
+    msg += `\nFecha regreso: ${fechaRegreso.value}`;
+  }
+
+  window.open(
+    `https://wa.me/573016791639?text=${encodeURIComponent(msg)}`,
+    "_blank"
+  );
 }
 </script>
 
