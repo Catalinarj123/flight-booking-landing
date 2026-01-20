@@ -16,7 +16,12 @@
   margin:0;
   padding:0;
 }
-body{background:#000;color:#fff;overflow:hidden;}
+body{
+  background:#000;
+  color:#fff;
+  overflow:hidden;
+  -webkit-font-smoothing:antialiased;
+}
 section{
   min-height:100vh;
   display:flex;
@@ -25,7 +30,9 @@ section{
   padding:40px;
   position:absolute;
   inset:0;
-  transition:opacity .6s ease, transform .6s ease;
+  transition:
+    opacity .6s cubic-bezier(.4,0,.2,1),
+    transform .8s cubic-bezier(.2,.8,.2,1);
 }
 #home,#formulario{
   background:
@@ -49,10 +56,11 @@ section{
 #splash img{
   width:260px;
   opacity:0;
-  animation:splashLogo 1.4s ease forwards;
+  animation:splashLogo 1.4s cubic-bezier(.2,.8,.2,1) forwards;
 }
 @keyframes splashLogo{
-  to{opacity:1;transform:scale(1);}
+  0%{opacity:0;transform:scale(.85);}
+  100%{opacity:1;transform:scale(1);}
 }
 @keyframes splashOut{
   to{opacity:0;pointer-events:none;}
@@ -67,7 +75,7 @@ section{
 }
 #home.oculto{
   opacity:0;
-  transform:translateY(-120px);
+  transform:translateY(-120px) scale(.98);
   pointer-events:none;
 }
 
@@ -78,7 +86,7 @@ section{
   margin-bottom:6px;
   opacity:0;
   transform:translateY(-30px);
-  animation:fadeDown 1s ease forwards .3s;
+  animation:fadeDown 1s cubic-bezier(.2,.8,.2,1) forwards .3s;
 }
 @keyframes fadeDown{
   to{opacity:1;transform:none;}
@@ -89,13 +97,14 @@ section{
   font-size:20px;
   margin-bottom:40px;
   opacity:0;
-  animation:fadeDown 1s ease forwards .6s;
+  animation:fadeDown 1s cubic-bezier(.2,.8,.2,1) forwards .6s;
 }
 
 /* TARJETAS */
 .opciones{
   display:flex;
   gap:36px;
+  perspective:1200px;
 }
 .opcion{
   width:240px;
@@ -114,10 +123,18 @@ section{
   position:relative;
   overflow:hidden;
   box-shadow:0 25px 60px rgba(0,0,0,.65);
-  transition:.35s;
+  transition:
+    transform .6s cubic-bezier(.2,.8,.2,1),
+    box-shadow .6s cubic-bezier(.2,.8,.2,1),
+    filter .6s cubic-bezier(.2,.8,.2,1);
 }
 .opcion:hover{
-  transform:translateY(-14px) scale(1.04);
+  transform:translateY(-14px) scale(1.05);
+  box-shadow:0 50px 100px rgba(0,0,0,.9);
+  filter:brightness(1.1);
+}
+.opcion:active{
+  transform:scale(.97);
 }
 .opcion.nacional{
   background-image:url("https://images.unsplash.com/photo-1529070538774-1843cb3265df");
@@ -129,7 +146,7 @@ section{
   content:"";
   position:absolute;
   inset:0;
-  background:linear-gradient(to top, rgba(0,0,0,.8), rgba(0,0,0,.25));
+  background:linear-gradient(to top, rgba(0,0,0,.85), rgba(0,0,0,.25));
 }
 .opcion span{z-index:1}
 
@@ -141,19 +158,31 @@ section{
 }
 #formulario.activo{
   opacity:1;
-  transform:none;
+  transform:translateY(0) scale(1);
   pointer-events:auto;
 }
 .form-box{
-  background:#fff;color:#000;
+  background:#fff;
+  color:#000;
   border-radius:22px;
   padding:30px;
-  max-width:420px;width:100%;
+  max-width:420px;
+  width:100%;
+  box-shadow:0 40px 100px rgba(0,0,0,.35);
 }
 label{display:block;margin-top:12px;}
 input,select,button{
-  width:100%;padding:14px;margin-top:6px;
-  border-radius:12px;border:1px solid #ccc;
+  width:100%;
+  padding:14px;
+  margin-top:6px;
+  border-radius:12px;
+  border:1px solid #ccc;
+  transition:.25s ease;
+}
+input:focus,select:focus{
+  outline:none;
+  border-color:#c8102e;
+  box-shadow:0 0 0 3px rgba(200,16,46,.15);
 }
 button{
   background:#c8102e;
@@ -162,6 +191,8 @@ button{
   margin-top:20px;
   cursor:pointer;
 }
+button:hover{filter:brightness(1.1);}
+button:active{transform:scale(.98);}
 .tarifa-info{
   margin-top:8px;
   font-size:14px;
@@ -175,8 +206,6 @@ button{
   text-align:center;
   color:#666;
 }
-input.error, select.error{border:2px solid #c8102e;}
-input.ok, select.ok{border:2px solid #2ecc71;}
 </style>
 </head>
 
@@ -251,7 +280,7 @@ let tipoSeleccionado="nacional";
 
 /* LISTA COMPLETA */
 const aeropuertosNacionales=[
-"Bogotá (BOG)","Medellín MDE","Cali (CLO)","Cartagena (CTG)","Barranquilla (BAQ)",
+"Bogotá (BOG)","Medellín (MDE)","Cali (CLO)","Cartagena (CTG)","Barranquilla (BAQ)",
 "Bucaramanga (BGA)","Cúcuta (CUC)","Santa Marta (SMR)","San Andrés (ADZ)",
 "Pereira (PEI)","Armenia (AXM)","Manizales (MZL)","Pasto (PSO)",
 "Neiva (NVA)","Ibagué (IBE)","Villavicencio (VVC)","Leticia (LET)",
@@ -301,10 +330,8 @@ function mostrarDescripcionTarifa(){
 }
 
 function enviarWhatsApp(){
-  const campos=[origen,destino,tipoViaje,tipoTarifa,pasajeros,fechaIda];
-  if(tipoViaje.value==="ida-regreso") campos.push(fechaRegreso);
-  for(let c of campos){if(!c.value){alert("Completa todos los campos");return;}}
   let msg=`✈️ Cotización Avianca
+Tipo: ${tipoSeleccionado==="nacional"?"Vuelo Nacional":"Vuelo Internacional"}
 Origen: ${origen.value}
 Destino: ${destino.value}
 Viaje: ${tipoViaje.value}
