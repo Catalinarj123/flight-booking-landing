@@ -177,12 +177,6 @@ input,select,button{
   margin-top:6px;
   border-radius:12px;
   border:1px solid #ccc;
-  transition:.25s ease;
-}
-input:focus,select:focus{
-  outline:none;
-  border-color:#c8102e;
-  box-shadow:0 0 0 3px rgba(200,16,46,.15);
 }
 button{
   background:#c8102e;
@@ -190,15 +184,6 @@ button{
   border:none;
   margin-top:20px;
   cursor:pointer;
-}
-button:hover{filter:brightness(1.1);}
-button:active{transform:scale(.98);}
-.tarifa-info{
-  margin-top:8px;
-  font-size:14px;
-  background:#f6f6f6;
-  padding:10px;
-  border-radius:10px;
 }
 .footer{
   margin-top:15px;
@@ -219,8 +204,12 @@ button:active{transform:scale(.98);}
   <img src="avianca_logo_transparent.png" class="logo-img">
   <div class="slogan">¡El cielo es de todos!</div>
   <div class="opciones">
-    <button class="opcion nacional" onclick="seleccionar('nacional')"><span>Vuelos Nacionales</span></button>
-    <button class="opcion internacional" onclick="seleccionar('internacional')"><span>Vuelos Internacionales</span></button>
+    <button class="opcion nacional" onclick="seleccionar('nacional')">
+      <span>Vuelos Nacionales</span>
+    </button>
+    <button class="opcion internacional" onclick="seleccionar('internacional')">
+      <span>Vuelos Internacionales</span>
+    </button>
   </div>
 </section>
 
@@ -229,10 +218,10 @@ button:active{transform:scale(.98);}
     <h2 id="tipoVueloTitulo"></h2>
 
     <label>Origen</label>
-    <input id="origen" list="listaAeropuertos" placeholder="Escribe aeropuerto">
+    <input id="origen" list="listaAeropuertos" placeholder="Ciudad, país o código">
 
     <label>Destino</label>
-    <input id="destino" list="listaAeropuertos" placeholder="Escribe aeropuerto">
+    <input id="destino" list="listaAeropuertos" placeholder="Ciudad, país o código">
 
     <datalist id="listaAeropuertos"></datalist>
 
@@ -242,16 +231,6 @@ button:active{transform:scale(.98);}
       <option value="ida">Solo ida</option>
       <option value="ida-regreso">Ida y regreso</option>
     </select>
-
-    <label>Tipo de tarifa</label>
-    <select id="tipoTarifa" onchange="mostrarDescripcionTarifa()">
-      <option value="">Selecciona</option>
-      <option value="BASIC">Basic</option>
-      <option value="CLASSIC">Classic</option>
-      <option value="BUSINESS">Business</option>
-    </select>
-
-    <div id="descripcionTarifa" class="tarifa-info" style="display:none"></div>
 
     <label>Pasajeros</label>
     <select id="pasajeros">
@@ -276,38 +255,50 @@ button:active{transform:scale(.98);}
 <script>
 setTimeout(()=>document.getElementById("splash").remove(),3600);
 
-let tipoSeleccionado="nacional";
+/* LISTA AMPLIA DESTINOS AVIANCA */
+const aeropuertos=[
+"Colombia - Bogotá (BOG)","Colombia - Medellín (MDE)","Colombia - Cali (CLO)",
+"Colombia - Cartagena (CTG)","Colombia - Barranquilla (BAQ)",
+"Colombia - Santa Marta (SMR)","Colombia - San Andrés (ADZ)",
+"Colombia - Pereira (PEI)","Colombia - Bucaramanga (BGA)",
+"Colombia - Cúcuta (CUC)","Colombia - Armenia (AXM)",
+"Colombia - Manizales (MZL)","Colombia - Pasto (PSO)",
+"Colombia - Neiva (NVA)","Colombia - Villavicencio (VVC)",
+"Colombia - Leticia (LET)","Colombia - Yopal (EYP)",
 
-/* LISTA COMPLETA */
-const aeropuertosNacionales=[
-"Bogotá (BOG)","Medellín (MDE)","Cali (CLO)","Cartagena (CTG)","Barranquilla (BAQ)",
-"Bucaramanga (BGA)","Cúcuta (CUC)","Santa Marta (SMR)","San Andrés (ADZ)",
-"Pereira (PEI)","Armenia (AXM)","Manizales (MZL)","Pasto (PSO)",
-"Neiva (NVA)","Ibagué (IBE)","Villavicencio (VVC)","Leticia (LET)",
-"Yopal (EYP)","Riohacha (RCH)","Valledupar (VUP)"
-];
+"Panamá - Ciudad de Panamá (PTY)",
 
-const aeropuertosInternacionales=[
-"Miami (MIA)","New York (JFK)","Orlando (MCO)","Fort Lauderdale (FLL)",
-"Los Angeles (LAX)","Chicago (ORD)","Dallas (DFW)",
-"Ciudad de México (MEX)","Cancún (CUN)","San Salvador (SAL)",
-"San José (SJO)","Guatemala (GUA)","Lima (LIM)","Quito (UIO)",
-"Santiago (SCL)","Buenos Aires (EZE)","Montevideo (MVD)",
-"São Paulo (GRU)","Madrid (MAD)","Barcelona (BCN)","París (CDG)",
-"Londres (LHR)"
+"Estados Unidos - Miami (MIA)","Estados Unidos - Nueva York (JFK)",
+"Estados Unidos - Orlando (MCO)","Estados Unidos - Fort Lauderdale (FLL)",
+"Estados Unidos - Chicago (ORD)","Estados Unidos - Dallas (DFW)",
+"Estados Unidos - Los Ángeles (LAX)","Estados Unidos - Washington (IAD)",
+"Estados Unidos - Boston (BOS)",
+
+"México - Ciudad de México (MEX)","México - Cancún (CUN)",
+
+"El Salvador - San Salvador (SAL)",
+"Costa Rica - San José (SJO)",
+"Guatemala - Ciudad de Guatemala (GUA)",
+
+"Perú - Lima (LIM)",
+"Ecuador - Quito (UIO)",
+"Chile - Santiago (SCL)",
+"Argentina - Buenos Aires (EZE)",
+"Uruguay - Montevideo (MVD)",
+"Brasil - São Paulo (GRU)",
+
+"España - Madrid (MAD)",
+"España - Barcelona (BCN)",
+"Francia - París (CDG)",
+"Reino Unido - Londres (LHR)"
 ];
 
 function seleccionar(tipo){
-  tipoSeleccionado=tipo;
   home.classList.add("oculto");
   formulario.classList.add("activo");
   tipoVueloTitulo.textContent=tipo==="nacional"?"Vuelo Nacional":"Vuelo Internacional";
-  cargar(tipo==="nacional"?aeropuertosNacionales:[...aeropuertosNacionales,...aeropuertosInternacionales]);
-}
-
-function cargar(lista){
   listaAeropuertos.innerHTML="";
-  lista.forEach(a=>listaAeropuertos.appendChild(new Option(a,a)));
+  aeropuertos.forEach(a=>listaAeropuertos.appendChild(new Option(a,a)));
 }
 
 function cambiarFechas(){
@@ -320,22 +311,11 @@ function regresarInicio(){
   home.classList.remove("oculto");
 }
 
-function mostrarDescripcionTarifa(){
-  if(!tipoTarifa.value){descripcionTarifa.style.display="none";return;}
-  descripcionTarifa.textContent=
-    tipoTarifa.value==="BASIC"?"Solo un (1) morral.":
-    tipoTarifa.value==="CLASSIC"?"Morral + equipaje de mano 12kg.":
-    "Mano + bodega 23kg + beneficios Business.";
-  descripcionTarifa.style.display="block";
-}
-
 function enviarWhatsApp(){
   let msg=`✈️ Cotización Avianca
-Tipo: ${tipoSeleccionado==="nacional"?"Vuelo Nacional":"Vuelo Internacional"}
 Origen: ${origen.value}
 Destino: ${destino.value}
 Viaje: ${tipoViaje.value}
-Tarifa: ${tipoTarifa.value}
 Pasajeros: ${pasajeros.value}
 Fecha ida: ${fechaIda.value}`;
   if(tipoViaje.value==="ida-regreso") msg+=`\nFecha regreso: ${fechaRegreso.value}`;
